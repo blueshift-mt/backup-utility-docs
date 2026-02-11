@@ -18,7 +18,7 @@
 |-------|---------------|
 | **Portal URL/Organization** | Your org name (e.g., `myorg` for myorg.maps.arcgis.com) |
 | **Username** | Your ArcGIS username (case-sensitive!) |
-| **Password** | Your password, or leave blank for SSO |
+| **Password** | Your password, or leave blank and check SSO/OAuth for single sign-on |
 
 ### Step 3: Choose Where to Save
 
@@ -265,10 +265,10 @@ Control delete protection on items during backup:
 
 ### Exclude Types
 
-Skip specific item types from backup. Enter type names separated by semicolons:
+Skip specific item types from backup. Enter type names separated by commas:
 
 ```
-Web Map;Dashboard;StoryMap
+Web Map, Dashboard, StoryMap
 ```
 
 This is useful when you only want to back up feature data without web apps.

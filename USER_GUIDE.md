@@ -95,7 +95,7 @@ Exported as **original uploaded files**:
 
 ### Notebooks
 Exported as **.ipynb files**:
-- Notebook, Notebook Code Snippet Library
+- Notebook
 
 ### Not Exportable
 

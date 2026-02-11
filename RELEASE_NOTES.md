@@ -1,4 +1,4 @@
-# Backup Utility v5.0 Release Notes
+# Backup Utility for ArcGIS Online and Portal for ArcGIS v5.0 Release Notes
 
 ## What's New
 
@@ -17,6 +17,19 @@ Your passwords are now optionally stored securely in Windows Credential Manager 
 ### Built-in Scheduling
 
 Set up daily, weekly, or monthly backups directly in the app. No more editing XML files or using Task Scheduler manually. Schedules run even when you're logged out.
+
+### Migrating from Parameters Files
+
+Parameters files (parameters.xlsx or parameters.csv) are still supported, but we strongly recommend migrating to the built-in Schedules tab as soon as possible. Parameters file scheduling is deprecated and will be removed in a future release.
+
+Benefits of the Schedules tab:
+
+- **Easier management** — No more editing spreadsheets
+- **OAuth/SSO support** — Scheduled backups work with single sign-on
+- **Progress monitoring** — Watch backups run in real-time
+- **Secure credentials** — Passwords stored in Windows Credential Manager
+
+**Important:** If a parameters.xlsx or parameters.csv file is in the same folder as the exe, the application will automatically run a headless backup instead of opening the GUI. To open the GUI, move the exe to a folder without a parameters file. This behavior will be removed in a future release when parameters file support is discontinued.
 
 ### Settings That Stick
 

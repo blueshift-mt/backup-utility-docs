@@ -66,13 +66,16 @@ Exported as **original uploaded files**:
 - **Office**: Microsoft Word, Excel, PowerPoint, Visio, PDF
 - **Apple**: iWork Keynote, Pages, Numbers
 - **Images**: Image, Image Collection, Photos With Locations
-- **GIS Packages**: File Geodatabase, Shapefile, GeoPackage, GeoJSON, KML, KML Collection, CSV, CSV Collection, GML
+- **GIS Data**: File Geodatabase, Shapefile, GeoPackage, GeoJSON, KML, KML Collection, CSV, CSV Collection, GML
 - **Pro/Desktop**: ArcGIS Pro Map, Project Package, Project Template, Map Package, Map Template, Layout, Layer Package, Scene Package, Scene Layer Package, Mobile Map Package, Mobile Basemap Package, Mobile Scene Package
 - **Tiles**: Tile Package, Vector Tile Package, Compact Tile Package
 - **Other Packages**: Locator Package, Geoprocessing Package, Rule Package, Deep Learning Package, Export Package, Task File
-- **Notebooks**: Jupyter Notebook, Notebook, Notebook Code Snippet Library
 - **Add-ins**: Desktop Add In, Explorer Add In, ArcGIS Pro Add In, Survey123 Add In, Dashboards Add In, AppBuilder Widget Package, Experience Builder Widget Package
 - **Other**: Service Definition, CAD Drawing, Urban Model, Code Sample, Native Application, Pro Report, and 30+ more file types
+
+### Notebooks
+Exported as **.ipynb files**:
+- Notebook, Notebook Code Snippet Library
 
 ### Not Exportable
 
@@ -112,8 +115,11 @@ Use these exact type names for the **Exclude Types** filter.
 #### ArcGIS Pro/Desktop Packages (exported as original file)
 `ArcGIS Pro Map`, `Project Package`, `Project Template`, `Map Package`, `Map Template`, `Layout`, `Layer`, `Layer Package`, `Scene Package`, `Scene Layer Package`, `Mobile Map Package`, `Mobile Basemap Package`, `Mobile Scene Package`, `Tile Package`, `Vector Tile Package`, `Compact Tile Package`, `Locator Package`, `Geoprocessing Package`, `Geoprocessing Package (Pro version)`, `Geoprocessing Sample`, `Rule Package`, `Deep Learning Package`, `Export Package`, `Task File`, `ArcPad Package`, `Explorer Map`, `Globe Document`, `Windows Mobile Package`, `Explorer Layer`, `Pro Report`, `Desktop Style`, `Raster function template`, `ArcGIS Pro Configuration`, `Workflow Manager (Classic) Package`, `Statistical Data Collection`, `SQLite Geodatabase`
 
-#### Notebooks & Code (exported as original file)
-`Jupyter Notebook`, `Notebook`, `Notebook Code Snippet Library`, `Code Sample`, `Code Attachment`
+#### Notebooks (exported as .ipynb)
+`Notebook`, `Notebook Code Snippet Library`
+
+#### Code (exported as original file)
+`Code Sample`, `Code Attachment`
 
 #### Add-ins & Extensions (exported as original file)
 `Desktop Add In`, `Explorer Add In`, `ArcGIS Pro Add In`, `Survey123 Add In`, `Dashboards Add In`, `AppBuilder Widget Package`, `Experience Builder Widget`, `Experience Builder Widget Package`

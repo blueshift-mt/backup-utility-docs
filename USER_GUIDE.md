@@ -52,14 +52,12 @@ Exported as **Tile Package (.tpk or .vtpk)**:
 
 ### Web Apps, Maps & Dashboards
 Exported as **JSON configuration with item resources**:
-- Web Map, Web Scene, Dashboard
-- StoryMap, Web Experience, Web Mapping Application
-- Hub Site Application, Hub Page, Site Application, Site Page
-- QuickCapture Project, Workforce Project, Survey123 Form
-- Insights Workbook, Insights Page, Insights Model, Insights Theme
-- Hub Initiative, Solution, Mission
-- Feature Collection, Feature Collection Template
-- 360 VR Experience, Oriented Imagery Catalog
+- **Maps**: Web Map, Web Scene
+- **Apps**: Dashboard, StoryMap, Web Experience, Web Mapping Application
+- **Field Apps**: Survey123 Form, QuickCapture Project, Workforce Project
+- **Insights**: Insights Workbook, Insights Page, Insights Model, Insights Theme
+- **Hub/Sites**: Hub Site Application, Hub Page, Hub Initiative, Site Application, Site Page
+- **Other**: Solution, Mission, Feature Collection, Feature Collection Template, 360 VR Experience, Oriented Imagery Catalog
 
 ### Documents & Packages
 Exported as **original uploaded files**:

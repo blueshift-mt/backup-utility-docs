@@ -12,8 +12,6 @@
 2. Save it anywhere on your computer
 3. Double-click to launch
 
-> **First Launch Tip**: Windows may show a SmartScreen warning. Click **More info** then **Run anyway**.
-
 ### Step 2: Connect to Your Organization
 
 | Field | What to Enter |
@@ -48,7 +46,7 @@ Click **Start Backup** and watch the progress. When complete, your backup folder
 Exported as **File Geodatabase (.gdb)** with domains, attachments, and related tables:
 - Feature Service
 
-### Tile & Map Services
+### Cached Tile Services
 Exported as **Tile Package (.tpk or .vtpk)**:
 - Map Service, Vector Tile Service, Map Image Layer
 
@@ -100,10 +98,10 @@ These items are automatically skipped or have limited export:
 For the **Exclude Types** filter, use these exact type names:
 
 **Feature Data:**
-Feature Service, Table, Feature Collection, Feature Collection Template
+Feature Service, Feature Collection, Feature Collection Template
 
 **Maps and Scenes:**
-Web Map, Web Scene, Map Image Layer, Tile Layer, Vector Tile Service
+Web Map, Web Scene, Tile Layer, Vector Tile Service
 
 **Apps and Dashboards:**
 Web Mapping Application, Dashboard, StoryMap, Web Experience, Hub Site, Hub Page, Site Application, Site Page

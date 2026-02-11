@@ -12,11 +12,11 @@ Official documentation for the **Backup Utility for ArcGIS Online and Portal for
 
 The Backup Utility provides comprehensive backup capabilities for ArcGIS Online and Portal for ArcGIS organizations:
 
-- Export feature services, web maps, dashboards, and 100+ item types
-- Schedule automatic backups via Windows Task Scheduler
-- Save to local storage, Amazon S3, or Azure Blob Storage
-- Email notifications on completion or failure
-- Incremental backups to save time and storage
+- Export feature services, web maps, web apps, dashboards, and 100+ item types
+- Schedule automatic backups via built-in interface (managed in background by Windows Task Scheduler)
+- Save to local/network storage, Amazon S3, or Azure Blob Storage (or use WIndows desktop clients to push to Google Drive, Box, Dropbox, or OneDrive)
+- Email notification of backup results
+- Incremental backups to save storage
 
 ## Getting Started
 

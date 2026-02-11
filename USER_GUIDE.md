@@ -48,7 +48,7 @@ Exported as **File Geodatabase (.gdb)** with domains, attachments, and related t
 
 ### Cached Tile Services
 Exported as **Tile Package (.tpk or .vtpk)**:
-- Map Service, Vector Tile Service, Map Image Layer
+- Map Service, Vector Tile Service
 
 ### Web Apps, Maps & Dashboards
 Exported as **JSON configuration with item resources**:
@@ -101,7 +101,7 @@ Use these exact type names for the **Exclude Types** filter.
 `Feature Service`
 
 #### Tile Services (exported as Tile Package)
-`Map Service`, `Vector Tile Service`, `Map Image Layer`
+`Map Service`, `Vector Tile Service`
 
 #### Apps, Maps & Configuration Items (exported as JSON + resources)
 `Web Map`, `Web Scene`, `Dashboard`, `StoryMap`, `Web Experience`, `Web Mapping Application`, `Hub Site Application`, `Hub Page`, `Site Application`, `Site Page`, `QuickCapture Project`, `Workforce Project`, `Insights Workbook`, `Insights Page`, `Insights Model`, `Insights Theme`, `Hub Initiative`, `Hub Initiative Template`, `Solution`, `Mission`, `Feature Collection`, `Feature Collection Template`, `360 VR Experience`, `Oriented Imagery Catalog`, `Investigation`, `Hub Event`, `GeoBIM Project`, `GeoBIM Application`, `Data Pipeline`, `Style`, `StoryMap Theme`, `Story Map Theme`, `Map Area`, `Symbol Set`, `Color Set`, `Content Category Set`, `Web Experience Template`, `Group Layer`, `Mobile Application`
@@ -127,7 +127,7 @@ These items reference external services and contain no exportable data. Item met
 
 #### Automatically Skipped (Not Exportable)
 These cannot be exported from the hosted ArcGIS environment:
-`Scene Service`, `Scene Layer`, `Image Service`
+`Scene Service`, `Scene Layer`, `Image Service`, `Map Image Layer`
 
 #### Not Included in Backups
 `Application` (registered OAuth/API apps - these are configuration registrations, not content)
@@ -145,15 +145,14 @@ Enter your username and password. Note: **Username is case-sensitive**.
 ### SSO / Multi-Factor Authentication
 
 1. Leave the password field **empty**
-2. A browser window opens
-3. Complete your organization's login
-4. Done—the app receives your credentials automatically
-
-> **Tip**: For scheduled backups with SSO, use the OAuth option in schedule settings.
+2. Check the **SSO / OAuth** checkbox
+3. Click **Start Backup** - a browser window opens
+4. Complete your organization's login
+5. Done—the app receives your credentials and backup starts
 
 ### OAuth for Scheduled Backups
 
-For organizations using SSO/SAML/MFA, OAuth allows scheduled backups to run without storing passwords:
+Scheduled backups need to run unattended, so they can't open a browser each time. OAuth stores a refresh token securely:
 
 1. In the **Schedules** tab, check **SSO / OAuth**
 2. Click **Authorize...**

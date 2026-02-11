@@ -95,30 +95,44 @@ These items are automatically skipped or have limited export:
 
 ### Item Types Reference
 
-For the **Exclude Types** filter, use these exact type names:
+Use these exact type names for the **Exclude Types** filter.
 
-**Feature Data:**
-Feature Service, Feature Collection, Feature Collection Template
+#### Feature Services (exported as File Geodatabase)
+`Feature Service`
 
-**Maps and Scenes:**
-Web Map, Web Scene, Tile Layer, Vector Tile Service
+#### Tile Services (exported as Tile Package)
+`Map Service`, `Vector Tile Service`, `Map Image Layer`
 
-**Apps and Dashboards:**
-Web Mapping Application, Dashboard, StoryMap, Web Experience, Hub Site, Hub Page, Site Application, Site Page
+#### Apps, Maps & Configuration Items (exported as JSON + resources)
+`Web Map`, `Web Scene`, `Dashboard`, `StoryMap`, `Web Experience`, `Web Mapping Application`, `Hub Site Application`, `Hub Page`, `Site Application`, `Site Page`, `QuickCapture Project`, `Workforce Project`, `Insights Workbook`, `Insights Page`, `Insights Model`, `Insights Theme`, `Hub Initiative`, `Hub Initiative Template`, `Solution`, `Mission`, `Feature Collection`, `Feature Collection Template`, `360 VR Experience`, `Oriented Imagery Catalog`, `Investigation`, `Hub Event`, `GeoBIM Project`, `GeoBIM Application`, `Data Pipeline`, `Style`, `StoryMap Theme`, `Story Map Theme`, `Map Area`, `Symbol Set`, `Color Set`, `Content Category Set`, `Web Experience Template`, `Group Layer`, `Mobile Application`
 
-**Forms and Field Apps:**
-Form, QuickCapture Project, Workforce Project
+#### Files & Packages (exported as original uploaded file)
+`Form`, `Image`, `Image Collection`, `Photos With Locations`, `PDF`, `Microsoft Word`, `Microsoft Excel`, `Microsoft Powerpoint`, `Visio Document`, `iWork Keynote`, `iWork Pages`, `iWork Numbers`, `CSV`, `CSV Collection`, `Shapefile`, `File Geodatabase`, `GeoPackage`, `GeoJson`, `KML`, `KML Collection`, `GML`, `Table`, `CAD Drawing`, `Apache Parquet`
 
-**Analysis and Notebooks:**
-Notebook, Insights Workbook, Insights Page, Insights Model, Insights Theme
+#### ArcGIS Pro/Desktop Packages (exported as original file)
+`ArcGIS Pro Map`, `Project Package`, `Project Template`, `Map Package`, `Map Template`, `Layout`, `Layer`, `Layer Package`, `Scene Package`, `Scene Layer Package`, `Mobile Map Package`, `Mobile Basemap Package`, `Mobile Scene Package`, `Tile Package`, `Vector Tile Package`, `Compact Tile Package`, `Locator Package`, `Geoprocessing Package`, `Geoprocessing Package (Pro version)`, `Geoprocessing Sample`, `Rule Package`, `Deep Learning Package`, `Export Package`, `Task File`, `ArcPad Package`, `Explorer Map`, `Globe Document`, `Windows Mobile Package`, `Explorer Layer`, `Pro Report`, `Desktop Style`, `Raster function template`, `ArcGIS Pro Configuration`, `Workflow Manager (Classic) Package`, `Statistical Data Collection`, `SQLite Geodatabase`
 
-**Files and Packages:**
-Image, PDF, Microsoft Word, Microsoft Excel, Microsoft PowerPoint, CSV, Shapefile, File Geodatabase, KML, GeoJSON, GeoPackage, Layer Package, Map Package, Project Package, Mobile Map Package, Tile Package, Vector Tile Package, Locator Package, Scene Package
+#### Notebooks & Code (exported as original file)
+`Jupyter Notebook`, `Notebook`, `Notebook Code Snippet Library`, `Code Sample`, `Code Attachment`
 
-**Other:**
-Code Sample, Desktop Add In, ArcGIS Pro Add In, Service Definition, CAD Drawing, and 30+ more
+#### Add-ins & Extensions (exported as original file)
+`Desktop Add In`, `Explorer Add In`, `ArcGIS Pro Add In`, `Survey123 Add In`, `Dashboards Add In`, `AppBuilder Widget Package`, `Experience Builder Widget`, `Experience Builder Widget Package`
 
-Each backup includes an **Inventory.csv** listing every item with its ID, title, owner, dates, and backup result.
+#### Other Exportable Types
+`Service Definition`, `Map Service Definition`, `Report Template`, `Map Document`, `Insights Workbook Package`, `Urban Model`, `CityEngine Web Scene`, `Native Application`, `Native Application Template`, `Native Application Installer`, `Desktop Application`, `Desktop Application Template`, `Administrative Report`
+
+#### Automatically Skipped (Reference-Only)
+These items reference external services and contain no exportable data. Item metadata/description is saved:
+`WMS`, `WMTS`, `WFS`, `Geocoding Service`, `Document Link`
+
+#### Automatically Skipped (Not Exportable)
+These cannot be exported from the hosted ArcGIS environment:
+`Scene Service`, `Scene Layer`, `Image Service`
+
+#### Not Included in Backups
+`Application` (registered OAuth/API apps - these are configuration registrations, not content)
+
+Each backup includes an **Inventory.csv** listing every item with its ID, title, owner, type, dates, and backup result.
 
 ---
 

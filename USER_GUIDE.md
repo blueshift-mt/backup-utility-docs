@@ -59,17 +59,39 @@ Exported as **JSON configuration with item resources**:
 - **Hub/Sites**: Hub Site Application, Hub Page, Hub Initiative, Site Application, Site Page
 - **Other**: Solution, Mission, Feature Collection, Feature Collection Template, 360 VR Experience, Oriented Imagery Catalog
 
-### Documents & Packages
+### Documents
 Exported as **original uploaded files**:
-- **Office**: Microsoft Word, Excel, PowerPoint, Visio, PDF
-- **Apple**: iWork Keynote, Pages, Numbers
+- **Office**: Microsoft Word, Microsoft Excel, Microsoft Powerpoint, Visio Document, PDF
+- **Apple**: iWork Keynote, iWork Pages, iWork Numbers
 - **Images**: Image, Image Collection, Photos With Locations
-- **GIS Data**: File Geodatabase, Shapefile, GeoPackage, GeoJSON, KML, KML Collection, CSV, CSV Collection, GML
-- **Pro/Desktop**: ArcGIS Pro Map, Project Package, Project Template, Map Package, Map Template, Layout, Layer Package, Scene Package, Scene Layer Package, Mobile Map Package, Mobile Basemap Package, Mobile Scene Package
-- **Tiles**: Tile Package, Vector Tile Package, Compact Tile Package
-- **Other Packages**: Locator Package, Geoprocessing Package, Rule Package, Deep Learning Package, Export Package, Task File
-- **Add-ins**: Desktop Add In, Explorer Add In, ArcGIS Pro Add In, Survey123 Add In, Dashboards Add In, AppBuilder Widget Package, Experience Builder Widget Package
-- **Other**: Service Definition, CAD Drawing, Urban Model, Code Sample, Native Application, Pro Report, and 30+ more file types
+- **Other**: CAD Drawing, Report Template, Administrative Report
+
+### GIS Data Files
+Exported as **original uploaded files**:
+- CSV, CSV Collection, Shapefile, File Geodatabase, GeoPackage, GeoJson, KML, KML Collection, GML, Table, Apache Parquet, SQLite Geodatabase
+
+### ArcGIS Packages
+Exported as **original uploaded files**:
+- **Project**: Project Package, Project Template, ArcGIS Pro Map, ArcGIS Pro Configuration
+- **Map/Layer**: Map Package, Map Template, Layer, Layer Package, Map Document
+- **Scene**: Scene Package, Scene Layer Package, Mobile Scene Package
+- **Mobile**: Mobile Map Package, Mobile Basemap Package
+- **Tile**: Tile Package, Vector Tile Package, Compact Tile Package
+- **Analysis**: Locator Package, Geoprocessing Package, Geoprocessing Package (Pro version), Geoprocessing Sample
+- **Other**: Rule Package, Deep Learning Package, Export Package, Task File, Layout, Pro Report, Desktop Style, Raster function template, Workflow Manager (Classic) Package, Statistical Data Collection, Insights Workbook Package
+- **Legacy**: ArcPad Package, Explorer Map, Explorer Layer, Globe Document, Windows Mobile Package
+
+### Service Definitions
+Exported as **original uploaded files**:
+- Service Definition, Map Service Definition
+
+### Add-ins
+Exported as **original uploaded files**:
+- Desktop Add In, Explorer Add In, ArcGIS Pro Add In, Survey123 Add In, Dashboards Add In, AppBuilder Widget Package, Experience Builder Widget, Experience Builder Widget Package
+
+### Other
+Exported as **original uploaded files**:
+- Form, Urban Model, CityEngine Web Scene, Native Application, Native Application Template, Native Application Installer, Desktop Application, Desktop Application Template, Code Sample, Code Attachment
 
 ### Notebooks
 Exported as **.ipynb files**:

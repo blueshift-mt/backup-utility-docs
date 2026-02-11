@@ -44,7 +44,7 @@ Click **Start Backup**. The application switches to the Progress tab, showing re
 
 ### Hosted Feature and Table Data
 Exported as **File Geodatabase (.gdb)** with domains, attachments, and related tables:
-- Feature Service, Table
+- Feature Service
 
 ### Tile & Map Services
 Exported as **Tile Package (.tpk or .vtpk)**:
@@ -569,19 +569,23 @@ Each backup creates a timestamped folder like `BACKUP_20240115_143022` containin
 ```
 BACKUP_20240115_143022/
 ├── Feature Service/
-│   ├── Roads.zip
-│   └── Parcels.zip
+│   ├── Roads_abc123def456.zip          (File Geodatabase)
+│   └── Parcels_def456abc123.zip
 ├── Web Map/
-│   └── City Map.json
+│   ├── City Map_aaa111bbb222.json      (Item configuration)
+│   └── City Map_aaa111bbb222.zip       (Item resources: thumbnails, images)
 ├── Dashboard/
-│   └── Operations.json
+│   ├── Operations_ccc333ddd444.json
+│   └── Operations_ccc333ddd444.zip
 ├── Inventory.csv
 └── Results.txt
 ```
 
 - **Folders by item type** — Feature Services, Web Maps, Dashboards, etc.
-- **Inventory.csv** — Complete record of every item
-- **Results.txt** — Summary with timing and success/failure counts
+- **JSON files** — Item configuration (for web apps, maps, dashboards)
+- **ZIP files with item ID** — For feature services: File Geodatabase. For web apps/maps: item resources (thumbnails, embedded images, attachments)
+- **Inventory.csv** — Complete record of every item with ID, title, owner, type, and backup result
+- **Results.txt** — Summary with timing, counts, and any errors
 
 ---
 

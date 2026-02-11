@@ -8,11 +8,11 @@ The application has been completely rebuilt with a modern tabbed interface:
 
 - **Backup tab** — Configure and start backups
 - **Monitor tab** — Watch progress in real-time with item-by-item status
-- **Schedules tab** — Set up automatic backups without editing config files
+- **Schedules tab** — Set up automatic backups without editing or managing config files
 
 ### Secure Password Storage
 
-Your passwords are now stored securely in Windows Credential Manager. Check "Remember Password" and you won't need to enter it again. For SSO organizations, OAuth tokens are also stored securely so scheduled backups can run unattended.
+Your passwords are now optionally stored securely in Windows Credential Manager for both on-demand and scheduled backups. or SSO organizations, OAuth tokens are also stored securely so scheduled backups can run unattended without requiring built-in user authentication (scheduled backups now work with SSO-only and MFA-enforced logins).
 
 ### Built-in Scheduling
 
@@ -21,18 +21,6 @@ Set up daily, weekly, or monthly backups directly in the app. No more editing XM
 ### Settings That Stick
 
 Your configuration is saved automatically. Close the app, reopen it tomorrow — everything is right where you left it.
-
-### SSO/OAuth Support
-
-For organizations using single sign-on:
-- Check the SSO/OAuth box
-- Click Start Backup (or Authorize for schedules)
-- Sign in through your browser
-- Done
-
-### Cloud Storage
-
-Back up directly to Amazon S3 or Azure Blob Storage. Files are staged locally first, then uploaded automatically.
 
 ### Proxy Support
 
@@ -43,17 +31,10 @@ Configure an HTTP/HTTPS proxy in the Advanced section if your network requires i
 ## Other Improvements
 
 - Admin/non-admin status shown on Progress tab
-- CPU usage now displays correctly (matches Task Manager)
+- CPU/RAM/ available disk now displayed in app console
 - Online documentation at docs.civiclens.com
-- Better error messages
-- Cleaner Results.txt formatting
-
----
-
-## Requirements
-
-- Windows 10/11 or Windows Server 2016+
-- 4 GB RAM (8 GB recommended)
+- Improved error messages
+- Cleaner Results.txt formatting and logging improvements
 
 ---
 

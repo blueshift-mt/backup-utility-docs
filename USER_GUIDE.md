@@ -52,7 +52,7 @@ Exported as **Tile Package (.tpk or .vtpk)**:
 
 ### Web Apps, Maps & Dashboards
 Exported as **JSON configuration with item resources**:
-- **Maps**: Web Map, Web Scene
+- **Maps**: Web Map, Web Scene (Field Maps configurations are included in web map item resources)
 - **Apps**: Dashboard, StoryMap, Web Experience, Web Mapping Application
 - **Field Apps**: Survey123 Form, QuickCapture Project, Workforce Project
 - **Insights**: Insights Workbook, Insights Page, Insights Model, Insights Theme
@@ -60,18 +60,22 @@ Exported as **JSON configuration with item resources**:
 - **Other**: Solution, Mission, Feature Collection, Feature Collection Template, 360 VR Experience, Oriented Imagery Catalog
 
 ### Documents
-Exported as **original uploaded files**:
+Downloaded in **original format**:
 - **Office**: Microsoft Word, Microsoft Excel, Microsoft Powerpoint, Visio Document, PDF
 - **Apple**: iWork Keynote, iWork Pages, iWork Numbers
 - **Images**: Image, Image Collection, Photos With Locations
 - **Other**: CAD Drawing, Report Template, Administrative Report
 
 ### GIS Data Files
-Exported as **original uploaded files**:
-- CSV, CSV Collection, Shapefile, File Geodatabase, GeoPackage, GeoJson, KML, KML Collection, GML, Table, Apache Parquet, SQLite Geodatabase
+Downloaded in **original format**:
+- Shapefile, File Geodatabase, GeoPackage, GeoJson, KML, KML Collection, GML, Apache Parquet, SQLite Geodatabase
+
+### Tabular Data
+Downloaded in **original format**:
+- CSV, CSV Collection, Table
 
 ### ArcGIS Packages
-Exported as **original uploaded files**:
+Downloaded in **original format**:
 - **Project**: Project Package, Project Template, ArcGIS Pro Map, ArcGIS Pro Configuration
 - **Map/Layer**: Map Package, Map Template, Layer, Layer Package, Map Document
 - **Scene**: Scene Package, Scene Layer Package, Mobile Scene Package
@@ -82,16 +86,16 @@ Exported as **original uploaded files**:
 - **Legacy**: ArcPad Package, Explorer Map, Explorer Layer, Globe Document, Windows Mobile Package
 
 ### Service Definitions
-Exported as **original uploaded files**:
-- Service Definition, Map Service Definition
+Downloaded in **original format**:
+- Service Definition
 
 ### Add-ins
-Exported as **original uploaded files**:
+Downloaded in **original format**:
 - Desktop Add In, Explorer Add In, ArcGIS Pro Add In, Survey123 Add In, Dashboards Add In, AppBuilder Widget Package, Experience Builder Widget, Experience Builder Widget Package
 
 ### Other
-Exported as **original uploaded files**:
-- Form, Urban Model, CityEngine Web Scene, Native Application, Native Application Template, Native Application Installer, Desktop Application, Desktop Application Template, Code Sample, Code Attachment
+Downloaded in **original format**:
+- Urban Model, CityEngine Web Scene, Native Application, Native Application Template, Native Application Installer, Desktop Application, Desktop Application Template, Code Sample, Code Attachment
 
 ### Notebooks
 Exported as **.ipynb files**:
@@ -129,19 +133,19 @@ Use these exact type names for the **Exclude Types** filter.
 #### Apps, Maps & Configuration Items (exported as JSON + resources)
 `Web Map`, `Web Scene`, `Dashboard`, `StoryMap`, `Web Experience`, `Web Mapping Application`, `Hub Site Application`, `Hub Page`, `Site Application`, `Site Page`, `QuickCapture Project`, `Workforce Project`, `Insights Workbook`, `Insights Page`, `Insights Model`, `Insights Theme`, `Hub Initiative`, `Hub Initiative Template`, `Solution`, `Mission`, `Feature Collection`, `Feature Collection Template`, `360 VR Experience`, `Oriented Imagery Catalog`, `Investigation`, `Hub Event`, `GeoBIM Project`, `GeoBIM Application`, `Data Pipeline`, `Style`, `StoryMap Theme`, `Story Map Theme`, `Map Area`, `Symbol Set`, `Color Set`, `Content Category Set`, `Web Experience Template`, `Group Layer`, `Mobile Application`
 
-#### Files & Packages (exported as original uploaded file)
+#### Files & Packages (downloaded in original format)
 `Form`, `Image`, `Image Collection`, `Photos With Locations`, `PDF`, `Microsoft Word`, `Microsoft Excel`, `Microsoft Powerpoint`, `Visio Document`, `iWork Keynote`, `iWork Pages`, `iWork Numbers`, `CSV`, `CSV Collection`, `Shapefile`, `File Geodatabase`, `GeoPackage`, `GeoJson`, `KML`, `KML Collection`, `GML`, `Table`, `CAD Drawing`, `Apache Parquet`
 
-#### ArcGIS Pro/Desktop Packages (exported as original file)
+#### ArcGIS Pro/Desktop Packages (downloaded in original format)
 `ArcGIS Pro Map`, `Project Package`, `Project Template`, `Map Package`, `Map Template`, `Layout`, `Layer`, `Layer Package`, `Scene Package`, `Scene Layer Package`, `Mobile Map Package`, `Mobile Basemap Package`, `Mobile Scene Package`, `Tile Package`, `Vector Tile Package`, `Compact Tile Package`, `Locator Package`, `Geoprocessing Package`, `Geoprocessing Package (Pro version)`, `Geoprocessing Sample`, `Rule Package`, `Deep Learning Package`, `Export Package`, `Task File`, `ArcPad Package`, `Explorer Map`, `Globe Document`, `Windows Mobile Package`, `Explorer Layer`, `Pro Report`, `Desktop Style`, `Raster function template`, `ArcGIS Pro Configuration`, `Workflow Manager (Classic) Package`, `Statistical Data Collection`, `SQLite Geodatabase`
 
 #### Notebooks (exported as .ipynb)
 `Notebook`, `Notebook Code Snippet Library`
 
-#### Code (exported as original file)
+#### Code (downloaded in original format)
 `Code Sample`, `Code Attachment`
 
-#### Add-ins & Extensions (exported as original file)
+#### Add-ins & Extensions (downloaded in original format)
 `Desktop Add In`, `Explorer Add In`, `ArcGIS Pro Add In`, `Survey123 Add In`, `Dashboards Add In`, `AppBuilder Widget Package`, `Experience Builder Widget`, `Experience Builder Widget Package`
 
 #### Other Exportable Types

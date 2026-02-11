@@ -22,13 +22,13 @@
 
 ### Step 3: Choose Where to Save
 
-Click **Browse** and select a folder for your backups.
+Click **Browse** and select a folder for your backups. You can use a local path (e.g., `D:\Backups`) or a network/UNC path (e.g., `\\server\share\backups`).
 
-> **Warning**: Don't select a drive root like `C:\` or system folders.
+> **Warning**: Don't select a drive root like `C:\` or network share roots like `\\server\share`.
 
 ### Step 4: Start Backup
 
-Click **Start Backup** and watch the progress. When complete, your backup folder will contain all your content.
+Click **Start Backup**. The application switches to the Progress tab, showing real-time status as items are discovered, exported, and saved. When complete, Results.txt and Inventory.csv summarize what was backed up.
 
 ---
 
@@ -42,11 +42,11 @@ Click **Start Backup** and watch the progress. When complete, your backup folder
 
 ## What Gets Backed Up
 
-### Feature Data
+### Hosted Feature and Table Data
 Exported as **File Geodatabase (.gdb)** with domains, attachments, and related tables:
-- Feature Service
+- Feature Service, Table
 
-### Cached Tile Services
+### Tile & Map Services
 Exported as **Tile Package (.tpk or .vtpk)**:
 - Map Service, Vector Tile Service
 
@@ -522,8 +522,8 @@ For authenticated proxies, use: `http://username:password@proxy.yourcompany.com:
 
 Keep your backup folder from growing forever:
 
-1. In schedule settings, set **Days to Retention**
-2. Optionally enable **Keep Monthly Archives** to preserve one backup per month
+1. In schedule settings, set **Delete after** to the number of days to keep backups
+2. Optionally enable **Keep Monthly** to preserve one backup per month
 
 ### Test Before Deleting
 
@@ -601,7 +601,7 @@ BACKUP_20240115_143022/
 
 ### "Export timeout"
 
-- Increase the timeout setting (Options tab)
+- Increase the timeout setting (Backup Options section on the Backup tab)
 - Reduce concurrent threads
 - Large services with millions of features may need longer timeouts
 

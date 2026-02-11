@@ -16,7 +16,7 @@
 
 | Field | What to Enter |
 |-------|---------------|
-| **Portal URL/Organization** | Your org name (e.g., `myorg` for myorg.maps.arcgis.com) |
+| **Portal URL/Organization** | **ArcGIS Online:** Your org name (e.g., `myorg`) or full URL (e.g., `myorg.maps.arcgis.com`). **Portal:** Your Portal URL (e.g., `https://gis.mycompany.com/portal`) |
 | **Username** | Your ArcGIS username (case-sensitive!) |
 | **Password** | Your password, or leave blank and check SSO/OAuth for single sign-on |
 

@@ -6,7 +6,7 @@
 
 ## Quick Start (On-Demand Backup)
 
-Run an on-demand backup first, then [set up scheduled backups](#scheduling-automatic-backups) in the **Schedules** tab.
+See [Scheduling Automatic Backups](#scheduling-automatic-backups) for information on scheduling backups.
 
 ### Step 1: Download & Launch
 

@@ -26,7 +26,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 ### Redesigned Interface
 
-Version 5.0 is a ground-up rewrite. The Gooey-based interface has been replaced with a modern Qt application organized into three tabs:
+Version 5.0 is a ground-up rewrite with a modern interface organized into three tabs:
 
 - **Backup tab**: Configure connection, filters, storage, and start on-demand backups
 - **Progress tab**: Real-time item-by-item status, active export tracking, and system metrics
@@ -58,7 +58,7 @@ Schedules are now created and managed directly in the app. Previous versions req
 
 ### Unified Application
 
-Previous versions used separate executables for different storage targets and modes (od.py, od_s3.py, od_azure.py, od_cleanup.py, sch.py, sch_s3.py, sch_azure.py, sch_cleanup.py). Version 5.0 consolidates everything into a single application. Local storage, S3, Azure, cleanup, and scheduling are all configured from one interface.
+Previous versions used separate executables for different storage targets and modes. Version 5.0 consolidates everything into a single application. Local storage, S3, Azure, cleanup, and scheduling are all configured from one interface.
 
 ### Persistent Settings
 
@@ -93,11 +93,9 @@ The `--file` flag accepts both formats:
 
 **Why migrate to the Schedules tab:**
 
-- No more editing spreadsheets or Task Scheduler XML
+- No more editing spreadsheets or Task Scheduler tasks
 - Real-time progress monitoring from the GUI
-- Email notifications on completion or failure
 - Cloud storage configured from the same interface
-- Built-in retention policies
 - Last run time, status, and warnings visible at a glance
 
 ### Cloud Storage
@@ -112,15 +110,12 @@ Backup folder retention now validates paths before deletion, blocking drive root
 
 - Authentication and license failures show actionable messages instead of tracebacks
 - License validation uses S3 fallback and local cache for resilience
-- Temporary export items (`TEMP_FOR_BACKUP`) are cleaned up automatically; cleanup is skipped when no exports occurred
-- Duplicate tile package detection skips redundant exports
 
 ### Reliability
 
 - Memory-aware downloads with adaptive chunk sizes and garbage collection
 - CPU pressure monitoring (memory only in v4.x)
 - Disk full detection stops cleanly instead of writing corrupt files
-- Consistent Portal URL handling across all export functions
 
 ---
 

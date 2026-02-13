@@ -6,7 +6,7 @@
 
 ## Quick Start (On-Demand Backup)
 
-Run an on-demand backup first, then [set up scheduled backups](#scheduling-automatic-backups) in the **Schedules** tab when ready.
+Run an on-demand backup first, then [set up scheduled backups](#scheduling-automatic-backups) in the **Schedules** tab.
 
 ### Step 1: Download & Launch
 
@@ -14,14 +14,18 @@ Run an on-demand backup first, then [set up scheduled backups](#scheduling-autom
 2. Save it anywhere on your computer
 3. Double-click to launch
 
-> **Note for parameters file users:** The application no longer auto-detects parameters files. To run a headless backup with a parameters file, use `BackupUtility.exe --file parameters.xlsx`. Parameters file support is temporary and will be removed in a future release — please migrate to the built-in Schedules tab.
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">Note for parameters file users:</strong> The application no longer auto-detects parameters files. To run a headless backup with a parameters file, use <code>BackupUtility.exe --file parameters.xlsx</code>. Parameters file support is temporary and will be removed in a future release — please migrate to the built-in Schedules tab.
+
+</div>
 
 ### Step 2: Connect to Your Organization
 
 | Field | What to Enter |
 |-------|---------------|
 | **Portal URL/Organization** | **ArcGIS Online:** Your org name (e.g., `myorg`) or full URL (e.g., `myorg.maps.arcgis.com`). **Portal:** Your Portal URL (e.g., `https://gis.mycompany.com/portal`) |
-| **Username** | Your ArcGIS username (case-sensitive!) |
+| **Username** | Your ArcGIS username (case-sensitive) |
 | **Password** | Your password, or leave blank and check SSO/OAuth for single sign-on |
 
 ### Step 3: Choose Where to Save
@@ -32,7 +36,7 @@ Click **Browse** to select a backup folder. Local paths (e.g., `D:\Backups`) and
 
 ### Step 4: Start Backup
 
-Click **Start Backup**. The application switches to the Progress tab, showing real-time status as items are discovered, exported, and saved. When complete, Results.txt and Inventory.csv summarize what was backed up.
+Click **Start Backup**. The Progress tab shows real-time status as items are discovered, exported, and saved. Results.txt and Inventory.csv are generated on completion.
 
 ---
 
@@ -208,7 +212,11 @@ Scheduled backups run unattended and can't open a browser each time. OAuth uses 
 4. The utility stores a refresh token securely in Windows Credential Manager
 5. Scheduled backups will automatically refresh the token as needed
 
-> **Note**: Refresh tokens expire after approximately 2 weeks of inactivity. If no backup runs within that window, the schedule will fail until you re-authorize. Tokens also expire if your credentials change or your organization changes SSO providers.
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f;">Refresh tokens expire after approximately 2 weeks of inactivity.</strong> If no backup runs within that window, the schedule will fail until you re-authorize. Tokens also expire if your credentials change or your organization changes SSO providers.
+
+</div>
 
 ### Windows Credential Manager (Recommended for Automation)
 
@@ -222,7 +230,11 @@ Store passwords securely instead of typing them:
    - **Password**: Your password
 4. In the Backup Utility, enter `wcm` as your password
 
-> **Security Tip**: This is the recommended approach for scheduled backups—passwords are stored securely by Windows and never saved in plain text.
+<div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #2e7d32;">Security Tip:</strong> Recommended for scheduled backups - passwords are stored securely by Windows, never in plain text.
+
+</div>
 
 ### Admin vs. Non-Admin Mode
 
@@ -250,14 +262,18 @@ The backup proceeds with accessible content.
 
 Set **Incremental Days** to back up only recent changes (e.g., `7` for the last week).
 
-> **Note**: Incremental backup is only available for ArcGIS Online. A 12-hour buffer is added automatically to avoid missing items near the boundary.
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">Note:</strong> Incremental backup is only available for ArcGIS Online. A 12-hour buffer is added automatically to avoid missing items near the boundary.
+
+</div>
 
 ### Filter by Item Type
 
 Choose from:
-- **All Items** — Everything
-- **All Items Except Cached Tile Layers** — Skip large tile caches
-- **Feature Services Only** — Just feature data
+- **All Items**
+- **All Items Except Cached Tile Layers**
+- **Feature Services Only**
 
 ### Scan Type
 
@@ -288,7 +304,11 @@ test, draft
 Public Works;Planning;GIS Team
 ```
 
-> **Note**: Groups and Folders filters are mutually exclusive—use one or the other.
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">Note:</strong> Groups and Folders filters are mutually exclusive—use one or the other.
+
+</div>
 
 ### Exclude Groups or Specific Items
 
@@ -344,7 +364,7 @@ Found in the **Advanced** section of the Backup tab:
 4. Enter your connection details
 5. Click **Save**
 
-Each schedule creates a Windows Task Scheduler task that runs in the background. No need to keep the application open or stay logged in.
+Schedules run via Windows Task Scheduler in the background. No need to keep the app open or stay logged in.
 
 #### Windows Service Account
 
@@ -352,7 +372,11 @@ Each schedule requires a **Windows Password** so Task Scheduler can run backups 
 
 > **Tip**: The password is stored securely by Windows Task Scheduler, not by the application.
 
-> **Monitor Running Backups**: Open the application at any time to check progress on the **Progress** tab. Closing the GUI does not stop the backup.
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">Monitor Running Backups:</strong> Open the application at any time to check progress on the <strong>Progress</strong> tab. Closing the GUI does not stop the backup.
+
+</div>
 
 > **Tip**: Set backups to run overnight when network usage is low.
 
@@ -434,7 +458,7 @@ For better security, create a policy that only allows access to your backup buck
 5. Click **Create user**
 6. Click on the user, go to **Security credentials**
 7. Click **Create access key** > **Application running outside AWS**
-8. Copy the **Access Key ID** and **Secret Access Key** (save these securely—you won't see the secret again!)
+8. Copy the **Access Key ID** and **Secret Access Key** (save these securely - the secret is only shown once)
 
 #### Step 4: Configure Backup Utility
 
@@ -445,7 +469,11 @@ For better security, create a policy that only allows access to your backup buck
    - **Access Key ID**: From the IAM user
    - **Secret Access Key**: From the IAM user
 
-> **Tip**: Leave credentials blank if running on EC2/ECS with an IAM role attached—the utility will use instance credentials automatically.
+<div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #2e7d32;">Tip:</strong> Leave credentials blank if running on EC2/ECS with an IAM role attached—the utility will use instance credentials automatically.
+
+</div>
 
 #### Optional: Store S3 Credentials in Windows Credential Manager
 
@@ -520,13 +548,17 @@ Move old backups to cheaper storage automatically:
    - **Container name**: The container you created (e.g., `arcgis-backups`)
    - **Connection string**: Paste the full connection string
 
-> **Warning**: SAS tokens expire! Set a long expiration date or create a calendar reminder to renew before it expires. If uploads to Azure suddenly fail, check if your SAS token has expired.
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f;">SAS tokens expire.</strong> Set a long expiration or create a calendar reminder to renew. If Azure uploads suddenly fail, check token expiration.
+
+</div>
 
 > **Tip**: Use [Azure Storage Explorer](https://azure.microsoft.com/en-us/products/storage/storage-explorer/) to browse and manage your backup blobs.
 
 ### Zip Before Upload
 
-Enabled by default. The backup folder is zipped into a single archive before uploading. Disable this to upload individual files preserving the folder structure, which allows browsing backups directly in cloud storage without downloading.
+Enabled by default. The backup folder is zipped into a single archive before uploading. Disable to preserve folder structure and browse backups directly in cloud storage.
 
 ### Delete Local After Upload
 
@@ -700,7 +732,7 @@ Summary report organized into sections:
 
 ### Full_Log.log
 
-Detailed debug-level log of the entire backup process. Useful for troubleshooting failures or contacting support.
+Detailed log of the entire backup process. Include this when contacting support.
 
 ### StartErrorLog.txt
 
@@ -744,7 +776,7 @@ Common reasons items are skipped:
 
 ### Application Appears to Be Hanging
 
-Large feature services with attachments can take an hour or more to prepare on the server. The process continues with other items while waiting.
+Large feature services with attachments can take over an hour to prepare server-side. Other items continue exporting in the meantime.
 
 > **Tip**: Don't click in the console window or select text—this can pause the output (a Windows feature). Press Escape or right-click to resume.
 

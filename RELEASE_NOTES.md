@@ -34,7 +34,7 @@ Version 5.0 is a ground-up rewrite with a modern interface organized into three 
 
 ### Real-Time Progress Monitoring
 
-The Progress tab provides live visibility into running backups:
+The Progress tab shows live status for running backups:
 
 - Progress bar with item counts (exported / failed / skipped / total)
 - Active exports table showing items currently being processed
@@ -45,7 +45,7 @@ The Progress tab provides live visibility into running backups:
 - Console log output
 - Elapsed time
 
-Scheduled backups also report progress to the GUI in real time if the application is open.
+Open the app during a scheduled backup to monitor progress in real time.
 
 ### Built-in Schedule Management
 
@@ -58,7 +58,7 @@ Schedules are now created and managed directly in the app. Previous versions req
 
 ### Unified Application
 
-Previous versions used separate executables for different storage targets and modes. Version 5.0 consolidates everything into a single application. Local storage, S3, Azure, cleanup, and scheduling are all configured from one interface.
+Previous versions used separate executables for different storage targets and modes. Version 5.0 consolidates local storage, S3, Azure, cleanup, and scheduling into a single application.
 
 ### Persistent Settings
 
@@ -66,7 +66,7 @@ All Backup tab configuration is saved automatically between sessions.
 
 ### Exclude Item IDs
 
-A new filter allows excluding specific items by ArcGIS item ID (comma-separated).
+Exclude specific items by ArcGIS item ID (comma-separated).
 
 ---
 
@@ -100,11 +100,11 @@ The `--file` flag accepts both formats:
 
 ### Cloud Storage
 
-S3 and Azure Blob support has been consolidated into the main application. S3 now supports IAM instance roles and environment credentials in addition to access keys.
+S3 and Azure Blob are now built in. S3 also supports IAM instance roles and environment credentials in addition to access keys.
 
 ### Cleanup Safety
 
-Backup folder retention now validates paths before deletion, blocking drive roots, UNC roots, and protected user directories (Desktop, Documents, etc.). Dry run mode previews deletions before enabling.
+Retention validates paths before deletion, blocking drive roots, UNC roots, and protected directories (Desktop, Documents, etc.). Dry run previews what would be deleted.
 
 ### Error Handling
 

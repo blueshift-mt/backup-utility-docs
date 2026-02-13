@@ -4,7 +4,7 @@
 
 <strong style="color: #d32f2f; font-size: 1.2em;">BREAKING CHANGE: Scheduled Backup Users Must Act</strong>
 
-**If you run backups via Windows Task Scheduler with a parameters file, your backups will stop working after upgrading to v5.0.**
+**If you run backups via Windows Task Scheduler with a parameters file, your backups will stop working after upgrading to v5.0 unless you do the following:**
 
 The application no longer auto-detects parameters files on launch. Double-clicking the executable now always opens the GUI. To restore headless operation, you must add `--file` to your scheduled task arguments.
 

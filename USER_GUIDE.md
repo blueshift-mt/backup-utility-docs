@@ -4,13 +4,17 @@
 
 ---
 
-## Quick Start
+## Quick Start (On-Demand Backup)
+
+Run an on-demand backup first, then [set up scheduled backups](#scheduling-automatic-backups) in the **Schedules** tab when ready.
 
 ### Step 1: Download & Launch
 
 1. Download **BackupUtility.exe** from [civiclens.com/downloads](https://civiclens.com/downloads)
 2. Save it anywhere on your computer
 3. Double-click to launch
+
+> **Note for parameters file users:** The application no longer auto-detects parameters files. To run a headless backup with a parameters file, use `BackupUtility.exe --file parameters.xlsx`. Parameters file support is temporary and will be removed in a future release — please migrate to the built-in Schedules tab.
 
 ### Step 2: Connect to Your Organization
 
@@ -22,7 +26,7 @@
 
 ### Step 3: Choose Where to Save
 
-Click **Browse** and select a folder for your backups. You can use a local path (e.g., `D:\Backups`) or a network/UNC path (e.g., `\\server\share\backups`).
+Click **Browse** to select a backup folder. Local paths (e.g., `D:\Backups`) and UNC paths (e.g., `\\server\share\backups`) are supported.
 
 > **Warning**: Don't select a drive root like `C:\` or network share roots like `\\server\share`.
 
@@ -46,6 +50,9 @@ Click **Start Backup**. The application switches to the Progress tab, showing re
 Exported as **File Geodatabase (.gdb)** with domains, attachments, and related tables:
 - Feature Service
 
+### Location Tracking Services
+Exported as **Shapefile (.shp)** to a `Location Tracking` folder. Cannot be exported to File Geodatabase.
+
 ### Tile & Map Services
 Exported as **Tile Package (.tpk or .vtpk)**:
 - Map Service, Vector Tile Service
@@ -53,11 +60,15 @@ Exported as **Tile Package (.tpk or .vtpk)**:
 ### Web Apps, Maps & Dashboards
 Exported as **JSON configuration with item resources**:
 - **Maps**: Web Map, Web Scene (Field Maps configurations are included in web map item resources)
-- **Apps**: Dashboard, StoryMap, Web Experience, Web Mapping Application
-- **Field Apps**: Survey123 Form, QuickCapture Project, Workforce Project
+- **Apps**: Dashboard, StoryMap, Web Experience, Web Mapping Application, Mobile Application
+- **Field Apps**: QuickCapture Project, Workforce Project
 - **Insights**: Insights Workbook, Insights Page, Insights Model, Insights Theme
-- **Hub/Sites**: Hub Site Application, Hub Page, Hub Initiative, Site Application, Site Page
-- **Other**: Solution, Mission, Feature Collection, Feature Collection Template, 360 VR Experience, Oriented Imagery Catalog
+- **Hub/Sites**: Hub Site Application, Hub Page, Hub Initiative, Hub Initiative Template, Hub Event, Site Application, Site Page
+- **Other**: Solution, Mission, Investigation, GeoBIM Project, GeoBIM Application, Data Pipeline, Style, StoryMap Theme, Map Area, Symbol Set, Color Set, Content Category Set, Web Experience Template, Group Layer, Feature Collection, Feature Collection Template, 360 VR Experience, Oriented Imagery Catalog
+
+### Survey123 Forms
+Downloaded as **Survey123 survey packages** including XLSForm, media, pulldata files, CSVs, and JSON configuration:
+- Form
 
 ### Documents
 Downloaded in **original format**:
@@ -72,7 +83,7 @@ Downloaded in **original format**:
 
 ### Tabular Data
 Downloaded in **original format**:
-- CSV, CSV Collection, Table
+- CSV, CSV Collection
 
 ### ArcGIS Packages
 Downloaded in **original format**:
@@ -95,15 +106,15 @@ Downloaded in **original format**:
 
 ### Other
 Downloaded in **original format**:
-- Urban Model, CityEngine Web Scene, Native Application, Native Application Template, Native Application Installer, Desktop Application, Desktop Application Template, Code Sample, Code Attachment
+- Urban Project, CityEngine Web Scene, Native Application, Native Application Template, Native Application Installer, Desktop Application, Desktop Application Template, Code Sample, Code Attachment
 
 ### Notebooks
-Exported as **.ipynb files**:
-- Notebook
+Downloaded as **.ipynb files**:
+- Notebook, Notebook Code Snippet Library
 
 ### Not Exportable
 
-These items are automatically skipped or have limited export:
+Automatically skipped or limited:
 
 **Reference-only (description saved, no data):**
 - WMS, WMTS, WFS, Geocoding Service, Document Link
@@ -117,7 +128,7 @@ These items are automatically skipped or have limited export:
 **Conditionally skipped during export:**
 - Referenced Feature Services (data lives in another org or external server)
 - Multipatch Feature Services (3D geometry not supported by export API)
-- Tile layers exceeding 500,000 tiles (platform limit)
+- Tile layers exceeding the platform's export limit
 - Unpublished apps
 
 ### Item Types Reference
@@ -130,26 +141,31 @@ Use these exact type names for the **Exclude Types** filter.
 #### Tile Services (exported as Tile Package)
 `Map Service`, `Vector Tile Service`
 
+#### Survey123 Forms (downloaded as survey package)
+`Form`
+
 #### Apps, Maps & Configuration Items (exported as JSON + resources)
 `Web Map`, `Web Scene`, `Dashboard`, `StoryMap`, `Web Experience`, `Web Mapping Application`, `Hub Site Application`, `Hub Page`, `Site Application`, `Site Page`, `QuickCapture Project`, `Workforce Project`, `Insights Workbook`, `Insights Page`, `Insights Model`, `Insights Theme`, `Hub Initiative`, `Hub Initiative Template`, `Solution`, `Mission`, `Feature Collection`, `Feature Collection Template`, `360 VR Experience`, `Oriented Imagery Catalog`, `Investigation`, `Hub Event`, `GeoBIM Project`, `GeoBIM Application`, `Data Pipeline`, `Style`, `StoryMap Theme`, `Story Map Theme`, `Map Area`, `Symbol Set`, `Color Set`, `Content Category Set`, `Web Experience Template`, `Group Layer`, `Mobile Application`
 
 #### Files & Packages (downloaded in original format)
-`Form`, `Image`, `Image Collection`, `Photos With Locations`, `PDF`, `Microsoft Word`, `Microsoft Excel`, `Microsoft Powerpoint`, `Visio Document`, `iWork Keynote`, `iWork Pages`, `iWork Numbers`, `CSV`, `CSV Collection`, `Shapefile`, `File Geodatabase`, `GeoPackage`, `GeoJson`, `KML`, `KML Collection`, `GML`, `Table`, `CAD Drawing`, `Apache Parquet`
+`Image`, `Image Collection`, `Photos With Locations`, `PDF`, `Microsoft Word`, `Microsoft Excel`, `Microsoft Powerpoint`, `Visio Document`, `iWork Keynote`, `iWork Pages`, `iWork Numbers`, `CSV`, `CSV Collection`, `Shapefile`, `File Geodatabase`, `GeoPackage`, `GeoJson`, `KML`, `KML Collection`, `GML`, `CAD Drawing`, `Apache Parquet`, `Report Template`
 
 #### ArcGIS Pro/Desktop Packages (downloaded in original format)
 `ArcGIS Pro Map`, `Project Package`, `Project Template`, `Map Package`, `Map Template`, `Layout`, `Layer`, `Layer Package`, `Scene Package`, `Scene Layer Package`, `Mobile Map Package`, `Mobile Basemap Package`, `Mobile Scene Package`, `Tile Package`, `Vector Tile Package`, `Compact Tile Package`, `Locator Package`, `Geoprocessing Package`, `Geoprocessing Package (Pro version)`, `Geoprocessing Sample`, `Rule Package`, `Deep Learning Package`, `Export Package`, `Task File`, `ArcPad Package`, `Explorer Map`, `Globe Document`, `Windows Mobile Package`, `Explorer Layer`, `Pro Report`, `Desktop Style`, `Raster function template`, `ArcGIS Pro Configuration`, `Workflow Manager (Classic) Package`, `Statistical Data Collection`, `SQLite Geodatabase`
 
-#### Notebooks (exported as .ipynb)
+#### Notebooks (downloaded as .ipynb)
 `Notebook`, `Notebook Code Snippet Library`
 
-#### Code (downloaded in original format)
+#### Code (downloaded if file exists)
 `Code Sample`, `Code Attachment`
+
+These items may not have an associated file. If none exists, only item metadata is saved.
 
 #### Add-ins & Extensions (downloaded in original format)
 `Desktop Add In`, `Explorer Add In`, `ArcGIS Pro Add In`, `Survey123 Add In`, `Dashboards Add In`, `AppBuilder Widget Package`, `Experience Builder Widget`, `Experience Builder Widget Package`
 
 #### Other Exportable Types
-`Service Definition`, `Map Service Definition`, `Report Template`, `Map Document`, `Insights Workbook Package`, `Urban Model`, `CityEngine Web Scene`, `Native Application`, `Native Application Template`, `Native Application Installer`, `Desktop Application`, `Desktop Application Template`, `Administrative Report`
+`Service Definition`, `Map Service Definition`, `Map Document`, `Insights Workbook Package`, `Urban Project`, `CityEngine Web Scene`, `Native Application`, `Native Application Template`, `Native Application Installer`, `Desktop Application`, `Desktop Application Template`, `Administrative Report`
 
 #### Automatically Skipped (Reference-Only)
 These items reference external services and contain no exportable data. Item metadata/description is saved:
@@ -170,19 +186,21 @@ Each backup includes an **Inventory.csv** listing every item with its ID, title,
 
 ### Regular Password Login
 
-Enter your username and password. Note: **Username is case-sensitive**.
+Enter your username and password. **Username is case-sensitive.**
 
 ### SSO / Multi-Factor Authentication
 
+For organizations using single sign-on or MFA-enforced login:
+
 1. Leave the password field **empty**
 2. Check the **SSO / OAuth** checkbox
-3. Click **Start Backup** - a browser window opens
+3. Click **Start Backup** — a browser window opens
 4. Complete your organization's login
-5. Done—the app receives your credentials and backup starts
+5. The app receives your credentials and backup starts
 
 ### OAuth for Scheduled Backups
 
-Scheduled backups need to run unattended, so they can't open a browser each time. OAuth stores a refresh token securely:
+Scheduled backups run unattended and can't open a browser each time. OAuth uses a stored refresh token:
 
 1. In the **Schedules** tab, check **SSO / OAuth**
 2. Click **Authorize...**
@@ -190,7 +208,7 @@ Scheduled backups need to run unattended, so they can't open a browser each time
 4. The utility stores a refresh token securely in Windows Credential Manager
 5. Scheduled backups will automatically refresh the token as needed
 
-> **Note**: If your organization changes SSO providers or policies, you may need to re-authorize.
+> **Note**: Refresh tokens expire after approximately 2 weeks of inactivity. If no backup runs within that window, the schedule will fail until you re-authorize. Tokens also expire if your credentials change or your organization changes SSO providers.
 
 ### Windows Credential Manager (Recommended for Automation)
 
@@ -208,18 +226,18 @@ Store passwords securely instead of typing them:
 
 ### Admin vs. Non-Admin Mode
 
-The utility automatically detects your administrator status:
+Detected automatically:
 
-- **Admin Mode**: Can back up all organization content (all users' items)
-- **Non-Admin Mode**: Can only back up items you own or items shared with you
+- **Admin**: Backs up all organization content
+- **Non-Admin**: Backs up only items you own
 
-If you're not an organization administrator, the utility automatically switches to non-admin mode. You'll see a message like:
+Non-admin accounts see a message like:
 
 ```
 username is not an administrator for orgname. Running in non-admin mode.
 ```
 
-This is normal for non-admin users and the backup will proceed with accessible content.
+The backup proceeds with accessible content.
 
 ---
 
@@ -232,7 +250,7 @@ This is normal for non-admin users and the backup will proceed with accessible c
 
 Set **Incremental Days** to back up only recent changes (e.g., `7` for the last week).
 
-> **Note**: Incremental backup only works for ArcGIS Online, not Portal. The utility automatically adds a 12-hour buffer to ensure items near the time boundary are not missed.
+> **Note**: Incremental backup is only available for ArcGIS Online. A 12-hour buffer is added automatically to avoid missing items near the boundary.
 
 ### Filter by Item Type
 
@@ -301,7 +319,7 @@ Skip specific item types from backup. Enter type names separated by commas:
 Web Map, Dashboard, StoryMap
 ```
 
-This is useful when you only want to back up feature data without web apps.
+Useful for backing up feature data only.
 
 ### Advanced Options
 
@@ -309,10 +327,10 @@ Found in the **Advanced** section of the Backup tab:
 
 | Option | Description |
 |--------|-------------|
-| **Service Definitions** | Download .sd files (publishing artifacts from ArcGIS Pro). Large files, often redundant if you have the original Pro project. |
-| **Write Dependencies** | Analyze and record which items reference other items. Creates additional columns in Inventory.csv. Useful for migration planning. |
-| **Empty Services** | Include feature services with zero features. Preserves the schema even if no data exists. Enabled by default. |
-| **Tag Backed-Up Items** | Add a `last_backup` tag to items after successful backup. ⚠️ Updates the item's modified date, which affects incremental backups. |
+| **Service Definitions** | Download .sd files from ArcGIS Pro. |
+| **Write Dependencies** | Record item-to-item dependencies in Inventory.csv. Useful for migration planning and restoration. |
+| **Empty Services** | Include feature services with zero features to preserve schema. Enabled by default. |
+| **Tag Backed-Up Items** | Tag items with `last_backup_<date>` after export (e.g., `last_backup_11FEB2026_14:30`). ⚠️ Updates the item's modified date, causing every tagged item to appear in the next incremental backup. Not recommended with incremental mode. |
 
 ---
 
@@ -326,19 +344,39 @@ Found in the **Advanced** section of the Backup tab:
 4. Enter your connection details
 5. Click **Save**
 
-The backup runs automatically via Windows Task Scheduler—no need to stay logged in.
+Each schedule creates a Windows Task Scheduler task that runs in the background. No need to keep the application open or stay logged in.
+
+#### Windows Service Account
+
+Each schedule requires a **Windows Password** so Task Scheduler can run backups when no user is logged in. Optionally specify a **Windows User** to run the task under a different account (defaults to the current user).
+
+> **Tip**: The password is stored securely by Windows Task Scheduler, not by the application.
+
+> **Monitor Running Backups**: Open the application at any time to check progress on the **Progress** tab. Closing the GUI does not stop the backup.
 
 > **Tip**: Set backups to run overnight when network usage is low.
 
+> **Overlap Detection**: If a backup is still running when the next scheduled run starts, a warning is logged to Results.txt. Both backups will run, but concurrent processes double the memory, disk, and network usage on your machine. You may want to increase the schedule interval or reduce backup scope.
+
+### Where to Find Scheduled Tasks
+
+The application creates tasks in Windows Task Scheduler under the **CivicLens** folder. To view them:
+
+1. Open **Task Scheduler** (search "Task Scheduler" in the Start menu)
+2. In the left panel, expand **Task Scheduler Library** and click **CivicLens**
+3. Your backup tasks will be listed as `BackupUtility_<id>`
+
+Useful for troubleshooting. In normal use, manage schedules from the **Schedules** tab.
+
 ### Email Confirmation
 
-Configure email notifications to receive confirmation when backups complete or alerts if they fail.
+Receive notifications when backups complete or fail.
 
 ### Managing Schedules
 
 - **Edit**: Modify settings anytime
-- **Delete**: Removes the schedule and Windows Task
-- **Run Now**: Trigger an immediate backup
+- **Delete**: Removes the schedule and its Windows Task Scheduler task
+- **Run Now**: Run the backup immediately through the GUI with progress monitoring
 - **Enable/Disable**: Pause without deleting
 
 ---
@@ -482,19 +520,21 @@ Move old backups to cheaper storage automatically:
    - **Container name**: The container you created (e.g., `arcgis-backups`)
    - **Connection string**: Paste the full connection string
 
-> **Warning**: SAS tokens expire! Set a long expiration date or create a calendar reminder to renew before it expires. If backups suddenly fail, check if your SAS token has expired.
+> **Warning**: SAS tokens expire! Set a long expiration date or create a calendar reminder to renew before it expires. If uploads to Azure suddenly fail, check if your SAS token has expired.
 
 > **Tip**: Use [Azure Storage Explorer](https://azure.microsoft.com/en-us/products/storage/storage-explorer/) to browse and manage your backup blobs.
 
+### Zip Before Upload
+
+Enabled by default. The backup folder is zipped into a single archive before uploading. Disable this to upload individual files preserving the folder structure, which allows browsing backups directly in cloud storage without downloading.
+
 ### Delete Local After Upload
 
-When using cloud storage (S3 or Azure), backups are first saved locally then uploaded. By default, both copies are kept.
-
-Check **Delete local after upload** to remove the local staging folder after successful cloud upload. This saves disk space but means you only have the cloud copy.
+Backups are saved locally first, then uploaded. Check **Delete local after upload** to remove the local copy after successful upload.
 
 ### Box, Dropbox, OneDrive, and Google Drive
 
-These services sync local folders to the cloud automatically. To use them:
+These services sync local folders automatically:
 
 1. Install the desktop sync app:
    - [Box Drive](https://www.box.com/resources/downloads)
@@ -507,9 +547,7 @@ These services sync local folders to the cloud automatically. To use them:
    - OneDrive: `C:\Users\YourName\OneDrive\Backups`
    - Google Drive: `G:\My Drive\Backups` (or your mapped drive letter)
 
-Your backups will automatically sync to the cloud after each run.
-
-> **Tip**: Create a dedicated subfolder for backups to keep them organized.
+> **Tip**: Create a dedicated subfolder for backups.
 
 ---
 
@@ -517,11 +555,17 @@ Your backups will automatically sync to the cloud after each run.
 
 Get notified when scheduled backups complete or fail.
 
+### What's in the Email
+
+- Contains the full Results.txt content in monospace formatting
+- Subject line includes the organization name and backup status
+- Failed backups use the subject prefix **"Backup failure"**
+- When a software update is available, the subject includes **[UPDATE AVAILABLE]**
+
 ### Setup
 
-1. In your schedule settings, find Email options
-2. Choose:
-   - **CivicLens** — Uses our mail server (just enter recipient emails)
+In schedule settings, choose:
+   - **CivicLens** — Uses the CivicLens mail server; no SMTP credentials needed, just enter recipient email addresses
    - **Custom SMTP** — Use your own mail server
 
 ### Custom SMTP
@@ -544,20 +588,20 @@ If your network requires a proxy for internet access:
 
 For authenticated proxies, use: `http://username:password@proxy.yourcompany.com:8080`
 
-> **Note**: The proxy is used for all ArcGIS API connections. Leave empty for direct connection.
+> **Note**: Used for all ArcGIS API connections. Leave empty for direct connection.
 
 ---
 
 ## Automatic Cleanup
 
-Keep your backup folder from growing forever:
+Control backup folder growth:
 
 1. In schedule settings, set **Delete after** to the number of days to keep backups
 2. Optionally enable **Keep Monthly** to preserve one backup per month
 
 ### Test Before Deleting
 
-Use **Dry Run** mode to preview what would be deleted without actually removing files. Check the logs to verify the cleanup logic before enabling actual deletion.
+Use **Dry Run** to preview deletions before enabling actual cleanup.
 
 > **Safety**: The utility never deletes from system folders or drive roots.
 
@@ -568,11 +612,11 @@ Use **Dry Run** mode to preview what would be deleted without actually removing 
 ### Performance
 
 - **Large organizations (10,000+ items)**: Use Deep Scan instead of Quick Scan
-- **Slow exports**: Reduce concurrent threads from 15 to 5-10
-- **Timeouts**: Increase the timeout for very large feature services with lots of attachments
-- **Unstable network**: The utility retries failed exports automatically, but a stable connection helps
-- **Split large backups**: Use tag, group, folder, or owner filters to break up very large orgs into multiple backup jobs
-- **Portal for ArcGIS**: Ensure your server has available disk space for temporary FGDB exports during processing
+- **Slow exports**: Reduce concurrent threads (5-10 conservative, 10-20 recommended, 20-50 aggressive; default is 15)
+- **Timeouts**: Increase the timeout for large feature services with many attachments
+- **Unstable network**: Failed exports are retried automatically, but a stable connection helps
+- **Split large backups**: Use filters (tag, group, folder, owner) to split large orgs into multiple jobs
+- **Portal for ArcGIS**: Ensure sufficient disk space for temporary FGDB exports
 
 ### Security
 
@@ -584,17 +628,24 @@ Use **Dry Run** mode to preview what would be deleted without actually removing 
 
 - Use consistent **folder prefixes** to identify backups (e.g., `PROD_BACKUP`, `DEV_BACKUP`)
 - Set up **separate schedules** for different orgs or content sets
-- **Spot-check your backups**: Open a few exported files to verify they contain data
 
 ### 7-Zip Recommendation
 
-For extracting backup ZIP files, we recommend [7-Zip](https://www.7-zip.org/download.html) as it handles large archives better than Windows' built-in ZIP support.
+[7-Zip](https://www.7-zip.org/download.html) handles large backup archives better than Windows' built-in extractor.
 
 ---
 
 ## Understanding Your Backup
 
-Each backup creates a timestamped folder like `BACKUP_20240115_143022` containing:
+Each backup creates a timestamped folder using the **Filename Prefix** (default `BACKUP`), e.g., `BACKUP_20240115_143022`. Change the prefix to distinguish between backup jobs (e.g., `PROD`, `DEV`). The **Sort By** setting controls the folder structure:
+
+| Sort Option | Structure | Example Path |
+|-------------|-----------|-------------|
+| **Item Type Only** (default) | `Type/item` | `Feature Service/Roads_abc123.zip` |
+| **Owner - Item Type** | `Owner/Type/item` | `jsmith/Feature Service/Roads_abc123.zip` |
+| **Owner - Folder - Item Type** | `Owner/Folder/Type/item` | `jsmith/MyFolder/Feature Service/Roads_abc123.zip` |
+
+With the default "Item Type Only" sorting:
 
 ```
 BACKUP_20240115_143022/
@@ -608,14 +659,52 @@ BACKUP_20240115_143022/
 │   ├── Operations_ccc333ddd444.json
 │   └── Operations_ccc333ddd444.zip
 ├── Inventory.csv
-└── Results.txt
+├── Results.txt
+└── Full_Log.log
 ```
 
 - **Folders by item type** — Feature Services, Web Maps, Dashboards, etc.
 - **JSON files** — Item configuration (for web apps, maps, dashboards)
-- **ZIP files with item ID** — For feature services: File Geodatabase. For web apps/maps: item resources (thumbnails, embedded images, attachments)
-- **Inventory.csv** — Complete record of every item with ID, title, owner, type, and backup result
-- **Results.txt** — Summary with timing, counts, and any errors
+- **ZIP files with item ID** — For feature services: File Geodatabase. For web apps/maps/dashboards: a ZIP of item resources stored alongside the JSON file in the same folder
+
+### Inventory.csv
+
+A spreadsheet of every item discovered during the backup. Columns include:
+
+| Column | Description |
+|--------|-------------|
+| Item ID | Unique ArcGIS item identifier |
+| Title | Item name |
+| Owner | Item owner username |
+| Type | ArcGIS item type (Feature Service, Web Map, etc.) |
+| Folder | Owner's content folder |
+| Created / Modified | Timestamps |
+| Sharing | Private, Organization, or Public |
+| Size | Item size in bytes |
+| Result | Backup outcome (exported, failed, skipped, etc.) |
+| Dependencies | Items that reference this item (if **Write Dependencies** is enabled) |
+
+### Results.txt
+
+Summary report organized into sections:
+
+- **BACKUP RESULTS** — Overall status, duration, and item counts
+- **SUMMARY** — Totals for exported, failed, skipped, and excluded items
+- **EXPORTED ITEMS BY TYPE** — Successful exports grouped by item type
+- **FAILED ITEMS** — Items that could not be exported, grouped by failure reason with troubleshooting suggestions
+- **PARTIAL EXPORTS** — Items that exported but with warnings
+- **FALLBACK EXPORTS** — Feature Services exported as Shapefile or CSV because File Geodatabase export failed
+- **EXPORTED WITHOUT ATTACHMENTS** — Feature Services re-exported without attachments due to blob errors
+- **WARNINGS** — Non-fatal issues encountered during the backup
+- **EXCLUDED ITEMS** — Items skipped due to filters or unsupported types
+
+### Full_Log.log
+
+Detailed debug-level log of the entire backup process. Useful for troubleshooting failures or contacting support.
+
+### StartErrorLog.txt
+
+Located next to the application executable. Records startup failures, configuration errors, and fatal crashes from scheduled backups where no console is visible. Check this file if a scheduled backup fails silently.
 
 ---
 
@@ -637,7 +726,7 @@ BACKUP_20240115_143022/
 
 - Increase the timeout setting (Backup Options section on the Backup tab)
 - Reduce concurrent threads
-- Large services with millions of features may need longer timeouts
+- Large services may need longer timeouts
 
 ### "Memory error"
 
@@ -648,36 +737,51 @@ BACKUP_20240115_143022/
 ### Items Show as "Skipped"
 
 Common reasons items are skipped:
-- **Referenced/Registered Services**: The data lives in another organization's ArcGIS Online or Portal, or on an external server—only the item metadata is in your org
-- **Multipatch Feature Services**: 3D geometry cannot be exported via the ArcGIS REST API
+- **Referenced/Registered Services**: Data lives in another org or external server
+- **Multipatch Feature Services**: 3D geometry not supported by export API
 - **Tile layers over 500,000 tiles**: Exceeds the platform export limit
 - **Empty feature services**: Skipped if you chose to exclude empty services
 
 ### Application Appears to Be Hanging
 
-If the application seems frozen, it's likely working on a large service in the background:
-
-- Large feature services with attachments can take an hour or more to prepare on the server
-- The process will move on to the next item after the timeout period, continuing to work on the large item in the background
-- If it's showing "Checking and finishing any potential active exports…" at the end, it's actively downloading
+Large feature services with attachments can take an hour or more to prepare on the server. The process continues with other items while waiting.
 
 > **Tip**: Don't click in the console window or select text—this can pause the output (a Windows feature). Press Escape or right-click to resume.
 
 ### ZIP File Won't Extract
 
-- Use [7-Zip](https://www.7-zip.org/download.html) instead of Windows' built-in extractor
-- Long path names can cause issues with Windows' default extractor
-- If needed, move the backup to a shorter path before extracting
+Use [7-Zip](https://www.7-zip.org/download.html) instead of Windows' built-in extractor. Long path names can cause issues — move to a shorter path if needed.
 
 ### 'TEMP_FOR_EXPORT' Files Left in Portal
 
-If the backup was interrupted, temporary export files may remain. You can delete these manually, or they'll be cleaned up automatically during the next backup run (files older than 72 hours are removed).
+Temporary export files from interrupted backups are cleaned up automatically on the next run (files older than 72 hours). You can also delete them manually.
 
 ### Incremental Backup Grabs Extra Services
 
-Occasionally, incremental backups may include services that haven't had feature edits. This happens because ArcGIS considers settings changes (editing, sync, change tracking) to be edits.
+Incremental backups may include services without feature edits. ArcGIS treats settings changes (editing, sync, change tracking) as modifications.
 
-> **Note**: Incremental backups work only with ArcGIS Online. Portal for ArcGIS does not expose the required properties.
+> **Note**: Incremental backups are only available for ArcGIS Online. Portal does not provide required edit timestamps.
+
+### Schedule Shows "Not Available"
+
+- Verify the Windows Task Scheduler service is running
+- Confirm your Windows account has permission to create scheduled tasks
+
+### "OAuth token expired"
+
+- Open the schedule in the **Schedules** tab and click **Authorize...** to re-authenticate
+- Tokens expire after approximately 2 weeks of inactivity
+
+### Backup Runs but Exports 0 Items
+
+- Check your filter settings — tags, owner, folders, or groups may be excluding everything
+- Verify the account has access to content (non-admin accounts only back up items they own)
+
+### Email Not Received
+
+- Check your spam/junk folder
+- Verify SMTP settings (server, port, credentials)
+- Try the **CivicLens** email option first to rule out SMTP configuration issues
 
 ---
 

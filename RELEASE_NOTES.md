@@ -26,7 +26,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 ### Redesigned Interface
 
-Version 5.0 is a ground-up rewrite with a modern interface organized into three tabs:
+Version 5.0 features a completely redesigned interface organized into three tabs:
 
 - **Backup tab**: Configure connection, filters, storage, and start on-demand backups
 - **Progress tab**: Real-time item-by-item status, active export tracking, and system metrics
@@ -37,15 +37,15 @@ Version 5.0 is a ground-up rewrite with a modern interface organized into three 
 The Progress tab shows live status for running backups:
 
 - Progress bar with item counts (exported / failed / skipped / total)
-- Active exports table showing items currently being processed
-- Phase indicator (Authenticating, Discovering, Exporting, Retrying, Finishing)
+- Active exports table showing each item currently being processed, its type, and the current API response status (e.g., Pending, Processing, Completed) for Feature Service exports
+- Phase indicator tracking each stage of the backup: Authenticating, Discovering Items, Exporting, Retry Pass 1–11, and Finishing
 - System metrics (CPU, memory, disk usage)
-- Admin/non-admin detection
+- Admin/non-admin detection with a warning if running without administrator privileges
 - Backup and staging folder paths
-- Console log output
+- Console log with per-item export results as they complete
 - Elapsed time
 
-Open the app during a scheduled backup to monitor progress in real time.
+Open the app during a scheduled backup to monitor its progress in real time.
 
 ### Built-in Schedule Management
 

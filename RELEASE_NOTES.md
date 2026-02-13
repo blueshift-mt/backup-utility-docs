@@ -37,7 +37,7 @@ Version 5.0 features a completely redesigned interface organized into three tabs
 The Progress tab shows live status for running backups:
 
 - Progress bar with item counts (exported / failed / skipped / total)
-- Active exports table showing each item currently being processed, its type, and the current API response status (e.g., Pending, Processing, Completed) for Feature Service exports
+- Active exports table showing each item currently being processed, its type, and the current API response status (e.g., Pending, ExportingData, ExportingAttachments, Completed) for Feature Service exports
 - Phase indicator tracking each stage of the backup: Authenticating, Discovering Items, Exporting, Retry Pass 1–11, and Finishing
 - System metrics (CPU, memory, disk usage)
 - Admin/non-admin detection with a warning if running without administrator privileges

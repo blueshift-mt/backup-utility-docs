@@ -16,8 +16,6 @@
   * [Amazon S3](USER_GUIDE.md#save-backups-to-amazon-s3)
   * [Azure Blob Storage](USER_GUIDE.md#save-backups-to-azure-blob-storage)
   * [Box, Dropbox, OneDrive](USER_GUIDE.md#box-dropbox-onedrive-and-google-drive)
-* **Restore**
-  * [Restoring Items](USER_GUIDE.md#restoring-items)
 * **Reference**
   * [Proxy Settings](USER_GUIDE.md#proxy-settings)
   * [Understanding Your Backup](USER_GUIDE.md#understanding-your-backup)

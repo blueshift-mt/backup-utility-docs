@@ -232,7 +232,7 @@ Store passwords securely instead of typing them:
 
 <div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #2e7d32;">Security Tip:</strong> Recommended for scheduled backups - passwords are stored securely by Windows, never in plain text.
+<strong style="color: #2e7d32;">Security Tip:</strong> Recommended for scheduled backups. All credentials stored in Windows Credential Manager are encrypted at rest using Windows DPAPI and are only accessible to your Windows user account. Passwords are never stored in plain text. Credentials never leave your machine — CivicLens has no access to your stored passwords or tokens.
 
 </div>
 
@@ -652,9 +652,21 @@ Use **Dry Run** to preview deletions before enabling actual cleanup.
 
 ### Security
 
-- Use **Windows Credential Manager** for passwords (see above)
+All credentials are stored in **Windows Credential Manager**, encrypted at rest using **Windows DPAPI** (Data Protection API). This includes ArcGIS passwords, OAuth refresh tokens, S3 access keys, Azure connection strings, and SMTP credentials. Credentials are tied to your Windows user account and inaccessible to other users on the same machine. Credentials are never transmitted to CivicLens or any external service — they remain entirely on your machine.
+
+No passwords or tokens are ever written to configuration files, the Windows registry, log files, or any other unprotected location. Each scheduled backup stores its credentials under a unique keyring entry.
+
+The application communicates only with your ArcGIS Online or Portal for ArcGIS environment (and Esri-managed infrastructure that ArcGIS redirects to for downloads, such as AWS or Azure endpoints for exports, static items, and attachments). It does not phone home or collect usage data. The only exceptions are:
+
+- **License validation** — sends only your organization name to verify an active license. Cached locally for 30 days so the check is infrequent.
+- **Update check** — a lightweight query to see if a newer version is available. No user data is transmitted.
+- **CivicLens email** (opt-in only) — if you select the "CivicLens" email notification option, backup result summaries are sent through the CivicLens mail server. CivicLens can see the contents of these emails. To avoid this, select "Custom SMTP" and use your own mail server, or disable email notifications entirely.
+
+No telemetry, analytics, or usage tracking of any kind is collected or transmitted.
+
+- Use **Windows Credential Manager** for passwords (see [above](#windows-credential-manager-recommended-for-automation))
 - Use dedicated service accounts for scheduled backups
-- Store cloud credentials (S3/Azure) securely
+- The executable is **code-signed** with a CivicLens LLC EV certificate — verify the digital signature if you receive it from a third party
 
 ### Organization
 
@@ -737,6 +749,63 @@ Detailed log of the entire backup process. Include this when contacting support.
 ### StartErrorLog.txt
 
 Located next to the application executable. Records startup failures, configuration errors, and fatal crashes from scheduled backups where no console is visible. Check this file if a scheduled backup fails silently.
+
+---
+
+## Restoring Items
+
+The **Restore** tab lets you restore backed-up items to ArcGIS Online or Portal for ArcGIS. Two restore modes are supported:
+
+### Supported Item Types
+
+**JSON-based items** — full item data and resource restore:
+- Web Map, Dashboard, Web Experience, StoryMap, Web Mapping Application, QuickCapture Project, Hub Site/Page, Site Application/Page
+
+**Feature Service** — configuration restore only (no feature data):
+- Symbology, popups, labels, visibility
+- Service settings (capabilities, maxRecordCount, editor tracking)
+- Domains and field properties
+- Item metadata (title, tags, description, thumbnail)
+
+### Restoring JSON-Based Items
+
+1. Open the **Restore** tab
+2. Enter your portal connection details and connect
+3. Click **Browse** and select a backup folder containing item files (e.g., `BACKUP_2026-01-15/Web Map/`)
+4. Select an item from the dropdown — the item ID auto-fills
+5. Click **Validate** to confirm the item exists and you have edit permission
+6. Choose restore options:
+   - **Restore item data (JSON)** — replaces the item's configuration
+   - **Restore metadata** — updates title, tags, description, thumbnail
+   - **Create backup before restoring** — saves current state for rollback
+7. Click **Restore**
+
+### Restoring Feature Service Configuration
+
+Feature Service restore updates service configuration from the definition files captured during backup. It does **not** modify feature data (rows or geometry) — use ArcGIS Pro for data restoration.
+
+1. Open the **Restore** tab and connect to your portal
+2. Click **Browse** and select a backup folder — Feature Services are auto-detected from `Definitions/` subfolders
+3. Select a Feature Service item from the dropdown (shown with "(Feature Service)" suffix)
+4. Click **Validate** to confirm the service exists and has a valid URL
+5. Choose what to restore:
+   - **Symbology & Popups** — drawing info, popup config, labels (from `_data.json`)
+   - **Service Settings** — capabilities, maxRecordCount, editor tracking (from `_def.json`)
+   - **Domains & Field Properties** — coded value/range domains, field aliases (from `_def.json`)
+   - **Restore metadata** — title, tags, description, thumbnail (from `_desc.json`)
+6. Click **Restore**
+
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f;">Service Settings warning:</strong> Changing capabilities (e.g., removing Query or Sync) can break dependent maps and apps. The restore process shows a warning before proceeding. Use the "Create backup before restoring" option so you can revert if needed.
+
+</div>
+
+> **Tip**: The Symbology & Popups option is only available when a `_data.json` file exists for the service (approximately 68% of Feature Services have this file).
+
+### Restore Connection
+
+The Restore tab uses an **independent** portal connection, separate from the Backup tab. This allows you to restore items to a different portal or organization than the one you backed up from.
 
 ---
 

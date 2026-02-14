@@ -125,7 +125,7 @@ All credentials — ArcGIS passwords, OAuth tokens, cloud storage keys, and SMTP
 - **Per-schedule isolation**: Each scheduled backup stores its credentials under a unique keyring entry, preventing cross-schedule credential leakage
 - **OAuth token rotation**: When ArcGIS issues a new refresh token, it is automatically persisted back to Credential Manager — stale tokens are replaced, not accumulated
 - **Code-signed executable**: The application is signed with a CivicLens LLC EV (Extended Validation) certificate with SHA-256 timestamping, verifying publisher identity and protecting against tampering
-- **No telemetry or analytics**: The application communicates only with your ArcGIS Online or Portal for ArcGIS environment. The only exceptions are a lightweight license validation (sends only your organization name), a version check for available updates, and — only if you opt in — backup result emails sent through the CivicLens mail server (CivicLens can see the contents of these emails). No usage data, telemetry, or analytics are collected or transmitted.
+- **No telemetry or analytics**: The application communicates only with your ArcGIS Online or Portal for ArcGIS environment. The only exceptions are a lightweight license validation (downloads a license list and checks your organization locally — your org name is not transmitted), a version check for available updates, and — only if you opt in — backup result emails sent through the CivicLens mail server (CivicLens can see the contents of these emails). No usage data, telemetry, or analytics are collected or transmitted.
 
 ---
 

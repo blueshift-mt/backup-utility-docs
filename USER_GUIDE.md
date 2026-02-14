@@ -658,7 +658,7 @@ No passwords or tokens are ever written to configuration files, the Windows regi
 
 The application communicates only with your ArcGIS Online or Portal for ArcGIS environment (and Esri-managed infrastructure that ArcGIS redirects to for downloads, such as AWS or Azure endpoints for exports, static items, and attachments). It does not phone home or collect usage data. The only exceptions are:
 
-- **License validation** — sends only your organization name to verify an active license. Cached locally for 30 days so the check is infrequent.
+- **License validation** — downloads a license list and checks your organization name locally. Your org name is not transmitted. The list is cached locally for 30 days so the check is infrequent.
 - **Update check** — a lightweight query to see if a newer version is available. No user data is transmitted.
 - **CivicLens email** (opt-in only) — if you select the "CivicLens" email notification option, backup result summaries are sent through the CivicLens mail server. CivicLens can see the contents of these emails. To avoid this, select "Custom SMTP" and use your own mail server, or disable email notifications entirely.
 

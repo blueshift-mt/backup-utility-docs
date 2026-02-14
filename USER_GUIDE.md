@@ -180,7 +180,7 @@ These cannot be exported from the hosted ArcGIS environment:
 `Scene Service`, `Scene Layer`, `Image Service`
 
 #### Not Included in Backups
-`Application` (registered OAuth/API apps - these are configuration registrations, not content)
+`Application`, `API Key` — these are developer credentials (OAuth/API registrations), not web apps. Your Dashboards, StoryMaps, Web Apps, and other content items are backed up under their specific types.
 
 Each backup includes an **Inventory.csv** listing every item with its ID, title, owner, type, dates, and backup result.
 

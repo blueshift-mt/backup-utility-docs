@@ -173,11 +173,11 @@ These items may not have an associated file. If none exists, only item metadata 
 
 #### Automatically Skipped (Reference-Only)
 These items reference external services and contain no exportable data. Item metadata/description is saved:
-`WMS`, `WMTS`, `WFS`, `Geocoding Service`, `Document Link`
+`WMS`, `WMTS`, `WFS`, `Geocoding Service`, `Document Link`, `Map Image Layer`
 
 #### Automatically Skipped (Not Exportable)
 These cannot be exported from the hosted ArcGIS environment:
-`Scene Service`, `Scene Layer`, `Image Service`, `Map Image Layer`
+`Scene Service`, `Scene Layer`, `Image Service`
 
 #### Not Included in Backups
 `Application` (registered OAuth/API apps - these are configuration registrations, not content)

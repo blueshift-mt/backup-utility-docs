@@ -868,7 +868,7 @@ The Restore tab has its own portal connection, separate from the Backup tab. You
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">Cross-portal limitations:</strong> JSON-based items contain internal references to other item IDs (layer sources, widget configs). These must exist on the target portal or the restored item will have broken references, effectively limiting JSON restores to the same portal. Feature Service config restore has no such limitation.
+<strong style="color: #1565c0;">Cross-portal limitations:</strong> JSON-based items contain internal references to other item IDs (layer sources, widget configs). These must exist on the target portal or the restored item will have broken references, effectively limiting JSON restores to the same portal. Use <a href="#find--replace">Find &amp; Replace</a> to remap old IDs to new ones after restoring. Feature Service config restore has no such limitation.
 
 </div>
 

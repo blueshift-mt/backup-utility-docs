@@ -55,7 +55,7 @@ Exported as **File Geodatabase (.gdb)** with domains, attachments, and related t
 - Feature Service
 
 ### Location Tracking Services
-Exported as **Shapefile (.shp)** to a `Location Tracking` folder. Cannot be exported to File Geodatabase.
+Exported as **Shapefile (.shp)** to a `Location Tracking` folder. The ArcGIS export API does not support File Geodatabase for Location Tracking Services.
 
 ### Tile & Map Services
 Exported as **Tile Package (.tpk or .vtpk)**:
@@ -131,8 +131,8 @@ Automatically skipped or limited:
 
 **Conditionally skipped during export:**
 - Referenced Feature Services (data lives in another org or external server)
-- Multipatch Feature Services (3D geometry not supported by export API)
-- Tile layers exceeding the platform's export limit
+- Multipatch Feature Services (3D geometry not supported by the ArcGIS Online/Portal export API)
+- Tile layers exceeding the ArcGIS Online export limit
 - Unpublished apps
 
 ### Item Types Reference
@@ -784,7 +784,7 @@ The **Restore** tab lets you restore backed-up items to ArcGIS Online or Portal 
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">"Create as new item" is not available for Feature Services.</strong> Feature Services require a hosted data store that can only be created by publishing from ArcGIS Pro or the portal's New Item workflow. Use ArcGIS Pro to restore Feature Service data, then use this tool to restore configuration (symbology, settings, domains) to the resulting service.
+<strong style="color: #1565c0;">"Create as new item" is not available for Feature Services.</strong> The backup contains only service configuration (symbology, settings, domains), not the underlying feature data. Creating a new Feature Service requires publishing source data. Use this tool to restore configuration to an existing service.
 
 </div>
 
@@ -864,11 +864,11 @@ If the safety backup fails (e.g., network error while downloading), the restore 
 
 ### Restore Connection
 
-The Restore tab uses its own portal connection, separate from the Backup tab. You specify the target item ID manually, so you can restore to any item you have edit access to.
+The Restore tab has its own portal connection, separate from the Backup tab. You can restore to any item you have edit access to.
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">Cross-portal limitations:</strong> JSON-based items (maps, apps, dashboards) contain internal references to other item IDs - layer sources, widget data sources, etc. These dependencies must exist on the target portal or the restored item will have broken references. This effectively limits JSON-based restores to the same portal. Feature Service configuration restore has no such limitation since it updates symbology, settings, and domains without referencing other items.
+<strong style="color: #1565c0;">Cross-portal limitations:</strong> JSON-based items contain internal references to other item IDs (layer sources, widget configs). These must exist on the target portal or the restored item will have broken references, effectively limiting JSON restores to the same portal. Feature Service config restore has no such limitation.
 
 </div>
 
@@ -882,7 +882,7 @@ The Restore tab uses its own portal connection, separate from the Backup tab. Yo
 
 ### Dependency Checking (Create as New)
 
-When creating a new item, the tool checks the backup JSON for references to other item IDs (layer sources, widget configurations, etc.) and reports which dependencies were found. If a referenced item does not exist on the target portal, the new item will have broken references. Review the dependency list in the console before confirming the creation.
+When creating a new item, the tool scans the backup JSON for references to other item IDs and reports which dependencies were found. Missing dependencies on the target portal will result in broken references. Review the dependency list in the console before confirming.
 
 ---
 
@@ -1069,8 +1069,8 @@ Safety backups are saved in a `find_replace_backups` folder in your system temp 
 
 Common reasons items are skipped:
 - **Referenced/Registered Services**: Data lives in another org or external server
-- **Multipatch Feature Services**: 3D geometry not supported by export API
-- **Tile layers over 500,000 tiles**: Exceeds the platform export limit
+- **Multipatch Feature Services**: 3D geometry not supported by ArcGIS Online/Portal export API
+- **Tile layers over 500,000 tiles**: Exceeds the ArcGIS Online export limit
 - **Empty feature services**: Skipped if you chose to exclude empty services
 
 ### Application Appears to Be Hanging

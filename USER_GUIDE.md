@@ -16,7 +16,7 @@ See [Scheduling Automatic Backups](#scheduling-automatic-backups) for informatio
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">Note for parameters file users:</strong> The application no longer auto-detects parameters files. To run a headless backup with a parameters file, use <code>BackupUtility.exe --file parameters.xlsx</code>. Parameters file support is temporary and will be removed in a future release — please migrate to the built-in Schedules tab.
+<strong style="color: #1565c0;">Note for parameters file users:</strong> The application no longer auto-detects parameters files. To run a headless backup with a parameters file, use <code>BackupUtility.exe --file parameters.xlsx</code>. Parameters file support is temporary and will be removed in a future release - please migrate to the built-in Schedules tab.
 
 </div>
 
@@ -180,7 +180,7 @@ These cannot be exported from the hosted ArcGIS environment:
 `Scene Service`, `Scene Layer`, `Image Service`
 
 #### Not Included in Backups
-`Application`, `API Key` — these are developer credentials (OAuth/API registrations), not web apps. Your Dashboards, StoryMaps, Web Apps, and other content items are backed up under their specific types.
+`Application`, `API Key` - these are developer credentials (OAuth/API registrations), not web apps. Your Dashboards, StoryMaps, Web Apps, and other content items are backed up under their specific types.
 
 Each backup includes an **Inventory.csv** listing every item with its ID, title, owner, type, dates, and backup result.
 
@@ -198,7 +198,7 @@ For organizations using single sign-on or MFA-enforced login:
 
 1. Leave the password field **empty**
 2. Check the **SSO / OAuth** checkbox
-3. Click **Start Backup** — a browser window opens
+3. Click **Start Backup** - a browser window opens
 4. Complete your organization's login
 5. The app receives your credentials and backup starts
 
@@ -232,7 +232,7 @@ Store passwords securely instead of typing them:
 
 <div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #2e7d32;">Security Tip:</strong> Recommended for scheduled backups. All credentials stored in Windows Credential Manager are encrypted at rest using Windows DPAPI and are only accessible to your Windows user account. Passwords are never stored in plain text. Credentials never leave your machine — CivicLens has no access to your stored passwords or tokens.
+<strong style="color: #2e7d32;">Security Tip:</strong> Recommended for scheduled backups. All credentials stored in Windows Credential Manager are encrypted at rest using Windows DPAPI and are only accessible to your Windows user account. Passwords are never stored in plain text. Credentials never leave your machine - CivicLens has no access to your stored passwords or tokens.
 
 </div>
 
@@ -306,7 +306,7 @@ Public Works;Planning;GIS Team
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">Note:</strong> Groups and Folders filters are mutually exclusive—use one or the other.
+<strong style="color: #1565c0;">Note:</strong> Groups and Folders filters are mutually exclusive - use one or the other.
 
 </div>
 
@@ -471,7 +471,7 @@ For better security, create a policy that only allows access to your backup buck
 
 <div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #2e7d32;">Tip:</strong> Leave credentials blank if running on EC2/ECS with an IAM role attached—the utility will use instance credentials automatically.
+<strong style="color: #2e7d32;">Tip:</strong> Leave credentials blank if running on EC2/ECS with an IAM role attached - the utility will use instance credentials automatically.
 
 </div>
 
@@ -597,8 +597,8 @@ Get notified when scheduled backups complete or fail.
 ### Setup
 
 In schedule settings, choose:
-   - **CivicLens** — Uses the CivicLens mail server; no SMTP credentials needed, just enter recipient email addresses
-   - **Custom SMTP** — Use your own mail server
+   - **CivicLens** - Uses the CivicLens mail server; no SMTP credentials needed, just enter recipient email addresses
+   - **Custom SMTP** - Use your own mail server
 
 ### Custom SMTP
 
@@ -652,21 +652,21 @@ Use **Dry Run** to preview deletions before enabling actual cleanup.
 
 ### Security
 
-All credentials are stored in **Windows Credential Manager**, encrypted at rest using **Windows DPAPI** (Data Protection API). This includes ArcGIS passwords, OAuth refresh tokens, S3 access keys, Azure connection strings, and SMTP credentials. Credentials are tied to your Windows user account and inaccessible to other users on the same machine. Credentials are never transmitted to CivicLens or any external service — they remain entirely on your machine.
+All credentials are stored in **Windows Credential Manager**, encrypted at rest using **Windows DPAPI** (Data Protection API). This includes ArcGIS passwords, OAuth refresh tokens, S3 access keys, Azure connection strings, and SMTP credentials. Credentials are tied to your Windows user account and inaccessible to other users on the same machine. Credentials are never transmitted to CivicLens or any external service - they remain entirely on your machine.
 
 No passwords or tokens are ever written to configuration files, the Windows registry, log files, or any other unprotected location. Each scheduled backup stores its credentials under a unique keyring entry.
 
 The application communicates only with your ArcGIS Online or Portal for ArcGIS environment (and Esri-managed infrastructure that ArcGIS redirects to for downloads, such as AWS or Azure endpoints for exports, static items, and attachments). It does not phone home or collect usage data. The only exceptions are:
 
-- **License validation** — downloads a license list and checks your organization name locally. Your org name is not transmitted. The list is cached locally for 30 days so the check is infrequent.
-- **Update check** — a lightweight query to see if a newer version is available. No user data is transmitted.
-- **CivicLens email** (opt-in only) — if you select the "CivicLens" email notification option, backup result summaries are sent through the CivicLens mail server. CivicLens can see the contents of these emails. To avoid this, select "Custom SMTP" and use your own mail server, or disable email notifications entirely.
+- **License validation** - downloads a license list and checks your organization name locally. Your org name is not transmitted. The list is cached locally for 30 days so the check is infrequent.
+- **Update check** - a lightweight query to see if a newer version is available. No user data is transmitted.
+- **CivicLens email** (opt-in only) - if you select the "CivicLens" email notification option, backup result summaries are sent through the CivicLens mail server. CivicLens can see the contents of these emails. To avoid this, select "Custom SMTP" and use your own mail server, or disable email notifications entirely.
 
 No telemetry, analytics, or usage tracking of any kind is collected or transmitted.
 
 - Use **Windows Credential Manager** for passwords (see [above](#windows-credential-manager-recommended-for-automation))
 - Use dedicated service accounts for scheduled backups
-- The executable is **code-signed** with a CivicLens LLC EV certificate — verify the digital signature if you receive it from a third party
+- The executable is **code-signed** with a CivicLens LLC EV certificate - verify the digital signature if you receive it from a third party
 
 ### Organization
 
@@ -707,9 +707,9 @@ BACKUP_20240115_143022/
 └── Full_Log.log
 ```
 
-- **Folders by item type** — Feature Services, Web Maps, Dashboards, etc.
-- **JSON files** — Item configuration (for web apps, maps, dashboards)
-- **ZIP files with item ID** — For feature services: File Geodatabase. For web apps/maps/dashboards: a ZIP of item resources stored alongside the JSON file in the same folder
+- **Folders by item type** - Feature Services, Web Maps, Dashboards, etc.
+- **JSON files** - Item configuration (for web apps, maps, dashboards)
+- **ZIP files with item ID** - For feature services: File Geodatabase. For web apps/maps/dashboards: a ZIP of item resources stored alongside the JSON file in the same folder
 
 ### Inventory.csv
 
@@ -732,15 +732,15 @@ A spreadsheet of every item discovered during the backup. Columns include:
 
 Summary report organized into sections:
 
-- **BACKUP RESULTS** — Overall status, duration, and item counts
-- **SUMMARY** — Totals for exported, failed, skipped, and excluded items
-- **EXPORTED ITEMS BY TYPE** — Successful exports grouped by item type
-- **FAILED ITEMS** — Items that could not be exported, grouped by failure reason with troubleshooting suggestions
-- **PARTIAL EXPORTS** — Items that exported but with warnings
-- **FALLBACK EXPORTS** — Feature Services exported as Shapefile or CSV because File Geodatabase export failed
-- **EXPORTED WITHOUT ATTACHMENTS** — Feature Services re-exported without attachments due to blob errors
-- **WARNINGS** — Non-fatal issues encountered during the backup
-- **EXCLUDED ITEMS** — Items skipped due to filters or unsupported types
+- **BACKUP RESULTS** - Overall status, duration, and item counts
+- **SUMMARY** - Totals for exported, failed, skipped, and excluded items
+- **EXPORTED ITEMS BY TYPE** - Successful exports grouped by item type
+- **FAILED ITEMS** - Items that could not be exported, grouped by failure reason with troubleshooting suggestions
+- **PARTIAL EXPORTS** - Items that exported but with warnings
+- **FALLBACK EXPORTS** - Feature Services exported as Shapefile or CSV because File Geodatabase export failed
+- **EXPORTED WITHOUT ATTACHMENTS** - Feature Services re-exported without attachments due to blob errors
+- **WARNINGS** - Non-fatal issues encountered during the backup
+- **EXCLUDED ITEMS** - Items skipped due to filters or unsupported types
 
 ### Full_Log.log
 
@@ -749,6 +749,293 @@ Detailed log of the entire backup process. Include this when contacting support.
 ### StartErrorLog.txt
 
 Located next to the application executable. Records startup failures, configuration errors, and fatal crashes from scheduled backups where no console is visible. Check this file if a scheduled backup fails silently.
+
+---
+
+<div style="border: 2px solid #ff8f00; border-left: 6px solid #ff8f00; background-color: #fff8e1; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #ff8f00;">COMING SOON</strong> - The Restore feature is under development and not yet available in the current release.
+
+</div>
+
+## Restoring Items
+
+The **Restore** tab lets you restore backed-up items to ArcGIS Online or Portal for ArcGIS. You can overwrite an existing item or create a new item from backup files.
+
+### Supported Item Types
+
+**JSON-based items** - full item data and resource restore:
+- Web Map, Web Scene, Dashboard, StoryMap, Web Mapping Application
+- Web Experience, QuickCapture Project
+- Hub Site Application, Hub Page, Site Application, Site Page
+- GeoBIM Project, GeoBIM Application
+
+**Feature Service** - configuration restore only (no feature data):
+- Symbology, popups, labels, visibility
+- Service settings (capabilities, maxRecordCount, editor tracking)
+- Domains and field properties
+- Item metadata (title, tags, description, thumbnail)
+
+### Restore Modes
+
+**Restore to existing item** - Overwrites an existing portal item with the backed-up data, resources, and/or metadata. You provide the target item ID and the tool validates that the item exists and you have edit permission.
+
+**Create as new item** - Creates a brand-new portal item from the backup files. The new item is named `{original_title}_restored_{timestamp}`. Useful for testing a restore before overwriting a production item, or for recovering a deleted item.
+
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">"Create as new item" is not available for Feature Services.</strong> Feature Services require a hosted data store that can only be created by publishing from ArcGIS Pro or the portal's New Item workflow. Use ArcGIS Pro to restore Feature Service data, then use this tool to restore configuration (symbology, settings, domains) to the resulting service.
+
+</div>
+
+### Restoring JSON-Based Items
+
+1. Open the **Restore** tab
+2. Enter your portal connection details and click **Authorize**
+3. Choose your restore mode: **Restore to existing item** or **Create as new item**
+4. Click **Browse** and select a backup folder containing item files (e.g., `BACKUP_2026-01-15/Web Map/`)
+5. Select an item from the dropdown - the item ID auto-fills
+6. If restoring to an existing item, click **Validate** to confirm the item exists and you have edit permission
+7. Choose restore options:
+   - **Restore item data (JSON)** - replaces the item's JSON configuration (checked by default)
+   - **Restore metadata** - updates title, tags, description, and thumbnail
+   - **Create backup before restoring** - saves the current item state for rollback (checked by default, not shown in create-as-new mode)
+8. Click **Restore**
+
+Item resources (images, configuration files, etc.) are restored automatically when item data is restored. The tool deletes all existing resources and re-uploads them from the backup's `_resources.zip` file.
+
+### Restoring Feature Service Configuration
+
+Feature Service restore updates service configuration from the definition files captured during backup. It does **not** modify feature data (rows or geometry) - use ArcGIS Pro for data restoration.
+
+1. Open the **Restore** tab and connect to your portal
+2. Click **Browse** and select a backup folder - Feature Services are auto-detected from `Definitions/` subfolders
+3. Select a Feature Service item from the dropdown (shown with "(Feature Service)" suffix)
+4. Click **Validate** to confirm the service exists and has a valid URL
+5. Choose what to restore:
+   - **Symbology & Popups** - drawing info, popup config, labels (from `_data.json`)
+   - **Service Settings** - capabilities, maxRecordCount, editor tracking (from `_def.json`)
+   - **Domains & Field Properties** - coded value/range domains, field aliases (from `_def.json`)
+   - **Restore metadata** - title, tags, description, thumbnail (from `_desc.json`)
+6. Click **Restore**
+
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f;">Service Settings warning:</strong> Changing capabilities (e.g., removing Query or Sync) can break dependent maps and apps. The restore process shows a warning before proceeding. Use the "Create backup before restoring" option so you can revert if needed.
+
+</div>
+
+> **Tip**: The Symbology & Popups option is only available when a `_data.json` file exists for the service.
+
+### StoryMap Restore
+
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f;">StoryMaps require a manual publish step after restoring.</strong> The "View Story" link will not work until you open the StoryMap builder (Edit Story) and click **Publish**. The restore recreates the draft and published data resources, but ArcGIS requires an explicit publish action to make the story viewable.
+
+</div>
+
+### Safety Backup
+
+When "Create backup before restoring" is checked (default), the tool downloads the item's current JSON data, resources, and metadata into a timestamped subfolder before making any changes:
+
+```
+{backup_folder}/_pre_restore_{YYYYMMDD_HHMMSS}/
+    ItemTitle_abc123def456.json
+    ItemTitle_abc123def456_resources.zip
+    Descriptions/ItemTitle_abc123def456_desc.json
+    Thumbnails/abc123def456.png
+```
+
+If the safety backup fails (e.g., network error while downloading), the restore is aborted and the item is not modified.
+
+<div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #2e7d32;">Recommended workflow:</strong>
+
+<ul>
+<li>Always leave "Create backup before restoring" checked</li>
+<li>Use "Create as new item" first to verify the restore looks correct</li>
+<li>If the restored item looks wrong, you can restore again from the safety backup</li>
+<li>Check the console log for any warnings during the restore</li>
+</ul>
+
+</div>
+
+### Restore Connection
+
+The Restore tab uses its own portal connection, separate from the Backup tab. You specify the target item ID manually, so you can restore to any item you have edit access to.
+
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">Cross-portal limitations:</strong> JSON-based items (maps, apps, dashboards) contain internal references to other item IDs - layer sources, widget data sources, etc. These dependencies must exist on the target portal or the restored item will have broken references. This effectively limits JSON-based restores to the same portal. Feature Service configuration restore has no such limitation since it updates symbology, settings, and domains without referencing other items.
+
+</div>
+
+### What Happens on Failure
+
+- **Safety backup failure**: The restore is aborted and the item is not modified.
+- **Data restore failure**: The item may be in a partially updated state. Use the safety backup to restore the original.
+- **Resource upload failure**: Individual resource failures are logged as warnings; remaining resources continue uploading.
+- **Feature Service layer failure**: Each layer is updated independently. If one layer fails, the remaining layers are still processed. A summary of successes and failures is shown at the end.
+- **Create-as-new failure**: If item creation succeeds but subsequent steps fail, the orphaned item is automatically deleted to avoid clutter.
+
+### Dependency Checking (Create as New)
+
+When creating a new item, the tool checks the backup JSON for references to other item IDs (layer sources, widget configurations, etc.) and reports which dependencies were found. If a referenced item does not exist on the target portal, the new item will have broken references. Review the dependency list in the console before confirming the creation.
+
+---
+
+<div style="border: 2px solid #ff8f00; border-left: 6px solid #ff8f00; background-color: #fff8e1; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #ff8f00;">COMING SOON</strong> - The Find & Replace feature is under development and not yet available in the current release.
+
+</div>
+
+## Find & Replace
+
+The **Find & Replace** tab scans your portal for references to old item IDs, service URLs, or other strings and replaces them with new values. Changes are applied one item at a time with full undo capability.
+
+### When to Use Find & Replace
+
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">This tool modifies live portal items.</strong> It is designed for situations where internal references between items are broken or outdated and need bulk updating. Feature Service data (rows and geometry) is never touched - only the JSON configuration of maps, apps, dashboards, and similar items.
+
+</div>
+
+**Republished Feature Service** - A hosted Feature Service was republished from ArcGIS Pro, creating a new item ID and URL. All dependent Web Maps, Dashboards, and apps still reference the old service and need updating.
+
+**Portal migration** - Content was moved between ArcGIS Online organizations. Item IDs changed during the transfer and internal references need remapping.
+
+**Organization rename or server move** - An AGOL org short name changed (e.g., `oldorg.maps.arcgis.com` to `neworg.maps.arcgis.com`) or a Portal server moved to a new domain. All embedded URLs need updating.
+
+**Service folder restructure** - Services were reorganized into different server folders (e.g., `/rest/services/OldFolder/MyService/FeatureServer` to `/rest/services/NewFolder/MyService/FeatureServer`).
+
+### Scannable Item Types
+
+Find & Replace scans JSON-based item types:
+
+- Web Map, Web Scene
+- Dashboard
+- Web Mapping Application
+- StoryMap
+- Web Experience, Web Experience Template
+- QuickCapture Project
+- Hub Site Application, Hub Page, Hub Initiative, Hub Initiative Template
+- Site Application, Site Page
+- GeoBIM Project, GeoBIM Application
+
+### What Gets Scanned
+
+For each item, two things are checked:
+
+1. **Item text** - the JSON configuration property (the data behind Web Maps, Dashboards, etc.)
+2. **JSON resources** - configuration files attached to the item (under 10 MB each)
+
+Feature Service rows, geometry, attachments, and non-JSON resources are never read or modified.
+
+### Step 1: Connect to Your Portal
+
+Enter your portal connection details at the top of the Find & Replace tab. This connection is independent of the Backup tab - you can connect to any organization.
+
+| Field | What to Enter |
+|-------|---------------|
+| **Organization** | Your org name (e.g., `myorg`) or full Portal URL (e.g., `https://gis.mycompany.com/portal`) |
+| **Username** | Your ArcGIS username |
+| **Password** | Your password, or leave blank and check **SSO / OAuth** for browser-based login (SSO, SAML, MFA) |
+
+Check **Remember** to save your password securely in Windows Credential Manager.
+
+Click **Authorize** to connect. You need edit permissions on the items you want to modify.
+
+### Step 2: Enter Find/Replace Pairs
+
+Add one or more find/replace string pairs. Each pair replaces all occurrences of the "find" string with the "replace" string.
+
+**Auto-detection** categorizes each pair and shows a status indicator:
+
+| Find String Pattern | Detection | Validation |
+|---|---|---|
+| 32-character hex string (e.g., `a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6`) | **Item ID** | Replace must also be 32-character hex |
+| Starts with `http://` or `https://` | **URL** | Replace must also be a URL |
+| Anything else | **General** | Allowed, but a confirmation prompt appears before scanning |
+
+> **Tip**: For a republished Feature Service, you typically need two pairs: one for the old item ID mapped to the new item ID, and one for the old service URL mapped to the new service URL.
+
+You can add up to 20 pairs per scan. Click **+ Add Pair** to add more rows, or click the **X** button to remove a pair. Empty pairs and pairs where the find and replace strings are identical are automatically disabled.
+
+### Step 3: Set Scope Filters
+
+Control which items are included in the scan:
+
+- **Item types** - check the types you want to scan (all are selected by default). Use **Select All** / **Select None** for quick toggling.
+- **Owner** - filter to items owned by a specific user, or leave blank to scan all items you have access to
+- **Ownership mode** - choose between "All I can edit" or "Only items I own"
+- **Item IDs** - optionally enter specific item IDs (comma-separated) to scan only those items
+
+### Step 4: Scan the Portal
+
+Click **Scan Portal** to search for matches. The scan is completely read-only - nothing is modified.
+
+The scan searches every matching item's text and JSON resources for your find strings. Progress is shown in the console at the bottom of the tab.
+
+When the scan completes, the results table shows one row per affected item with:
+
+- Item title, type, and owner
+- Number of matches found
+- An action button: **Apply**, **Undo**, or **Re-Apply**
+
+Click any row to see the detail panel below the table, showing every match with its JSON path and surrounding context.
+
+### Step 5: Apply Changes
+
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f;">Changes modify live portal items.</strong> Apply to one item first, verify it in your browser, then proceed to others. Use Undo immediately if something looks wrong.
+
+</div>
+
+Click **Apply** in an item's row to apply the replacements to that item. Before making any change, the tool:
+
+1. **Creates a safety backup** of the current item text and resources to a local folder
+2. **Re-fetches** the item text (not cached from the scan) to detect concurrent edits
+3. **Verifies** the find strings are still present - if the item was modified since the scan, the apply is aborted with a warning
+4. **Applies** all replacements
+5. **Confirms** the update succeeded
+
+After applying, the console shows a clickable link to the item. Open the link in your browser and verify the changes look correct.
+
+### Step 6: Verify and Undo
+
+After applying changes to an item, the action button changes to **Undo**. If the item looks wrong in your browser, click **Undo** to revert it to its pre-change state using the safety backup. After undoing, the button changes to **Re-Apply** if you want to try again.
+
+Once you've verified a few items and are confident in the results, click **Apply All Remaining** to process the rest in sequence. Each item still gets its own safety backup, and you can undo individual items after completion.
+
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f;">Undo is session-based.</strong> Safety backups and undo capability are only available while the Find &amp; Replace tab remains open. If you close the tab, disconnect from the portal, or close the application, the undo history is cleared. Always verify applied changes before closing.
+
+</div>
+
+### Safety Features
+
+<div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #2e7d32;">Built-in safeguards:</strong>
+
+<ul>
+<li><strong>Read-only scan</strong> - no writes during the scan phase</li>
+<li><strong>Safety backup before every change</strong> - if the backup fails, the item is NOT modified</li>
+<li><strong>One at a time</strong> - you see and approve each item individually</li>
+<li><strong>Undo</strong> - revert any applied change from the safety backup</li>
+<li><strong>Stale data check</strong> - re-fetches item text before applying; aborts if the item has changed since the scan</li>
+<li><strong>Cancellation</strong> - scan and apply can be cancelled at any time</li>
+</ul>
+
+</div>
+
+Safety backups are saved in a `find_replace_backups` folder in your system temp directory (`%TEMP%`). Each item gets a timestamped subfolder containing the original JSON text and resources. These backups persist on disk but are managed by Windows and may be cleaned up over time - do not rely on them for long-term recovery.
 
 ---
 
@@ -762,7 +1049,7 @@ Located next to the application executable. Records startup failures, configurat
 
 ### "Authentication failed"
 
-- Double-check your username—it's case-sensitive
+- Double-check your username - it's case-sensitive
 - For SSO organizations, leave password blank and sign in via the browser popup
 - Check if your account is locked or password expired
 
@@ -790,11 +1077,11 @@ Common reasons items are skipped:
 
 Large feature services with attachments can take over an hour to prepare server-side. Other items continue exporting in the meantime.
 
-> **Tip**: Don't click in the console window or select text—this can pause the output (a Windows feature). Press Escape or right-click to resume.
+> **Tip**: Don't click in the console window or select text - this can pause the output (a Windows feature). Press Escape or right-click to resume.
 
 ### ZIP File Won't Extract
 
-Use [7-Zip](https://www.7-zip.org/download.html) instead of Windows' built-in extractor. Long path names can cause issues — move to a shorter path if needed.
+Use [7-Zip](https://www.7-zip.org/download.html) instead of Windows' built-in extractor. Long path names can cause issues - move to a shorter path if needed.
 
 ### 'TEMP_FOR_EXPORT' Files Left in Portal
 
@@ -818,7 +1105,7 @@ Incremental backups may include services without feature edits. ArcGIS treats se
 
 ### Backup Runs but Exports 0 Items
 
-- Check your filter settings — tags, owner, folders, or groups may be excluding everything
+- Check your filter settings - tags, owner, folders, or groups may be excluding everything
 - Verify the account has access to content (non-admin accounts only back up items they own)
 
 ### Email Not Received

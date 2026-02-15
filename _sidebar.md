@@ -16,10 +16,14 @@
   * [Amazon S3](USER_GUIDE.md#save-backups-to-amazon-s3)
   * [Azure Blob Storage](USER_GUIDE.md#save-backups-to-azure-blob-storage)
   * [Box, Dropbox, OneDrive](USER_GUIDE.md#box-dropbox-onedrive-and-google-drive)
+* **Restore** *(Coming Soon)*
+  * [Restoring Items](USER_GUIDE.md#restoring-items)
+* **Find & Replace** *(Coming Soon)*
+  * [Find & Replace](USER_GUIDE.md#find--replace)
 * **Reference**
   * [Proxy Settings](USER_GUIDE.md#proxy-settings)
   * [Understanding Your Backup](USER_GUIDE.md#understanding-your-backup)
   * [Tips and Best Practices](USER_GUIDE.md#tips-and-best-practices)
   * [Troubleshooting](USER_GUIDE.md#troubleshooting)
 * [Getting Help](USER_GUIDE.md#getting-help)
-* [Release Notes](RELEASE_NOTES.md)
+* [Release Notes](RELEASE_NOTES_5.0.md)

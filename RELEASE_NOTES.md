@@ -119,13 +119,13 @@ Retention validates paths before deletion, blocking drive roots, UNC roots, and 
 
 ### Security
 
-All credentials — ArcGIS passwords, OAuth tokens, cloud storage keys, and SMTP credentials — are stored exclusively in **Windows Credential Manager**, encrypted at rest using **Windows DPAPI** (Data Protection API). Credentials are tied to your Windows user account and inaccessible to other users on the same machine. Credentials never leave your machine — CivicLens has no access to your passwords, tokens, or keys.
+All credentials - ArcGIS passwords, OAuth tokens, cloud storage keys, and SMTP credentials - are stored exclusively in **Windows Credential Manager**, encrypted at rest using **Windows DPAPI** (Data Protection API). Credentials are tied to your Windows user account and inaccessible to other users on the same machine. Credentials never leave your machine - CivicLens has no access to your passwords, tokens, or keys.
 
 - **No plain-text storage**: Passwords and tokens are never written to configuration files, the Windows registry, log files, or any other unprotected location
 - **Per-schedule isolation**: Each scheduled backup stores its credentials under a unique keyring entry, preventing cross-schedule credential leakage
-- **OAuth token rotation**: When ArcGIS issues a new refresh token, it is automatically persisted back to Credential Manager — stale tokens are replaced, not accumulated
+- **OAuth token rotation**: When ArcGIS issues a new refresh token, it is automatically persisted back to Credential Manager - stale tokens are replaced, not accumulated
 - **Code-signed executable**: The application is signed with a CivicLens LLC EV (Extended Validation) certificate with SHA-256 timestamping, verifying publisher identity and protecting against tampering
-- **No telemetry or analytics**: The application communicates only with your ArcGIS Online or Portal for ArcGIS environment. The only exceptions are a lightweight license validation (downloads a license list and checks your organization locally — your org name is not transmitted), a version check for available updates, and — only if you opt in — backup result emails sent through the CivicLens mail server (CivicLens can see the contents of these emails). No usage data, telemetry, or analytics are collected or transmitted.
+- **No telemetry or analytics**: The application communicates only with your ArcGIS Online or Portal for ArcGIS environment. The only exceptions are a lightweight license validation (downloads a license list and checks your organization locally - your org name is not transmitted), a version check for available updates, and - only if you opt in - backup result emails sent through the CivicLens mail server (CivicLens can see the contents of these emails). No usage data, telemetry, or analytics are collected or transmitted.
 
 ---
 

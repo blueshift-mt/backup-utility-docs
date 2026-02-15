@@ -26,7 +26,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 ### Redesigned Interface
 
-Version 5.0 features a completely redesigned interface organized into three tabs:
+New interface with three tabs:
 
 - **Backup tab**: Configure connection, filters, storage, and start on-demand backups
 - **Progress tab**: Real-time item-by-item status, active export tracking, and system metrics
@@ -37,28 +37,26 @@ Version 5.0 features a completely redesigned interface organized into three tabs
 The Progress tab shows live status for running backups:
 
 - Progress bar with item counts (exported / failed / skipped / total)
-- Active exports table showing each item currently being processed, its type, and the current API response status (e.g., Pending, ExportingData, ExportingAttachments, Completed) for Feature Service exports
-- Phase indicator tracking each stage of the backup: Authenticating, Discovering Items, Exporting, Retry Pass 1–11, and Finishing
-- System metrics (CPU, memory, disk usage)
-- Admin/non-admin detection with a warning if running without administrator privileges
-- Backup and staging folder paths
-- Console log with per-item export results as they complete
+- Active exports table with per-item API status (Pending, ExportingData, Completed, etc.)
+- Phase indicator (Authenticating, Discovering, Exporting, Retry Pass 1-11, Finishing)
+- System metrics (CPU, memory, disk)
+- Console log with per-item results
 - Elapsed time
 
 Open the app during a scheduled backup to monitor its progress in real time.
 
 ### Built-in Schedule Management
 
-Schedules are now created and managed directly in the app. Previous versions required configuring Windows Task Scheduler externally with a parameters file.
+Schedules are now created and managed directly in the app.
 
-- Create daily, weekly, or monthly schedules from the Schedules tab
+- Daily, weekly, or monthly schedules
 - Edit, delete, enable/disable, or Run Now from the GUI
 - Overlap detection warns when a backup is still running at the next scheduled start
-- Schedules run via Windows Task Scheduler under a `CivicLens` folder, even when logged out
+- Runs via Windows Task Scheduler under a `CivicLens` folder, even when logged out
 
 ### Unified Application
 
-Previous versions used separate executables for different storage targets and modes. Version 5.0 consolidates local storage, S3, Azure, cleanup, and scheduling into a single application.
+Local, S3, Azure, cleanup, and scheduling consolidated into one executable.
 
 ### Persistent Settings
 
@@ -119,13 +117,12 @@ Retention validates paths before deletion, blocking drive roots, UNC roots, and 
 
 ### Security
 
-All credentials - ArcGIS passwords, OAuth tokens, cloud storage keys, and SMTP credentials - are stored exclusively in **Windows Credential Manager**, encrypted at rest using **Windows DPAPI** (Data Protection API). Credentials are tied to your Windows user account and inaccessible to other users on the same machine. Credentials never leave your machine - CivicLens has no access to your passwords, tokens, or keys.
+All credentials stored in **Windows Credential Manager**, encrypted via **Windows DPAPI**. Never written to config files, logs, or the registry.
 
-- **No plain-text storage**: Passwords and tokens are never written to configuration files, the Windows registry, log files, or any other unprotected location
-- **Per-schedule isolation**: Each scheduled backup stores its credentials under a unique keyring entry, preventing cross-schedule credential leakage
-- **OAuth token rotation**: When ArcGIS issues a new refresh token, it is automatically persisted back to Credential Manager - stale tokens are replaced, not accumulated
-- **Code-signed executable**: The application is signed with a CivicLens LLC EV (Extended Validation) certificate with SHA-256 timestamping, verifying publisher identity and protecting against tampering
-- **No telemetry or analytics**: The application communicates only with your ArcGIS Online or Portal for ArcGIS environment. The only exceptions are a lightweight license validation (downloads a license list and checks your organization locally - your org name is not transmitted), a version check for available updates, and - only if you opt in - backup result emails sent through the CivicLens mail server (CivicLens can see the contents of these emails). No usage data, telemetry, or analytics are collected or transmitted.
+- **Per-schedule isolation**: Unique keyring entry per schedule
+- **OAuth token rotation**: New refresh tokens automatically persisted, stale tokens replaced
+- **Code-signed**: CivicLens LLC EV certificate with SHA-256 timestamping
+- **No telemetry**: Communicates only with your ArcGIS environment. Exceptions: license validation (checks locally, org name not transmitted), version check, and opt-in CivicLens email notifications
 
 ---
 

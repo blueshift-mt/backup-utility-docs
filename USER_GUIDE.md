@@ -850,7 +850,16 @@ If the safety backup fails, the restore is aborted and the item is not modified.
 
 #### How to Revert Using the Safety Backup
 
-The safety backup is saved in the same format the Restore tab reads, so you can use it directly as a backup source to undo a restore:
+After a successful restore, two buttons become available in the bottom bar:
+
+- **View Item** - opens the restored item in your browser so you can verify it looks correct
+- **Undo Last Restore** - reverts the item to its pre-restore state in one step (requires "Create backup before restoring" to have been enabled)
+
+Click **View Item** first to inspect the result. If something is wrong, click **Undo Last Restore** to roll back. The undo runs the same restore process in reverse, using the safety backup files.
+
+Both buttons remain available until you close the tab, disconnect, or start a new restore. If you need to revert after closing, use the manual method below.
+
+**Manual revert (after closing or reconnecting):**
 
 1. Copy the `_pre_restore_*` folder path from the console log (e.g., `C:\Backups\MYORG_2026-02-14\\_pre_restore_2026-02-14_17-57-48`)
 2. In the Restore tab, paste that path into the **Backup Folder** field (or click Browse and navigate to it)
@@ -868,8 +877,8 @@ This overwrites the item with its pre-restore state, effectively undoing the pre
 
 <ul>
 <li>Always leave "Create backup before restoring" checked</li>
-<li>Use "Create as new item" first to verify the restore looks correct before overwriting</li>
-<li>If the restored item looks wrong, revert using the safety backup (see steps above)</li>
+<li>After restoring, click <strong>View Item</strong> to verify it looks correct</li>
+<li>If the restored item looks wrong, click <strong>Undo Last Restore</strong> to roll back</li>
 <li>Check the console log for any warnings during the restore</li>
 </ul>
 
@@ -1041,8 +1050,8 @@ Up to 20 pairs per scan. Empty pairs and identical find/replace strings are igno
 Control which items are included in the scan:
 
 - **Item types** - check the types you want to scan (all are selected by default). Use **Select All** / **Select None** for quick toggling.
-- **Owner** - filter to items owned by a specific user, or leave blank to scan all items you have access to
-- **Ownership mode** - choose between "All I can edit" or "Only items I own"
+- **Owner** - filter to items owned by a specific user (admin only), or leave blank to scan all
+- **Mode** - **All org items (admin)** scans the entire organization (requires admin role). **My items only** scans your own items plus items in shared update groups where you have edit access.
 - **Item IDs** - optionally enter specific item IDs (comma-separated) to scan only those items
 
 ### Step 4: Scan the Portal
@@ -1055,7 +1064,13 @@ Results show one row per affected item with:
 - Number of matches found
 - An action button: **Apply**, **Undo**, or **Re-Apply**
 
-Click a row to see match details with JSON paths and context.
+Click a row to see match details in the lower panel:
+
+| Column | Description |
+|--------|-------------|
+| **Location** | Where the match was found. `text` means the item's main JSON data. A filename like `config/config.json` means an item resource. |
+| **Path** | The JSON path to the matched value (e.g., `operationalLayers[0].itemId` or `widgets[3].config.webmaps[0]`). Use this to understand what the reference controls. |
+| **Context** | A snippet of the matched value with surrounding characters, so you can verify the match is what you expect before applying. |
 
 ### Step 5: Apply Changes
 
@@ -1072,13 +1087,15 @@ Click **Apply** on an item. Before making changes, the tool:
 3. **Verifies** find strings still present - aborts if the item changed since the scan
 4. **Applies** replacements and **confirms** success
 
-The console shows a clickable link to verify the item in your browser.
+Click **Open** in the results table to verify the item in your browser.
 
 ### Step 6: Verify and Undo
 
 After applying, the button changes to **Undo**. Click it to revert from the safety backup. After undoing, the button becomes **Re-Apply**.
 
 Once confident, click **Apply All Remaining** to process the rest. Each item still gets its own backup, and you can undo individually.
+
+> **StoryMaps:** Changes are saved as a draft. After applying, open the StoryMap builder and click **Publish** for changes to appear on the live version. The same applies after undoing.
 
 <div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 

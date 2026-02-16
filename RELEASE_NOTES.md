@@ -1,4 +1,63 @@
-# Backup Utility for ArcGIS Online and Portal for ArcGIS v5.0 Release Notes
+# Release Notes
+
+---
+
+## Version 5.1
+
+### What's New in 5.1
+
+#### Restore Tab
+
+Restore backed-up items directly from the Backup Utility - no manual file editing or portal uploads required.
+
+**Supported item types:**
+
+- **JSON-based items** (Web Map, Dashboard, StoryMap, Web Experience, Web Mapping Application, QuickCapture Project, Hub Site/Page, GeoBIM, and more) - full item data, resources, and metadata restore
+- **Feature Service** - configuration restore only (symbology, popups, service settings, domains, field properties). Feature data (rows and geometry) is never modified
+- **Feature Layer View** - configuration restore, plus "Create as new" to recreate a view on a source Feature Service
+
+**Two restore modes:**
+
+- **Restore to existing item** - overwrites an existing portal item with backed-up configuration
+- **Create as new item** - creates a new portal item from backup files, named `{title}_restored_{timestamp}`
+
+**Safety features:**
+
+- Automatic safety backup before every restore (saves current item state for rollback)
+- If the safety backup fails, the restore is aborted and the item is not modified
+- Create-as-new failures automatically clean up orphaned items
+- Dependency checking warns about missing referenced items before creation
+
+**Cloud restore:**
+
+- Restore directly from Amazon S3 or Azure Blob Storage without downloading the full backup
+- Only the small configuration files needed for restore are downloaded on demand
+- Works with the same S3 and Azure credentials used for backup
+
+#### Find & Replace Tab
+
+Scan your portal for references to old item IDs, service URLs, or other strings, and replace them across all dependent items.
+
+- Read-only scan phase - nothing is modified until you explicitly apply
+- Apply changes one item at a time with per-item safety backup and undo
+- Auto-detects find/replace pair types (Item ID, URL, General) with validation
+- Scope filters: item type, owner, specific item IDs
+- Stale data check re-fetches items before applying to detect concurrent edits
+- Session-based undo for every applied change
+
+### Improvements in 5.1
+
+#### User-Scoped Backup Restore
+
+Backups created with owner and folder sorting (e.g., `jcrhodes/Root/Web Map/`) are now correctly detected and restored from both local folders and cloud storage. Previous versions only detected item types at the backup root level.
+
+#### Cloud Upload Deletion Safety
+
+Local backup deletion after successful cloud upload now validates paths before deletion - blocking drive roots, UNC roots, and protected directories (Desktop, Documents, Downloads). Matches the safety checks already applied to retention-based cleanup.
+
+---
+
+## Version 5.0
 
 <div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
@@ -20,11 +79,9 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 </div>
 
----
+### What's New in 5.0
 
-## What's New
-
-### Redesigned Interface
+#### Redesigned Interface
 
 New interface with three tabs:
 
@@ -32,7 +89,7 @@ New interface with three tabs:
 - **Progress tab**: Real-time item-by-item status, active export tracking, and system metrics
 - **Schedules tab**: Create, edit, and manage scheduled backups
 
-### Real-Time Progress Monitoring
+#### Real-Time Progress Monitoring
 
 The Progress tab shows live status for running backups:
 
@@ -45,7 +102,7 @@ The Progress tab shows live status for running backups:
 
 Open the app during a scheduled backup to monitor its progress in real time.
 
-### Built-in Schedule Management
+#### Built-in Schedule Management
 
 Schedules are now created and managed directly in the app.
 
@@ -54,23 +111,21 @@ Schedules are now created and managed directly in the app.
 - Overlap detection warns when a backup is still running at the next scheduled start
 - Runs via Windows Task Scheduler under a `CivicLens` folder, even when logged out
 
-### Unified Application
+#### Unified Application
 
 Local, S3, Azure, cleanup, and scheduling consolidated into one executable.
 
-### Persistent Settings
+#### Persistent Settings
 
 All Backup tab configuration is saved automatically between sessions.
 
-### Exclude Item IDs
+#### Exclude Item IDs
 
 Exclude specific items by ArcGIS item ID (comma-separated).
 
----
+### Improvements in 5.0
 
-## Improvements
-
-### Migrating from Parameters Files
+#### Migrating from Parameters Files
 
 As noted in the [breaking change notice](#-breaking-change-scheduled-backup-users-must-act) above, parameters files are no longer auto-detected. Pass `--file` to continue using them, or migrate to the Schedules tab.
 
@@ -96,26 +151,30 @@ The `--file` flag accepts both formats:
 - Cloud storage configured from the same interface
 - Last run time, status, and warnings visible at a glance
 
-### Cloud Storage
+#### Cloud Storage
 
 S3 and Azure Blob are now built in. S3 also supports IAM instance roles and environment credentials in addition to access keys.
 
-### Cleanup Safety
+#### Portable Schedules
+
+Scheduled backups survive application upgrades, even when the executable is saved to a new location. On launch, the application automatically detects stale Windows Task Scheduler entries and updates them to point to the current executable path. Schedule configurations and credentials are stored in `%LOCALAPPDATA%` and Windows Credential Manager respectively - both independent of the install location.
+
+#### Cleanup Safety
 
 Retention validates paths before deletion, blocking drive roots, UNC roots, and protected directories (Desktop, Documents, etc.). Dry run previews what would be deleted.
 
-### Error Handling
+#### Error Handling
 
 - Authentication and license failures show actionable messages instead of tracebacks
 - License validation uses S3 fallback and local cache for resilience
 
-### Reliability
+#### Reliability
 
 - Memory-aware downloads with adaptive chunk sizes and garbage collection
 - CPU pressure monitoring (memory only in v4.x)
 - Disk full detection stops cleanly instead of writing corrupt files
 
-### Security
+#### Security
 
 All credentials stored in **Windows Credential Manager**, encrypted via **Windows DPAPI**. Never written to config files, logs, or the registry.
 
@@ -123,6 +182,43 @@ All credentials stored in **Windows Credential Manager**, encrypted via **Window
 - **OAuth token rotation**: New refresh tokens automatically persisted, stale tokens replaced
 - **Code-signed**: CivicLens LLC EV certificate with SHA-256 timestamping
 - **No telemetry**: Communicates only with your ArcGIS environment. Exceptions: license validation (checks locally, org name not transmitted), version check, and opt-in CivicLens email notifications
+
+---
+
+## Version 4.x
+
+Version 4.x was the previous generation of the Backup Utility, distributed as separate executables per storage backend and scheduling mode.
+
+### Separate Executables
+
+Each combination of storage and scheduling mode was a separate application:
+
+- `od.exe` - on-demand backup to local storage
+- `od_s3.exe` - on-demand backup to Amazon S3
+- `od_azure.exe` - on-demand backup to Azure Blob Storage
+- `sch.exe` - scheduled backup to local storage (headless, via parameters file)
+- `sch_s3.exe` - scheduled backup to Amazon S3
+- `sch_azure.exe` - scheduled backup to Azure Blob Storage
+- `od_cleanup.exe` / `sch_cleanup.exe` - retention cleanup
+
+All of these are consolidated into a single `BackupUtility.exe` in v5.0.
+
+### Scheduling via Parameters File
+
+Scheduled backups were configured through an Excel or CSV parameters file and executed via Windows Task Scheduler. The user was responsible for creating the Task Scheduler entry manually.
+
+### Key Capabilities (carried forward to v5.0)
+
+- Full ArcGIS Online and Portal for ArcGIS content backup
+- Feature Service export via File Geodatabase (FGDB) with multi-format fallback (CSV, Shapefile)
+- 11-pass retry logic for transient failures, permission issues, and corrupt features
+- Web Map, Dashboard, StoryMap, Web Experience JSON export
+- Survey123 form export
+- Notebook export
+- Static item download with resume support
+- Email notifications with backup summary
+- Retention-based cleanup of old backups
+- Inventory CSV with per-item export details
 
 ---
 

@@ -50,137 +50,92 @@ Click **Start Backup**. The Progress tab shows real-time status. Results.txt and
 
 ## What Gets Backed Up
 
+> Type names shown in `backticks` are the exact strings used by the **Exclude Types** filter.
+
 ### Hosted Feature and Table Data
 Exported as **File Geodatabase (.gdb)** with domains, attachments, and related tables:
-- Feature Service
+`Feature Service`
 
 ### Location Tracking Services
 Exported as **Shapefile (.shp)** to a `Location Tracking` folder. The ArcGIS export API does not support File Geodatabase for Location Tracking Services.
 
 ### Tile & Map Services
 Exported as **Tile Package (.tpk or .vtpk)**:
-- Map Service, Vector Tile Service
+`Map Service`, `Vector Tile Service`
 
 ### Web Apps, Maps & Dashboards
 Exported as **JSON configuration with item resources**:
-- **Maps**: Web Map, Web Scene (Field Maps configurations are included in web map item resources)
-- **Apps**: Dashboard, StoryMap, Web Experience, Web Mapping Application, Mobile Application
-- **Field Apps**: QuickCapture Project, Workforce Project
-- **Insights**: Insights Workbook, Insights Page, Insights Model, Insights Theme
-- **Hub/Sites**: Hub Site Application, Hub Page, Hub Initiative, Hub Initiative Template, Hub Event, Site Application, Site Page
-- **Other**: Solution, Mission, Investigation, GeoBIM Project, GeoBIM Application, Data Pipeline, Style, StoryMap Theme, Map Area, Symbol Set, Color Set, Content Category Set, Web Experience Template, Group Layer, Feature Collection, Feature Collection Template, 360 VR Experience, Oriented Imagery Catalog
+- **Maps**: `Web Map`, `Web Scene` (Field Maps configurations are included in web map item resources)
+- **Apps**: `Dashboard`, `StoryMap`, `Web Experience`, `Web Mapping Application`, `Mobile Application`
+- **Field Apps**: `QuickCapture Project`, `Workforce Project`
+- **Insights**: `Insights Workbook`, `Insights Page`, `Insights Model`, `Insights Theme`
+- **Hub/Sites**: `Hub Site Application`, `Hub Page`, `Hub Initiative`, `Hub Initiative Template`, `Hub Event`, `Site Application`, `Site Page`
+- **Other**: `Solution`, `Mission`, `Investigation`, `GeoBIM Project`, `GeoBIM Application`, `Data Pipeline`, `Style`, `StoryMap Theme`, `Map Area`, `Symbol Set`, `Color Set`, `Content Category Set`, `Web Experience Template`, `Group Layer`, `Feature Collection`, `Feature Collection Template`, `360 VR Experience`, `Oriented Imagery Catalog`
 
 ### Survey123 Forms
-Downloaded as **Survey123 survey packages** including XLSForm, media, pulldata files, CSVs, and JSON configuration:
-- Form
+Downloaded as **survey packages** including XLSForm, media, pulldata files, CSVs, and JSON configuration:
+`Form`
 
 ### Documents
 Downloaded in **original format**:
-- **Office**: Microsoft Word, Microsoft Excel, Microsoft Powerpoint, Visio Document, PDF
-- **Apple**: iWork Keynote, iWork Pages, iWork Numbers
-- **Images**: Image, Image Collection
-- **Other**: CAD Drawing, Report Template, Administrative Report
+- **Office**: `Microsoft Word`, `Microsoft Excel`, `Microsoft Powerpoint`, `Visio Document`, `PDF`
+- **Apple**: `iWork Keynote`, `iWork Pages`, `iWork Numbers`
+- **Images**: `Image`, `Image Collection`
+- **Other**: `CAD Drawing`, `Report Template`, `Administrative Report`
 
 ### GIS Data Files
 Downloaded in **original format**:
-- Shapefile, File Geodatabase, GeoPackage, GeoJson, KML, KML Collection, GML, Apache Parquet, SQLite Geodatabase
+`Shapefile`, `File Geodatabase`, `GeoPackage`, `GeoJson`, `KML`, `KML Collection`, `GML`, `Apache Parquet`, `SQLite Geodatabase`
 
 ### Tabular Data
 Downloaded in **original format**:
-- CSV, CSV Collection
+`CSV`, `CSV Collection`
 
 ### ArcGIS Packages
 Downloaded in **original format**:
-- **Project**: Project Package, Project Template, Pro Map, ArcGIS Pro Configuration
-- **Map/Layer**: Map Package, Map Template, Layer, Layer Package, Map Document
-- **Scene**: Scene Package, Mobile Scene Package
-- **Mobile**: Mobile Map Package, Mobile Basemap Package
-- **Tile**: Tile Package, Vector Tile Package, Compact Tile Package
-- **Analysis**: Locator Package, Geoprocessing Package, Geoprocessing Package (Pro version), Geoprocessing Sample
-- **Other**: Rule Package, Deep Learning Package, Export Package, Task File, Layout, Pro Report, Desktop Style, Raster function template, Workflow Manager Package, Statistical Data Collection, Insights Workbook Package
-- **Legacy**: ArcPad Package, Explorer Map, Explorer Layer, Globe Document
+- **Project**: `Project Package`, `Project Template`, `Pro Map`, `ArcGIS Pro Configuration`
+- **Map/Layer**: `Map Package`, `Map Template`, `Layer`, `Layer Package`, `Map Document`
+- **Scene**: `Scene Package`, `Mobile Scene Package`
+- **Mobile**: `Mobile Map Package`, `Mobile Basemap Package`
+- **Tile**: `Tile Package`, `Vector Tile Package`, `Compact Tile Package`
+- **Analysis**: `Locator Package`, `Geoprocessing Package`, `Geoprocessing Package (Pro version)`, `Geoprocessing Sample`
+- **Other**: `Rule Package`, `Deep Learning Package`, `Export Package`, `Task File`, `Layout`, `Pro Report`, `Desktop Style`, `Raster function template`, `Workflow Manager Package`, `Statistical Data Collection`, `Insights Workbook Package`
+- **Legacy**: `ArcPad Package`, `Explorer Map`, `Explorer Layer`, `Globe Document`
 
 ### Service Definitions
 Downloaded in **original format**:
-- Service Definition
+`Service Definition`
 
 ### Add-ins
 Downloaded in **original format**:
-- Desktop Add In, Explorer Add In, ArcGIS Pro Add In, Survey123 Add In, AppBuilder Widget Package, Experience Builder Widget, Experience Builder Widget Package
-
-### Other
-Downloaded in **original format**:
-- Urban Project, CityEngine Web Scene, Native Application, Native Application Installer, Desktop Application, Desktop Application Template, Code Sample, Code Attachment
+`Desktop Add In`, `Explorer Add In`, `ArcGIS Pro Add In`, `Survey123 Add In`, `AppBuilder Widget Package`, `Experience Builder Widget`, `Experience Builder Widget Package`
 
 ### Notebooks
 Downloaded as **.ipynb files**:
-- Notebook, Notebook Code Snippet Library
+`Notebook`, `Notebook Code Snippet Library`
+
+Code items (`Code Sample`, `Code Attachment`) may not have an associated file. If none exists, only item metadata is saved.
+
+### Other
+Downloaded in **original format**:
+`Urban Project`, `CityEngine Web Scene`, `Native Application`, `Native Application Installer`, `Desktop Application`, `Desktop Application Template`
 
 ### Not Exportable
 
-Automatically skipped or limited:
-
-**Reference-only (description saved, no data):**
-- WMS, WMTS, WFS, Geocoding Service, Document Link
-
-**Not exportable from hosted environment:**
-- Scene Service, Scene Layer, Image Service
-
-**Not included in backups:**
-- Application (registered OAuth/API apps)
-
-**Conditionally skipped during export:**
-- Referenced Feature Services (data lives in another org or external server)
-- Multipatch Feature Services (3D geometry not supported by the ArcGIS Online/Portal export API)
-- Tile layers exceeding the ArcGIS Online export limit
-- Unpublished apps
-
-### Item Types Reference
-
-Use these exact type names for the **Exclude Types** filter.
-
-#### Feature Services (exported as File Geodatabase)
-`Feature Service`
-
-#### Tile Services (exported as Tile Package)
-`Map Service`, `Vector Tile Service`
-
-#### Survey123 Forms (downloaded as survey package)
-`Form`
-
-#### Apps, Maps & Configuration Items (exported as JSON + resources)
-`Web Map`, `Web Scene`, `Dashboard`, `StoryMap`, `Web Experience`, `Web Mapping Application`, `Hub Site Application`, `Hub Page`, `Site Application`, `Site Page`, `QuickCapture Project`, `Workforce Project`, `Insights Workbook`, `Insights Page`, `Insights Model`, `Insights Theme`, `Hub Initiative`, `Hub Initiative Template`, `Solution`, `Mission`, `Feature Collection`, `Feature Collection Template`, `360 VR Experience`, `Oriented Imagery Catalog`, `Investigation`, `Hub Event`, `GeoBIM Project`, `GeoBIM Application`, `Data Pipeline`, `Style`, `StoryMap Theme`, `Map Area`, `Symbol Set`, `Color Set`, `Content Category Set`, `Web Experience Template`, `Group Layer`, `Mobile Application`
-
-#### Files & Packages (downloaded in original format)
-`Image`, `Image Collection`, `PDF`, `Microsoft Word`, `Microsoft Excel`, `Microsoft Powerpoint`, `Visio Document`, `iWork Keynote`, `iWork Pages`, `iWork Numbers`, `CSV`, `CSV Collection`, `Shapefile`, `File Geodatabase`, `GeoPackage`, `GeoJson`, `KML`, `KML Collection`, `GML`, `CAD Drawing`, `Apache Parquet`, `Report Template`
-
-#### ArcGIS Pro/Desktop Packages (downloaded in original format)
-`Pro Map`, `Project Package`, `Project Template`, `Map Package`, `Map Template`, `Layout`, `Layer`, `Layer Package`, `Scene Package`, `Mobile Map Package`, `Mobile Basemap Package`, `Mobile Scene Package`, `Tile Package`, `Vector Tile Package`, `Compact Tile Package`, `Locator Package`, `Geoprocessing Package`, `Geoprocessing Package (Pro version)`, `Geoprocessing Sample`, `Rule Package`, `Deep Learning Package`, `Export Package`, `Task File`, `ArcPad Package`, `Explorer Map`, `Globe Document`, `Explorer Layer`, `Pro Report`, `Desktop Style`, `Raster function template`, `ArcGIS Pro Configuration`, `Workflow Manager Package`, `Statistical Data Collection`, `SQLite Geodatabase`
-
-#### Notebooks (downloaded as .ipynb)
-`Notebook`, `Notebook Code Snippet Library`
-
-#### Code (downloaded if file exists)
-`Code Sample`, `Code Attachment`
-
-These items may not have an associated file. If none exists, only item metadata is saved.
-
-#### Add-ins & Extensions (downloaded in original format)
-`Desktop Add In`, `Explorer Add In`, `ArcGIS Pro Add In`, `Survey123 Add In`, `AppBuilder Widget Package`, `Experience Builder Widget`, `Experience Builder Widget Package`
-
-#### Other Exportable Types
-`Service Definition`, `Map Document`, `Insights Workbook Package`, `Urban Project`, `CityEngine Web Scene`, `Native Application`, `Native Application Installer`, `Desktop Application`, `Desktop Application Template`, `Administrative Report`
-
-#### Automatically Skipped (Reference-Only)
-These items reference external services and contain no exportable data. Item metadata/description is saved:
+**Reference-only** (item description saved, no data):
 `WMS`, `WMTS`, `WFS`, `Geocoding Service`, `Document Link`, `Map Image Layer`
 
-#### Automatically Skipped (Not Exportable)
-These cannot be exported from the hosted ArcGIS environment:
+**Not exportable** from the hosted ArcGIS environment:
 `Scene Service`, `Scene Layer`, `Image Service`
 
-#### Not Included in Backups
+**Not included** in backups:
 `Application`, `API Key` - developer credentials (OAuth/API registrations), not web apps.
+
+**Conditionally skipped** during export:
+- Referenced Feature Services (data lives in another org or external server)
+- Multipatch Feature Services (3D geometry not supported by the export API)
+- Tile layers exceeding the ArcGIS Online export limit
+- Unpublished apps
 
 Each backup includes an **Inventory.csv** listing every item with its ID, title, owner, type, dates, and backup result.
 
@@ -381,6 +336,18 @@ Each schedule requires a **Windows Password** so Task Scheduler can run unattend
 > **Tip**: Set backups to run overnight when network usage is low.
 
 > **Overlap Detection**: If a backup is still running when the next scheduled run starts, a warning is logged. Both will run concurrently, doubling resource usage.
+
+### Upgrading & Moving the Application
+
+Schedule configurations, credentials, and settings are stored independently of the application:
+
+| Component | Location | Survives upgrade? |
+|-----------|----------|-------------------|
+| Schedule configs | `%LOCALAPPDATA%\CivicLens\BackupUtility\schedules.json` | Yes |
+| ArcGIS credentials | Windows Credential Manager | Yes |
+| Windows Task Scheduler tasks | Task Scheduler `\CivicLens` folder | Auto-repaired |
+
+When the application launches from a new location (e.g., after downloading an update to a different folder), it automatically detects that existing scheduled tasks point to the old path and updates them. No manual intervention is required - existing schedules, credentials, and task triggers are all preserved.
 
 ### Where to Find Scheduled Tasks
 
@@ -747,12 +714,6 @@ Located next to the executable. Records startup failures and fatal crashes from 
 
 ---
 
-<div style="border: 2px solid #ff8f00; border-left: 6px solid #ff8f00; background-color: #fff8e1; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
-
-<strong style="color: #ff8f00;">COMING SOON</strong> - The Restore feature is under development and not yet available in the current release.
-
-</div>
-
 ## Restoring Items
 
 The **Restore** tab restores backed-up items to ArcGIS Online or Portal for ArcGIS.
@@ -771,6 +732,10 @@ The **Restore** tab restores backed-up items to ArcGIS Online or Portal for ArcG
 - Domains and field properties
 - Item metadata (title, tags, description, thumbnail)
 
+**Feature Layer View** - configuration restore, plus "Create as new" support:
+- Same configuration options as Feature Service (symbology, settings, domains, metadata)
+- Create as new: recreates a view on a source Feature Service you specify
+
 ### Restore Modes
 
 **Restore to existing item** - Overwrites an existing portal item with backed-up data, resources, and/or metadata. You provide the target item ID.
@@ -779,7 +744,7 @@ The **Restore** tab restores backed-up items to ArcGIS Online or Portal for ArcG
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">"Create as new item" is not available for Feature Services.</strong> This tool restores configuration only (symbology, settings, domains). To create a new Feature Service, publish the backed-up File Geodatabase, then use this tool to restore configuration to it.
+<strong style="color: #1565c0;">"Create as new item" is not available for regular Feature Services</strong> because this tool restores configuration only (symbology, settings, domains). To create a new Feature Service, publish the backed-up File Geodatabase, then use this tool to restore configuration to it. <strong>Feature Layer Views</strong> do support "Create as new" - see <a href="#/USER_GUIDE?id=restoring-feature-layer-views">Restoring Feature Layer Views</a>.
 
 </div>
 
@@ -799,6 +764,12 @@ The **Restore** tab restores backed-up items to ArcGIS Online or Portal for ArcG
 
 Item resources are restored automatically when item data is restored - existing resources are replaced with the backup's `_resources.zip` contents.
 
+<div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #2e7d32;">Field Maps configurations are included.</strong> Custom Field Maps configurations (offline areas, form layout, geofences, etc.) are stored as web map item resources. When you restore a web map with its resources, the Field Maps configuration is restored along with it - no extra steps needed.
+
+</div>
+
 ### Restoring Feature Service Configuration
 
 Feature Service restore updates service configuration from definition files. It does **not** modify feature data (rows or geometry).
@@ -809,18 +780,38 @@ Feature Service restore updates service configuration from definition files. It 
 4. Click **Validate** to confirm the service exists and has a valid URL
 5. Choose what to restore:
    - **Symbology & Popups** - drawing info, popup config, labels (from `_data.json`)
-   - **Service Settings** - capabilities, maxRecordCount, editor tracking (from `_def.json`)
    - **Domains & Field Properties** - coded value/range domains, field aliases (from `_def.json`)
    - **Restore metadata** - title, tags, description, thumbnail (from `_desc.json`)
 6. Click **Restore**
 
-<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+> **Tip**: The Symbology & Popups option is only available when a `_data.json` file exists for the service.
 
-<strong style="color: #d32f2f;">Service Settings warning:</strong> Changing capabilities (e.g., removing Query or Sync) can break dependent maps and apps. The restore process shows a warning before proceeding. Use the "Create backup before restoring" option so you can revert if needed.
+### Restoring Feature Layer Views
+
+Feature Layer Views (HFLVs) are backed up to the `HFLV Defs/` folder and appear in the item dropdown with a **(Feature Layer View)** suffix. Views support both restore modes.
+
+**Restore to existing view** works the same as Feature Service restore - select the view, validate the target item ID, choose your options, and click Restore. The tool warns if the backup and target don't match (e.g., restoring a view backup to a regular Feature Service).
+
+**Create as new view** recreates the view from scratch on a source Feature Service you specify:
+
+1. Select a Feature Layer View item from the dropdown
+2. Switch to **Create as new item** mode
+3. Enter the **Source Feature Service ID** - the 32-character item ID of the hosted Feature Service this view should be built on
+4. Choose what to apply: symbology, domains, metadata
+5. Click **Restore**
+
+The tool validates the source Feature Service before proceeding:
+- The source must exist and have a valid service URL
+- The source must be a hosted Feature Service (not another view)
+- The source must contain the same layer/table IDs referenced in the backup
+
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">Where to find the source Feature Service ID:</strong> Open the source Feature Service in your portal and copy the 32-character item ID from the URL bar (the <code>id=</code> parameter). If the original source was deleted, you'll need to republish it first and use the new item ID.
 
 </div>
 
-> **Tip**: The Symbology & Popups option is only available when a `_data.json` file exists for the service.
+> **Tip**: If the view creation fails mid-way (e.g., after layers are added but before symbology is applied), the partially created view is automatically deleted to avoid orphaned items.
 
 ### StoryMap Restore
 
@@ -832,17 +823,44 @@ Feature Service restore updates service configuration from definition files. It 
 
 ### Safety Backup
 
-When "Create backup before restoring" is checked (default), the current item state is saved to a timestamped subfolder before changes:
+When "Create backup before restoring" is checked (default), the current item state is saved to a timestamped subfolder before any changes are made:
+
+**JSON-based items** (Web Maps, Dashboards, StoryMaps, etc.):
 
 ```
-{backup_folder}/_pre_restore_{YYYYMMDD_HHMMSS}/
+{backup_folder}/_pre_restore_2026-02-14_17-57-48/
     ItemTitle_abc123def456.json
-    ItemTitle_abc123def456_resources.zip
+    abc123def456_resources.zip
     Descriptions/ItemTitle_abc123def456_desc.json
     Thumbnails/abc123def456.png
 ```
 
+**Feature Services and Feature Layer Views:**
+
+```
+{backup_folder}/_pre_restore_2026-02-14_17-57-48/
+    ServiceTitle_abc123def456_def.json
+    ServiceTitle_abc123def456_data.json
+    ServiceTitle_abc123def456_desc.json
+```
+
 If the safety backup fails, the restore is aborted and the item is not modified.
+
+> The safety backup folder path is printed to the console log at the start of every restore. Copy it from there if you need it later.
+
+#### How to Revert Using the Safety Backup
+
+The safety backup is saved in the same format the Restore tab reads, so you can use it directly as a backup source to undo a restore:
+
+1. Copy the `_pre_restore_*` folder path from the console log (e.g., `C:\Backups\MYORG_2026-02-14\\_pre_restore_2026-02-14_17-57-48`)
+2. In the Restore tab, paste that path into the **Backup Folder** field (or click Browse and navigate to it)
+3. The item will appear in the dropdown - select it
+4. Enter the same **Target Item ID** (the item you want to revert)
+5. Check the options you want to revert (data, metadata, etc.)
+6. Uncheck "Create backup before restoring" - you're already restoring from a safety backup, so a second one is unnecessary
+7. Click **Restore**
+
+This overwrites the item with its pre-restore state, effectively undoing the previous restore.
 
 <div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
@@ -850,12 +868,78 @@ If the safety backup fails, the restore is aborted and the item is not modified.
 
 <ul>
 <li>Always leave "Create backup before restoring" checked</li>
-<li>Use "Create as new item" first to verify the restore looks correct</li>
-<li>If the restored item looks wrong, you can restore again from the safety backup</li>
+<li>Use "Create as new item" first to verify the restore looks correct before overwriting</li>
+<li>If the restored item looks wrong, revert using the safety backup (see steps above)</li>
 <li>Check the console log for any warnings during the restore</li>
 </ul>
 
 </div>
+
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">Cloud source limitation:</strong> The "Create backup before restoring" option is not available when restoring from S3 or Azure, because there is no local folder to write the safety backup to. If you need a safety net when restoring from cloud storage, run a regular backup of the target item first.
+
+</div>
+
+### Restoring from Cloud Storage
+
+If your backups are stored in Amazon S3 or Azure Blob Storage, you can restore directly from the cloud without downloading the full backup first. Only the small configuration files needed for restore (JSON, thumbnails, descriptions - typically kilobytes) are downloaded on demand.
+
+#### Step 1: Select Backup Source
+
+At the top of the Restore tab, change **Backup Source** from **Local Folder** to **Amazon S3** or **Azure Blob**.
+
+#### Step 2: Enter Cloud Credentials
+
+**Amazon S3:**
+
+| Field | What to Enter |
+|-------|---------------|
+| **Bucket** | Your S3 bucket name (e.g., `mycompany-arcgis-backups`) |
+| **Subdirectory** | Optional path prefix within the bucket (e.g., `prod/weekly`) |
+| **Access Key** | Your AWS Access Key ID |
+| **Secret Key** | Your AWS Secret Access Key |
+
+> **Tip**: Leave credentials blank if running on EC2/ECS with an IAM role attached, or if you have environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`) or `~/.aws/credentials` configured.
+
+**Azure Blob:**
+
+| Field | What to Enter |
+|-------|---------------|
+| **Container** | Your Azure blob container name (e.g., `arcgis-backups`) |
+| **Connection String** | Your Azure Storage connection string (from Access keys or Shared access signature) |
+
+#### Step 3: Connect and Select a Backup
+
+Click **Connect**. The utility lists all folder-based backups in the cloud container/bucket.
+
+Select a backup from the **Backup** dropdown. The item type and item dropdowns populate automatically, just like local folder restore.
+
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">Zipped cloud backups are not supported for on-demand restore.</strong> If backups were uploaded as ZIP archives (the "Zip before upload" option), you must download the ZIP from your cloud console, extract it to a local folder, and use the Local Folder source instead.
+
+</div>
+
+#### Step 4: Restore as Normal
+
+From here, the restore workflow is identical to local folder restore - select an item, choose your options, and click **Restore**. The needed files are downloaded to a temporary directory automatically before the restore begins.
+
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f;">"Create backup before restoring" is not available when restoring from cloud storage</strong> because there is no local folder to write the safety backup to. If you need a safety net, manually back up the item first using the Backup tab.
+
+</div>
+
+#### Cloud Credential Storage
+
+Bucket name, subdirectory, access key ID, and container name are saved in application settings. Secret keys and connection strings are stored securely in **Windows Credential Manager** - the same approach used by the Backup tab.
+
+#### Required Cloud Permissions
+
+**S3**: `s3:ListBucket` and `s3:GetObject` on the backup bucket. Write permissions are not needed for restore.
+
+**Azure**: Read and List permissions on the blob container. The connection string or SAS token must include these permissions.
 
 ### Restore Connection
 
@@ -870,22 +954,16 @@ The Restore tab has its own portal connection, separate from the Backup tab. You
 ### What Happens on Failure
 
 - **Safety backup failure**: The restore is aborted and the item is not modified.
-- **Data restore failure**: The item may be in a partially updated state. Use the safety backup to restore the original.
+- **Data restore failure**: The item may be in a partially updated state. Use the safety backup to [revert to the original](#how-to-revert-using-the-safety-backup).
 - **Resource upload failure**: Individual resource failures are logged as warnings; remaining resources continue uploading.
 - **Feature Service layer failure**: Each layer is updated independently. If one layer fails, the remaining layers are still processed. A summary of successes and failures is shown at the end.
-- **Create-as-new failure**: If item creation succeeds but subsequent steps fail, the orphaned item is automatically deleted to avoid clutter.
+- **Create-as-new failure**: If item creation succeeds but subsequent steps fail, the orphaned item is automatically deleted to avoid clutter. This applies to both JSON-based items and Feature Layer Views.
 
 ### Dependency Checking (Create as New)
 
 When creating a new item, the tool scans the backup JSON for references to other item IDs and reports which dependencies were found. Missing dependencies on the target portal will result in broken references. Review the dependency list in the console before confirming.
 
 ---
-
-<div style="border: 2px solid #ff8f00; border-left: 6px solid #ff8f00; background-color: #fff8e1; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
-
-<strong style="color: #ff8f00;">COMING SOON</strong> - The Find & Replace feature is under development and not yet available in the current release.
-
-</div>
 
 ## Find & Replace
 
@@ -1066,8 +1144,6 @@ Common reasons items are skipped:
 ### Application Appears to Be Hanging
 
 Large feature services with attachments can take over an hour to prepare server-side. Other items continue exporting.
-
-> **Tip**: Don't click in the console window or select text - this can pause the output (a Windows feature). Press Escape or right-click to resume.
 
 ### ZIP File Won't Extract
 

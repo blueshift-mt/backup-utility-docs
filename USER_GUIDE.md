@@ -468,6 +468,18 @@ Move old backups to cheaper storage automatically:
 
 > **Note**: Glacier storage classes have per-object retrieval fees. Use for long-term archival only.
 
+#### Recommended: Browse S3 Backups with WinSCP
+
+[WinSCP](https://winscp.net) is a free Windows file manager that connects directly to S3. It provides a familiar Explorer-like interface for browsing, downloading, and managing your backup files without using the AWS Console or CLI.
+
+1. Download and install [WinSCP](https://winscp.net/eng/download.php)
+2. Open WinSCP and select **Amazon S3** as the protocol
+3. Enter your **Access Key ID** and **Secret Access Key** (the same credentials used in the Backup Utility)
+4. Click **Login** to connect
+5. Navigate to your backup bucket and browse backup folders by date
+
+> WinSCP also supports drag-and-drop downloads, so you can easily pull individual backup files to your local machine when needed.
+
 ### Save Backups to Azure Blob Storage
 
 #### Step 1: Create a Storage Account (if needed)

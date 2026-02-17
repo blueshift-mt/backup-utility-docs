@@ -74,6 +74,12 @@ Restore backed-up items directly from the Backup Utility - no manual file editin
 - Only the small configuration files needed for restore are downloaded on demand
 - Works with the same S3 and Azure credentials used for backup
 
+**Cross-portal restore:**
+
+- Create new items on a different ArcGIS portal or organization using the "Create on a different portal" option in create-as-new mode
+- Both the source and target portals must have a Backup Utility license - short-term migration licenses are available at reduced cost for the target portal, contact [info@civiclens.com](mailto:info@civiclens.com) for details
+- After creating items on the target portal, use the **Find & Replace** tab to update internal item ID references (web map layer sources, dashboard data sources, etc.) so they point to the correct items in the new organization
+
 #### Find & Replace Tab
 
 Scan your portal for references to old item IDs, service URLs, or other strings, and replace them across all dependent items.
@@ -84,14 +90,6 @@ Scan your portal for references to old item IDs, service URLs, or other strings,
 - Scope filters: item type, owner, specific item IDs
 - Stale data check re-fetches items before applying to detect concurrent edits
 - Session-based undo for every applied change
-
-### Improvements in 5.1
-
-#### Cross-Portal Restore
-
-Create new items on a different ArcGIS portal or organization using the "Create on a different portal" option in create-as-new mode. Both the source and target portals must have a Backup Utility license. Short-term migration licenses are available at reduced cost for the target portal - contact [info@civiclens.com](mailto:info@civiclens.com) for details.
-
-After creating items on the target portal, use the **Find & Replace** tab to update internal item ID references (web map layer sources, dashboard data sources, etc.) so they point to the correct items in the new organization.
 
 ---
 

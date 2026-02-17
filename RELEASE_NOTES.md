@@ -1,5 +1,45 @@
 # Release Notes
 
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f; font-size: 1.2em;">BREAKING CHANGE: Scheduled Backup Users Must Act (v5.0+)</strong>
+
+**If you run backups via Windows Task Scheduler with a parameters file, your backups will stop working after upgrading to v5.0 unless you do the following:**
+
+The application no longer auto-detects parameters files on launch. Double-clicking the executable now always opens the GUI. To restore headless operation, you must add `--file` to your scheduled task arguments.
+
+**Immediate fix:**
+
+1. Open **Task Scheduler** and find your backup task
+2. Right-click the task and select **Properties**
+3. Go to the **Actions** tab and click **Edit**
+4. In the **Add arguments** field, add: `--file "C:\path\to\parameters.xlsx"`
+5. Click **OK** to save
+
+**Parameters file support is deprecated and will be removed in a future release.** We recommend migrating to the built-in Schedules tab, which is easier to set up, supports OAuth/SSO, provides real-time progress monitoring, and stores credentials securely. See [Migrating from Parameters Files](#migrating-from-parameters-files) for details.
+
+</div>
+
+---
+
+## Version 5.1.1
+
+### Improvements in 5.1.1
+
+#### Scheduled Backup Monitoring
+
+The scheduled backup progress tab now matches the on-demand backup tab exactly:
+
+- **Full console output** - scheduled backups now display the same detailed console output as on-demand backups, including authentication messages, retry pass info, upload progress, and the full backup summary
+- **Active Items** - downloading items, timeout countdowns, and all active item statuses now display correctly for scheduled backups
+- **Skip breakdown** - skipped item counts are broken down into excluded, unsupported, and reference categories with a "Skip info" button, matching on-demand
+- **Non-admin banner** - an informational banner appears when the backup runs with non-administrator credentials, noting that only items owned by the authenticated user will be backed up
+
+#### Failure Notifications
+
+- Failure emails and the StartErrorLog now display a structured report (title, date, organization, error) instead of a bare error string
+- Fixed an issue where two failure emails were sent when a scheduled backup failed
+
 ---
 
 ## Version 5.1
@@ -47,37 +87,17 @@ Scan your portal for references to old item IDs, service URLs, or other strings,
 
 ### Improvements in 5.1
 
-#### User-Scoped Backup Restore
+#### Cross-Portal Restore
 
-Backups created with owner and folder sorting (e.g., `jcrhodes/Root/Web Map/`) are now correctly detected and restored from both local folders and cloud storage. Previous versions only detected item types at the backup root level.
+Create new items on a different ArcGIS portal or organization using the "Create on a different portal" option in create-as-new mode. Both the source and target portals must have a Backup Utility license. Short-term migration licenses are available at reduced cost for the target portal - contact [info@civiclens.com](mailto:info@civiclens.com) for details.
 
-#### Cloud Upload Deletion Safety
-
-Local backup deletion after successful cloud upload now validates paths before deletion - blocking drive roots, UNC roots, and protected directories (Desktop, Documents, Downloads). Matches the safety checks already applied to retention-based cleanup.
+After creating items on the target portal, use the **Find & Replace** tab to update internal item ID references (web map layer sources, dashboard data sources, etc.) so they point to the correct items in the new organization.
 
 ---
 
 ## Version 5.0
 
-<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
-
-<strong style="color: #d32f2f; font-size: 1.2em;">BREAKING CHANGE: Scheduled Backup Users Must Act</strong>
-
-**If you run backups via Windows Task Scheduler with a parameters file, your backups will stop working after upgrading to v5.0 unless you do the following:**
-
-The application no longer auto-detects parameters files on launch. Double-clicking the executable now always opens the GUI. To restore headless operation, you must add `--file` to your scheduled task arguments.
-
-**Immediate fix:**
-
-1. Open **Task Scheduler** and find your backup task
-2. Right-click the task and select **Properties**
-3. Go to the **Actions** tab and click **Edit**
-4. In the **Add arguments** field, add: `--file "C:\path\to\parameters.xlsx"`
-5. Click **OK** to save
-
-**Parameters file support is deprecated and will be removed in a future release.** We recommend migrating to the built-in Schedules tab, which is easier to set up, supports OAuth/SSO, provides real-time progress monitoring, and stores credentials securely. See [Migrating from Parameters Files](#migrating-from-parameters-files) for details.
-
-</div>
+> See the [breaking change notice](#breaking-change-scheduled-backup-users-must-act-v50) at the top of this page if you use parameters file scheduling.
 
 ### What's New in 5.0
 
@@ -107,6 +127,7 @@ Open the app during a scheduled backup to monitor its progress in real time.
 Schedules are now created and managed directly in the app.
 
 - Daily, weekly, or monthly schedules
+- **OAuth/SSO support** - scheduled backups can authenticate via your organization's SSO provider instead of storing a password
 - Edit, delete, enable/disable, or Run Now from the GUI
 - Overlap detection warns when a backup is still running at the next scheduled start
 - Runs via Windows Task Scheduler under a `CivicLens` folder, even when logged out

@@ -1,6 +1,6 @@
 # Backup Utility for ArcGIS Online and Portal for ArcGIS
 
-## User Guide | Version 5.1
+## User Guide | Version 5.1.1
 
 ---
 
@@ -748,6 +748,23 @@ The **Restore** tab restores backed-up items to ArcGIS Online or Portal for ArcG
 
 </div>
 
+### Cross-Portal Restore
+
+In **Create as new item** mode, you can create items on a different portal from where the backup originated. This is useful for migrating content between organizations.
+
+1. Switch to **Create as new item** mode
+2. Check **Create on a different portal**
+3. Enter the target portal connection details (organization URL, username, password or OAuth)
+4. Select a backup item and click **Restore** - the new item is created on the target portal
+
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">Both portals must be licensed.</strong> The source portal (Connection group) and the target portal must each have a valid Backup Utility license. Licenses are validated before authentication is attempted. Short-term migration licenses are available at reduced cost for the target portal - contact <a href="mailto:info@civiclens.com">info@civiclens.com</a> for details.
+
+</div>
+
+After creating items on the target portal, use the **Find & Replace** tab to update internal item ID references (web map layer sources, dashboard data sources, etc.) so they point to the correct items in the new organization.
+
 ### Restoring JSON-Based Items
 
 1. Open the **Restore** tab
@@ -1209,5 +1226,5 @@ ArcGIS treats settings changes (editing, sync, change tracking) as modifications
 
 ---
 
-*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1*
+*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.1*
 *Copyright CivicLens*

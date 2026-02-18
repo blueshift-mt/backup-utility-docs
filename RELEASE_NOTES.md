@@ -22,6 +22,36 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 ---
 
+## Version 5.1.2
+
+*Includes all features from [5.1](#version-51) and [5.1.1](#version-511).*
+
+- **Item Relationship Backup** - Backups now capture item relationships (e.g., Map2Service, Survey2Service, Solution2Item) alongside item data. For each item that has relationships, a `_relationships.json` file is saved to the Descriptions folder listing all forward and reverse relationships with their types, related item IDs, titles, and owners. After restoring an item that had relationships, a dialog shows the backed-up relationships and offers to recreate them on the target portal.
+
+- **Splash Screen** - A splash screen now appears immediately when the application launches, providing visual feedback while PyInstaller extracts and initializes the application.
+
+- **Cancel Cleanup** - All cancellation paths (on-demand cancel, tab close, window close, scheduled backup cancel) now run the full cleanup sequence: resetting modified service capabilities, resetting tile export settings, deleting temporary portal items, and running secondary tag-based cleanup. Scheduled backup cancellation now uses a graceful shutdown signal instead of immediate process termination, with force-kill only as a fallback after a 30-second timeout.
+
+- **Token Redaction** - Error messages displayed in the Find & Replace and Restore consoles no longer expose authentication tokens. Tokens in HTTP error URLs are automatically replaced with `<redacted>`.
+
+- **Resizable Table Columns** - All table column dividers across the application (Find & Replace results, backup progress, scheduled backup progress) are now draggable, allowing you to resize columns to fit your content.
+
+- **EULA Dialog** - The EULA dialog now requires confirmation when closed via the window X button, matching the behavior of the Decline button.
+
+- **Startup Error Diagnostics** - If the application fails to start (missing DLLs, GPU driver issues, import errors), a native Windows dialog now displays the full error and saves it to `%LOCALAPPDATA%\CivicLens\BackupUtility\StartErrorLog.txt`. Previously, the app would exit silently on startup failures.
+
+- **Software OpenGL Fallback** - The application now automatically uses software OpenGL rendering on machines without GPU drivers (Windows Servers, VMs, RDP sessions). This prevents silent startup failures on headless environments.
+
+- **Feature Service Symbology from Service Definition** - The "Symbology & Popups" restore option now restores `drawingInfo` from the service definition (`_def.json`) layer definitions, not just from item text (`_data.json`). The checkbox is now enabled whenever either file exists in the backup. Restore order: service settings first, layer-level symbology from definition second, item-level symbology from data last.
+
+- **Portal Credential Fix** - Changing the password field in Restore or Find & Replace now correctly invalidates the cached portal connection. Previously, a stale connection could be used after changing the password.
+
+- **Concurrent Backup Warning** - The overlap warning when starting a new backup now detects running scheduled backups in addition to on-demand backups.
+
+- **Undo Diagnostic Messages** - After a restore, the console now explains whether undo is available and why (e.g., "Create backup before restoring" was not selected, or the safety backup did not complete).
+
+---
+
 ## Version 5.1.1
 
 ### Improvements in 5.1.1

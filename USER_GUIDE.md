@@ -1,6 +1,6 @@
 # Backup Utility for ArcGIS Online and Portal for ArcGIS
 
-## User Guide | Version 5.1.1
+## User Guide | Version 5.1.2
 
 ---
 
@@ -685,6 +685,12 @@ BACKUP_20240115_143022/
 - **JSON files** - item configuration (web apps, maps, dashboards)
 - **ZIP files** - File Geodatabase (feature services) or item resources (web apps/maps/dashboards)
 
+Each item type folder also contains subfolders for supplemental metadata when "Get Definitions" is enabled:
+
+- **Descriptions/** - item description JSON (`_desc.json`) and relationship metadata (`_relationships.json`) for items that have relationships (e.g., Map2Service, Survey2Service)
+- **Thumbnails/** - item thumbnail images
+- **Definitions/** - Feature Service admin definitions (`_def.json`, `_data.json`)
+
 ### Inventory.csv
 
 Spreadsheet of every item discovered. Columns:
@@ -1001,6 +1007,16 @@ The Restore tab has its own portal connection, separate from the Backup tab. You
 
 When creating a new item, the tool scans the backup JSON for references to other item IDs and reports which dependencies were found. Missing dependencies on the target portal will result in broken references. Review the dependency list in the console before confirming.
 
+### Relationship Restore
+
+If a backed-up item has a `_relationships.json` file (created automatically during backup for items with relationships), a dialog appears after a successful restore offering to recreate those relationships.
+
+**Forward relationships** (e.g., a web map's Map2Service link to a feature service) can be recreated if the target item exists on the portal. Each relationship has a checkbox so you can select which ones to restore.
+
+**Reverse relationships** (owned by other items pointing to this one) are shown for reference but cannot be recreated from this side - you would need to restore or re-backup the other item.
+
+> Relationship restore is available for same-portal restores only. For cross-portal migrations, relationships must be recreated manually or by restoring the origin items on the target portal.
+
 ---
 
 ## Find & Replace
@@ -1238,5 +1254,5 @@ ArcGIS treats settings changes (editing, sync, change tracking) as modifications
 
 ---
 
-*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.1*
+*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.2*
 *Copyright CivicLens*

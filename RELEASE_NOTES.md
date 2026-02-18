@@ -38,7 +38,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 - **EULA Dialog** - The EULA dialog now requires confirmation when closed via the window X button, matching the behavior of the Decline button.
 
-- **Startup Error Diagnostics** - If the application fails to start (missing DLLs, GPU driver issues, import errors), a native Windows dialog now displays the full error and saves it to `%LOCALAPPDATA%\CivicLens\BackupUtility\StartErrorLog.txt`. Previously, the app would exit silently on startup failures.
+- **Startup Error Diagnostics** - If the application fails to start (missing DLLs, GPU driver issues, import errors), a native Windows dialog now displays the full error with system diagnostics (OS version, architecture, VC++ runtime status, Qt plugin availability) and saves it to `%LOCALAPPDATA%\CivicLens\BackupUtility\StartErrorLog.txt`. The Qt platform plugin is validated before loading PySide6 to catch extraction failures early. Previously, the app would exit silently on startup failures.
 
 - **Software OpenGL Fallback** - The application now automatically uses software OpenGL rendering on machines without GPU drivers (Windows Servers, VMs, RDP sessions). This prevents silent startup failures on headless environments.
 

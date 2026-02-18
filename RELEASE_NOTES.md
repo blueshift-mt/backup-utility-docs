@@ -30,10 +30,6 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 - **Splash Screen** - A splash screen now appears immediately when the application launches, providing visual feedback while PyInstaller extracts and initializes the application.
 
-- **Cancel Cleanup** - All cancellation paths (on-demand cancel, tab close, window close, scheduled backup cancel) now run the full cleanup sequence: resetting modified service capabilities, resetting tile export settings, deleting temporary portal items, and running secondary tag-based cleanup. Scheduled backup cancellation now uses a graceful shutdown signal instead of immediate process termination, with force-kill only as a fallback after a 30-second timeout.
-
-- **Token Redaction** - Error messages displayed in the Find & Replace and Restore consoles no longer expose authentication tokens. Tokens in HTTP error URLs are automatically replaced with `<redacted>`.
-
 - **Resizable Table Columns** - All table column dividers across the application (Find & Replace results, backup progress, scheduled backup progress) are now draggable, allowing you to resize columns to fit your content.
 
 - **EULA Dialog** - The EULA dialog now requires confirmation when closed via the window X button, matching the behavior of the Decline button.

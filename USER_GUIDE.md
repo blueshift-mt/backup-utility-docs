@@ -368,6 +368,28 @@ Receive email when backups complete or fail.
 - **Run Now**: Run the backup immediately through the GUI with progress monitoring
 - **Enable/Disable**: Pause without deleting
 
+### Troubleshooting Task Scheduler Errors
+
+If task creation fails, the application saves your schedule and shows a warning with the specific error and troubleshooting steps. You can also generate an XML file to import the task manually.
+
+**Common errors and solutions:**
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| **Access denied** | Not running with admin rights, or Group Policy restricts task creation | Right-click BackupUtility and select **Run as administrator** |
+| **User name or password is incorrect** | Wrong password, or the account does not exist (Windows uses the same error for both) | Verify the password is correct and the username is spelled correctly. Include the domain if needed (e.g., `DOMAIN\username`) |
+| **Account not found** | Username cannot be resolved (typo, deleted account, or missing domain prefix) | Check spelling, include the domain or machine name (e.g., `DOMAIN\user` or `.\localuser`) |
+| **Account locked out** | Too many failed login attempts | Ask your IT administrator to unlock the account, or wait for the lockout period to expire |
+| **Password expired** | The account password must be changed | Log in with the account to set a new password, then update the schedule |
+| **Logon session does not exist** | The account lacks the "Log on as a batch job" right | Open **Local Security Policy** (secpol.msc) > Local Policies > User Rights Assignment, and add the account to **Log on as a batch job** |
+| **Task Scheduler service not running** | The Windows service is stopped or disabled | Open **services.msc**, find **Task Scheduler**, right-click and select **Start**. Set Startup Type to **Automatic** |
+
+**Manual import option:** When automatic task creation fails, click **Yes** on the warning dialog to generate an XML file. You (or an administrator) can import it via Task Scheduler (right-click Task Scheduler Library > Import Task) or from an elevated command prompt:
+
+```
+schtasks /Create /TN "CivicLens\BackupUtility_<id>" /XML "path\to\file.xml"
+```
+
 ---
 
 ## Cloud Storage

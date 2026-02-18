@@ -44,6 +44,8 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 - **Concurrent Backup Warning** - The overlap warning when starting a new backup now detects running scheduled backups in addition to on-demand backups.
 
+- **Schedule Task Creation Diagnostics** - When Windows Task Scheduler fails to create a task (wrong password, account not found, access denied, service stopped, etc.), the error dialog now shows the specific cause and step-by-step troubleshooting instructions. Task creation is also verified after saving - if the task is missing despite a success report, a warning is shown immediately. Previously, raw Windows error text was shown without guidance.
+
 - **Undo Diagnostic Messages** - After a restore, the console now explains whether undo is available and why (e.g., "Create backup before restoring" was not selected, or the safety backup did not complete).
 
 ---

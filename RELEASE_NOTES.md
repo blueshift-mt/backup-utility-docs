@@ -32,7 +32,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 **Previous versions created Windows Task Scheduler tasks with "Run only when user is logged on", which meant scheduled backups would not run when no user was logged in to the machine.** This affected all schedules, including those with a Windows User and password configured.
 
-This is now fixed. All new and re-saved schedules will create tasks with "Run whether user is logged on or not". **To fix existing schedules, open the application and re-save each schedule** (edit the schedule and click OK). The task will be recreated with the correct setting.
+This is now fixed. **Existing schedules are upgraded automatically on launch** - the application detects tasks with the wrong setting and recreates them using stored credentials. No manual action is required unless the password was never saved (in which case, re-save the schedule to provide it).
 
 </div>
 

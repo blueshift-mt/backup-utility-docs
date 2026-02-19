@@ -36,6 +36,12 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 - **Faster Retry Processing** - The final retry pass now processes multiple items concurrently instead of sequentially. Previously, a small service could wait behind a multi-gigabyte export for nearly an hour. Items are now processed in parallel using a thread pool, matching the behavior of earlier retry passes.
 
+- **Smarter Task Path Repair** - When the application is opened from a new location (after moving, renaming, or updating), scheduled tasks are now updated using the Windows Task Scheduler COM API instead of `schtasks /Change`. This fixes a silent failure where `schtasks` prompted for a password in the background and never completed. Disabled schedules are now repaired too, so they work correctly if re-enabled later. A notification dialog appears on startup showing how many tasks were updated and the current path, and the Schedules tab displays matching informational banners.
+
+- **Safer Exit Handling** - Closing the application now distinguishes between manual and scheduled backups. Manual backups prompt for confirmation before cancelling. Scheduled backups show an informational message explaining they will continue in the background. When both are running, a combined dialog covers both scenarios.
+
+- **Improved Cleanup Reliability** - Temporary portal items that were already deleted (by an earlier cleanup pass) no longer cause false "deletion failed" warnings. The cleanup now recognizes the ArcGIS "item does not exist" response as a successful outcome.
+
 - **Improved Diagnostic Logging** - Full_Log.log now captures more detailed context for troubleshooting.
 
 - **Broader OS Compatibility** - Fixed a startup failure (`ImportError: DLL load failed while importing QtWidgets`) on some Windows versions. The Qt UI framework has been pinned to a version with wider platform support.
@@ -224,7 +230,7 @@ S3 and Azure Blob are now built in. S3 also supports IAM instance roles and envi
 
 #### Portable Schedules
 
-Scheduled backups survive application upgrades, even when the executable is saved to a new location. On launch, the application automatically detects stale Windows Task Scheduler entries and updates them to point to the current executable path. Schedule configurations and credentials are stored in `%LOCALAPPDATA%` and Windows Credential Manager respectively - both independent of the install location.
+Scheduled backups survive application moves and upgrades. On launch, the application automatically detects stale Windows Task Scheduler entries and updates them to point to the current executable path. Schedule configurations and credentials are stored in `%LOCALAPPDATA%` and Windows Credential Manager respectively, both independent of the install location.
 
 #### Cleanup Safety
 

@@ -22,7 +22,8 @@ The application makes exactly three types of outbound connections:
 | Destination | Purpose | Data sent | When |
 |---|---|---|---|
 | **Your ArcGIS portal** | Export your content | Your credentials (to your own portal) | During backup/restore |
-| **ArcGIS Online hosted service** | License validation | Nothing - downloads a list, checks locally | On startup |
+| **ArcGIS Online hosted service** | License validation (primary) | Nothing - downloads a license list, checks your org name locally | On startup |
+| **CivicLens S3 bucket** | License validation (fallback) | Nothing - downloads a cached JSON copy of the same list | If primary check is unavailable |
 | **CivicLens CDN** | Update check | Nothing - checks a version number | On startup |
 
 If you enable email notifications through CivicLens mail, result summaries are sent through our mail server. You can avoid this entirely by using the **Custom SMTP** option with your own mail server.

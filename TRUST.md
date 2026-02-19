@@ -11,7 +11,7 @@ Backup Utility connects to your ArcGIS Online or Portal for ArcGIS environment, 
 ## What It Does Not Do
 
 - **No telemetry.** The application does not collect usage data, analytics, or diagnostics.
-- **No data transmission.** Your ArcGIS content is never sent to CivicLens or any third party. Backups go only where you tell them to.
+- **No data transmission.** Your ArcGIS content and credentials are never sent to CivicLens or any third party. Backups go only where you tell them to.
 - **No background services.** Nothing is installed. No Windows services, no registry entries, no startup items. Scheduled backups run through Windows Task Scheduler, which you can inspect directly.
 - **No installer.** The application is a single `.exe` file. Delete it and it's gone.
 

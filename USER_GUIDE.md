@@ -339,6 +339,12 @@ Each schedule requires a **Windows Password** so Task Scheduler can run unattend
 
 ### Upgrading & Moving the Application
 
+<div style="border: 2px solid #e65100; border-left: 6px solid #e65100; background-color: #fff3e0; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #e65100;">Choose a permanent location.</strong> Scheduled tasks run from whichever copy of BackupUtility was last opened. Pick a folder (e.g., <code>C:\CivicLens\BackupUtility.exe</code>), put the application there, and leave it. When you download an update, replace the file in that same folder. Do not leave multiple copies in different locations.
+
+</div>
+
 Schedule configurations, credentials, and settings are stored independently of the application:
 
 | Component | Location | Survives upgrade? |
@@ -350,6 +356,8 @@ Schedule configurations, credentials, and settings are stored independently of t
 When the application launches from a new location (e.g., after downloading an update to a different folder), it automatically detects that existing scheduled tasks point to the old path and updates them. No manual intervention is required - existing schedules, credentials, and task triggers are all preserved.
 
 **How it works:** Each time the application starts, it reads every enabled schedule and checks whether the Windows task's command still points to the current executable. If not, it updates the task to use the new path. This uses a Windows Task Scheduler feature (`schtasks /Change /TR`) that modifies the command without touching the stored credentials, so no Windows password is needed.
+
+**If a scheduled backup is currently running**, the task cannot be updated until that backup finishes. Close any running backups and reopen the application to retry.
 
 **If a scheduled backup fires before you open the app from the new location**, that run will fail because the old path no longer exists. The next time you open the application, the task is automatically repaired, and all future runs will use the correct path. Disabled schedules are skipped during repair since they have no active Windows task to update.
 

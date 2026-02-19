@@ -28,22 +28,29 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 <div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #d32f2f; font-size: 1.2em;">CRITICAL FIX: Scheduled Tasks Must Be Re-Saved</strong>
+<strong style="color: #d32f2f; font-size: 1.2em;">CRITICAL FIX: Scheduled Tasks Must Be Updated</strong>
 
 **Previous versions created Windows Task Scheduler tasks with "Run only when user is logged on", which meant scheduled backups would not run when no user was logged in to the machine.**
 
-This is now fixed for all new and re-saved schedules. **Existing schedules must be re-saved to apply the fix:**
+This is now fixed for all new schedules. **On first launch, the application will detect affected tasks and prompt you to update them all at once:**
 
-1. Open the application - a warning dialog will list any affected schedules
-2. Go to the **Schedules** tab (an orange banner also shows the affected schedules)
-3. Click **Edit** on each affected schedule
-4. Re-enter the **Windows Password** (the password field is always blank for security - you must type it again)
-5. Click **OK** to save - the task will be recreated with "Run whether user is logged on or not"
-6. Repeat for each affected schedule
+1. A dialog will list all scheduled tasks that need attention (missing, wrong setting, or pointing to an old application location)
+2. Enter your **Windows username** (optional, defaults to the current user) and **Windows password**
+3. Click **Update Tasks** - all affected tasks will be recreated with the correct settings
+4. Your Windows password is used only for task creation and is **not saved**
+
+If you skip the prompt, you can fix tasks individually later:
+
+- **In the application:** Go to the Schedules tab, edit each schedule, re-enter the Windows password, and click OK
+- **In Task Scheduler** (if the task exists): Open Task Scheduler (`taskschd.msc`), expand the CivicLens folder, right-click the task, select Properties, choose "Run whether user is logged on or not", enter your Windows password, and click OK
 
 You can verify the fix in Windows Task Scheduler: right-click the task, select Properties, and confirm it shows "Run whether user is logged on or not" under Security options.
 
 </div>
+
+- **Windows Password Security** - The Windows password entered when creating or updating a scheduled task is passed directly to Windows Task Scheduler at task creation time and immediately discarded. It is never saved to disk or credential storage.
+
+- **Smarter Task Path Repair** - When the application is opened from a new location (after moving, renaming, or updating), the startup prompt now also updates the task path. Previously, path repair used a separate mechanism that could silently change the task's logon type.
 
 - **Owner Filter Performance** - When an owner filter is set, the discovery phase now queries only that owner's items instead of scanning every user in the organization. Previously, setting an owner filter still retrieved the full user list and iterated all owners before filtering. This also applies to web map dependency scanning and group mapping, which are now scoped to the filtered owner and exit early when all items are mapped.
 

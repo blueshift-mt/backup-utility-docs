@@ -28,17 +28,15 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 - **gMSA Support for Scheduled Tasks** - Group Managed Service Accounts (gMSA) are now supported for scheduled backups. Enter the account in `DOMAIN\account$` format in the Windows User field - no password is required. Active Directory manages the credentials automatically.
 
-- **Transient Network Error Handling** - Items that encounter a temporary network error (connection reset, timeout) during processing are now routed to retry instead of being marked as nonexistent. Previously, a brief network interruption during a large backup could cause items to be skipped silently.
-
 - **Cloud Credential Validation for Scheduled Backups** - S3 and Azure credentials are now checked when saving a schedule (access key format, connection string structure) with a warning if something looks wrong. At backup time, missing credentials (secret key or connection string) are detected at startup and logged clearly, rather than failing mid-backup with a generic message. If cloud storage is completely unreachable, the backup now falls back to local storage with a warning instead of aborting. Cloud credential info buttons now link directly to setup documentation.
 
 - **Azure Download Reliability** - When restoring from Azure Blob Storage, partial files from interrupted downloads are now cleaned up automatically instead of being left on disk.
 
 - **Windows Username Normalization** - The `.\` prefix (local account shorthand) is now automatically stripped from the Windows User field when creating scheduled tasks. This prevents a common configuration issue where `.\username` was rejected by Windows Task Scheduler while `username` worked correctly.
 
-- **Improved Diagnostic Logging** - Error-handling paths across the application now capture detailed context in Full_Log.log for troubleshooting. When an operation encounters a transient issue (locked file, credential refresh, cleanup failure), the log records what happened and where.
+- **Improved Diagnostic Logging** - Full_Log.log now captures more detailed context for troubleshooting.
 
-- **Windows Server 2016 Compatibility** - Fixed a startup failure (`ImportError: DLL load failed while importing QtWidgets`) on Windows Server 2016 and older Windows 10 builds (pre-1809). The Qt UI framework has been pinned to a version that supports these platforms.
+- **Broader OS Compatibility** - Fixed a startup failure (`ImportError: DLL load failed while importing QtWidgets`) on some Windows versions. The Qt UI framework has been pinned to a version with wider platform support.
 
 ---
 

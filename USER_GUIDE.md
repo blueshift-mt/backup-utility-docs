@@ -345,17 +345,23 @@ Schedule configurations, credentials, and settings are stored independently of t
 |-----------|----------|-------------------|
 | Schedule configs | `%LOCALAPPDATA%\CivicLens\BackupUtility\schedules.json` | Yes |
 | ArcGIS credentials | Windows Credential Manager | Yes |
-| Windows Task Scheduler tasks | Task Scheduler `\CivicLens` folder | Auto-repaired |
+| Windows Task Scheduler tasks | Task Scheduler `\CivicLens` folder | Repaired on startup |
 
 Scheduled tasks run from whichever copy of BackupUtility was last opened. If you move or rename the application or its folder, open it from the new location so your scheduled tasks are updated. If you download an update to the same location (replacing the existing file), no action is needed.
 
-**How it works:** Each time the application starts, it checks whether all scheduled tasks (enabled and disabled) still point to the current executable path. If not, it updates them using the Windows Task Scheduler COM API without touching stored credentials. A notification dialog confirms how many tasks were updated and shows the current path. The Schedules tab also displays a blue banner with this information.
+**How it works:** Each time the application starts, it checks whether all scheduled tasks (enabled and disabled) are healthy. It detects three issues:
 
-**If a task cannot be updated** (e.g., a backup is currently running), the Schedules tab shows a red warning banner. Close any running backups and reopen the application to retry.
+- **Stale path** - the task points to a different application location (after moving or updating)
+- **Missing task** - the Windows Task Scheduler task does not exist
+- **Runs only when logged on** - the task is configured to run only when a user is logged in, meaning it will not run at the scheduled time if no one is logged in
 
-**If a scheduled backup fires before you open the app from the new location**, that run will fail because the old path no longer exists. The next time you open the application, the task is automatically repaired, and all future runs will use the correct path.
+If any issues are found, a dialog prompts for your Windows username and password so the tasks can be recreated with proper credentials. The password is used only for task creation and is not saved. A confirmation dialog shows how many tasks were updated and whether any failed. If you skip the prompt, you can fix tasks later by editing each schedule in the Schedules tab.
 
-The application can be stored on a local drive or a network share. Network shares work because scheduled tasks run in your logged-on session where mapped drives and UNC paths are available. Keep in mind that if the network is unavailable when a scheduled backup fires, the backup will not run.
+**Ongoing monitoring:** The Schedules tab Warnings column checks task health every time it refreshes. If a task is missing, runs only when logged on, or points to the wrong location, a warning appears in the table. This catches issues that occur between application restarts (for example, if someone modifies a task directly in Task Scheduler).
+
+**If a scheduled backup fires before you open the app from the new location**, that run will fail because the old path no longer exists. The next time you open the application, the task is repaired, and all future runs will use the correct path.
+
+The application can be stored on a local drive or a network share. Network shares work because scheduled tasks run under the Windows user account specified during schedule creation. Keep in mind that if the network is unavailable when a scheduled backup fires, the backup will not run.
 
 ### Where to Find Scheduled Tasks
 

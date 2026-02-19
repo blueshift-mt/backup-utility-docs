@@ -49,7 +49,7 @@ All credentials are stored in **Windows Credential Manager**, encrypted at rest 
 
 ## Code Signing
 
-The executable is signed with a **CivicLens LLC EV code signing certificate**. You can verify by right-clicking `BackupUtility.exe` > **Properties** > **Digital Signatures** - the signer should be **CIVICLENS LLC**.
+The executable is signed with a **CivicLens LLC EV code signing certificate** issued by a trusted Certificate Authority (Sectigo). The digital signature guarantees the executable has not been tampered with or modified since it was built. You can verify by right-clicking `BackupUtility.exe` > **Properties** > **Digital Signatures** - the signer should be **CIVICLENS LLC**.
 
 ---
 

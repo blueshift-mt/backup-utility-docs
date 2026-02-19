@@ -36,7 +36,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 - **Faster Retry Processing** - The final retry pass now processes multiple items concurrently instead of sequentially. Previously, a small service could wait behind a multi-gigabyte export for nearly an hour. Items are now processed in parallel using a thread pool, matching the behavior of earlier retry passes.
 
-- **Improved Diagnostic Logging** - Full_Log.log now captures more detailed context for troubleshooting. Log messages now show original item titles (e.g., "Trees (master)") instead of filesystem-sanitized names (e.g., "Trees__master_").
+- **Improved Diagnostic Logging** - Full_Log.log now captures more detailed context for troubleshooting.
 
 - **Broader OS Compatibility** - Fixed a startup failure (`ImportError: DLL load failed while importing QtWidgets`) on some Windows versions. The Qt UI framework has been pinned to a version with wider platform support.
 

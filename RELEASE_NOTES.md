@@ -28,23 +28,24 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 <div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #d32f2f; font-size: 1.2em;">CRITICAL FIX: Scheduled Tasks Must Be Updated</strong>
+<strong style="color: #d32f2f; font-size: 1.2em;">CRITICAL FIX: Scheduled Backups May Not Have Been Running</strong>
 
-**Previous versions created Windows Task Scheduler tasks with "Run only when user is logged on", which meant scheduled backups would not run when no user was logged in to the machine.**
+**Previous versions created Windows Task Scheduler tasks with "Run only when user is logged on". If no user was logged in to the machine at the scheduled time, the backup did not run.**
 
-This is now fixed for all new schedules. **On first launch, the application will detect affected tasks and prompt you to update them all at once:**
+This version fixes the issue automatically. **When you open the application, it will detect all affected tasks and prompt you to fix them:**
 
-1. A dialog will list all scheduled tasks that need attention (missing, wrong setting, or pointing to an old application location)
-2. Enter your **Windows username** (optional, defaults to the current user) and **Windows password**
-3. Click **Update Tasks** - all affected tasks will be recreated with the correct settings
-4. Your Windows password is used only for task creation and is **not saved**
+1. A dialog lists every scheduled task that needs to be updated
+2. Enter your **Windows username** (optional - leave blank to use the current user) and your **Windows login password**
+3. Click **Update Tasks** - each task is deleted and recreated with "Run whether user is logged on or not"
+4. A confirmation dialog shows how many tasks were updated and whether any failed
+5. Your password is used only for task creation and is **not saved anywhere**
 
-If you skip the prompt, you can fix tasks individually later:
+If you click **Skip**, you can fix tasks one at a time later:
 
-- **In the application:** Go to the Schedules tab, edit each schedule, re-enter the Windows password, and click OK
-- **In Task Scheduler** (if the task exists): Open Task Scheduler (`taskschd.msc`), expand the CivicLens folder, right-click the task, select Properties, choose "Run whether user is logged on or not", enter your Windows password, and click OK
+- **In the application:** Go to the Schedules tab, click Edit on a schedule, re-enter the Windows password, and click OK
+- **Directly in Task Scheduler:** Open `taskschd.msc`, expand the **CivicLens** folder, right-click a task, select Properties, select "Run whether user is logged on or not", enter your password, and click OK
 
-You can verify the fix in Windows Task Scheduler: right-click the task, select Properties, and confirm it shows "Run whether user is logged on or not" under Security options.
+**To verify:** In Task Scheduler, right-click any task in the CivicLens folder, select Properties, and confirm it shows "Run whether user is logged on or not" under Security options.
 
 </div>
 

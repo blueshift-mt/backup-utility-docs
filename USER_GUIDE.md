@@ -349,6 +349,10 @@ Schedule configurations, credentials, and settings are stored independently of t
 
 When the application launches from a new location (e.g., after downloading an update to a different folder), it automatically detects that existing scheduled tasks point to the old path and updates them. No manual intervention is required - existing schedules, credentials, and task triggers are all preserved.
 
+**How it works:** Each time the application starts, it reads every enabled schedule and checks whether the Windows task's command still points to the current executable. If not, it updates the task to use the new path. This uses a Windows Task Scheduler feature (`schtasks /Change /TR`) that modifies the command without touching the stored credentials, so no Windows password is needed.
+
+**If a scheduled backup fires before you open the app from the new location**, that run will fail because the old path no longer exists. The next time you open the application, the task is automatically repaired, and all future runs will use the correct path. Disabled schedules are skipped during repair since they have no active Windows task to update.
+
 ### Where to Find Scheduled Tasks
 
 Tasks are created in Windows Task Scheduler under the **CivicLens** folder:

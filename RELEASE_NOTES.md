@@ -22,6 +22,24 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 ---
 
+## Version 5.1.4
+
+*Includes all features from [5.1.3](#version-513) and earlier.*
+
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f; font-size: 1.2em;">CRITICAL FIX: Scheduled Tasks Now Run When Logged Out</strong>
+
+**Previous versions created Windows Task Scheduler tasks with "Run only when user is logged on", which meant scheduled backups would not run when no user was logged in to the machine.** This affected all schedules, including those with a Windows User and password configured.
+
+This is now fixed. All new and re-saved schedules will create tasks with "Run whether user is logged on or not". **To fix existing schedules, open the application and re-save each schedule** (edit the schedule and click OK). The task will be recreated with the correct setting.
+
+</div>
+
+- **Owner Filter Performance** - When an owner filter is set, the discovery phase now queries only that owner's items instead of scanning every user in the organization. Previously, setting an owner filter still retrieved the full user list and iterated all owners before filtering. This also applies to web map dependency scanning and group mapping, which are now scoped to the filtered owner and exit early when all items are mapped.
+
+---
+
 ## Version 5.1.3
 
 *Includes all features from [5.1.2](#version-512) and earlier.*

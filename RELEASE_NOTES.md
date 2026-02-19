@@ -28,7 +28,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 <div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #d32f2f; font-size: 1.2em;">CRITICAL FIX: Scheduled Backups May Not Have Been Running</strong>
+<strong style="color: #d32f2f; font-size: 1.2em;">CRITICAL FIX: Scheduled Backups Not Configured to Run When User is Logged Out</strong>
 
 **Previous versions created Windows Task Scheduler tasks with "Run only when user is logged on". If no user was logged in to the machine at the scheduled time, the backup did not run.**
 

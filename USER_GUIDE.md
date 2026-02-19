@@ -750,7 +750,7 @@ Detailed log of the entire backup process. Include this when contacting support.
 
 ### StartErrorLog.txt
 
-Located next to the executable. Records startup failures and fatal crashes from scheduled backups. Check this if a scheduled backup fails silently.
+Located at `%LOCALAPPDATA%\CivicLens\BackupUtility\StartErrorLog.txt`. If the application fails to start, a native Windows dialog displays the error with system diagnostics (OS version, architecture, VC++ runtime status, Qt plugin availability) and saves it to this file. Send this file to support@civiclens.com for troubleshooting.
 
 ---
 
@@ -1192,6 +1192,16 @@ Safety backups are saved in `%TEMP%\find_replace_backups`. Do not rely on them f
 ---
 
 ## Troubleshooting
+
+### Application Fails to Start
+
+If the application won't launch, check `%LOCALAPPDATA%\CivicLens\BackupUtility\StartErrorLog.txt` for a detailed error report including OS version, architecture, and DLL availability.
+
+**Common causes:**
+
+- **Older Windows version**: The StartErrorLog shows `ImportError: DLL load failed while importing QtWidgets`. This means the Qt UI framework requires Windows APIs not available on your OS version. Download the latest release from [civiclens.com/downloads](https://civiclens.com/downloads), which includes Qt compatibility fixes for older Windows versions. If the issue persists, contact support@civiclens.com with your StartErrorLog.
+- **Missing VC++ Runtime**: Install the [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) (x64).
+- **Corrupted extraction**: Delete `_MEI*` folders in `%TEMP%` and try again. Antivirus software occasionally quarantines DLLs during extraction.
 
 ### "Connection failed"
 

@@ -48,8 +48,6 @@ You can verify the fix in Windows Task Scheduler: right-click the task, select P
 
 </div>
 
-- **Windows Password Security** - The Windows password entered when creating or updating a scheduled task is passed directly to Windows Task Scheduler at task creation time and immediately discarded. It is never saved to disk or credential storage.
-
 - **Smarter Task Path Repair** - When the application is opened from a new location (after moving, renaming, or updating), the startup prompt now also updates the task path. Previously, path repair used a separate mechanism that could silently change the task's logon type.
 
 - **Owner Filter Performance** - When an owner filter is set, the discovery phase now queries only that owner's items instead of scanning every user in the organization. Previously, setting an owner filter still retrieved the full user list and iterated all owners before filtering. This also applies to web map dependency scanning and group mapping, which are now scoped to the filtered owner and exit early when all items are mapped.

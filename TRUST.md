@@ -49,26 +49,7 @@ All credentials are stored in **Windows Credential Manager**, encrypted at rest 
 
 ## Code Signing
 
-The executable is signed with a **CivicLens LLC Extended Validation (EV) code signing certificate**. EV certificates require verified business identity - the certificate authority confirms the legal entity, physical address, and authorized signers before issuing.
-
-This means:
-- Windows SmartScreen will not block the application
-- The publisher name "CIVICLENS LLC" appears in Windows UAC prompts
-- The signature proves the executable has not been modified since it was built
-
-### How to verify
-
-1. Right-click `BackupUtility.exe` > **Properties** > **Digital Signatures** tab
-2. You should see:
-   - **Name of signer:** CIVICLENS LLC
-   - **Timestamp:** A date/time from Sectigo's timestamp server
-3. Click **Details** > **View Certificate** to inspect the full certificate chain
-4. Or from a command prompt:
-   ```
-   signtool verify /pa /v BackupUtility.exe
-   ```
-
-If the signature is missing or shows a different signer, do not run the executable.
+The executable is signed with a **CivicLens LLC EV code signing certificate**. You can verify by right-clicking `BackupUtility.exe` > **Properties** > **Digital Signatures** - the signer should be **CIVICLENS LLC**.
 
 ---
 

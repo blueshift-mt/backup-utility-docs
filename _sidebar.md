@@ -26,4 +26,5 @@
   * [Tips and Best Practices](USER_GUIDE.md#tips-and-best-practices)
   * [Troubleshooting](USER_GUIDE.md#troubleshooting)
 * [Getting Help](USER_GUIDE.md#getting-help)
+* [Trust & Security](TRUST.md)
 * [Release Notes](RELEASE_NOTES.md)

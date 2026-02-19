@@ -26,5 +26,10 @@
   * [Tips and Best Practices](USER_GUIDE.md#tips-and-best-practices)
   * [Troubleshooting](USER_GUIDE.md#troubleshooting)
 * [Getting Help](USER_GUIDE.md#getting-help)
-* [Trust & Security](TRUST.md)
+* **Trust & Security**
+  * [Overview](TRUST.md)
+  * [Network Connections](TRUST.md#network-connections)
+  * [Credential Security](TRUST.md#credential-security)
+  * [Code Signing](TRUST.md#code-signing)
+  * [File System Footprint](TRUST.md#file-system-footprint)
 * [Release Notes](RELEASE_NOTES.md)

@@ -44,6 +44,8 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 - **Improved Diagnostic Logging** - Full_Log.log now captures more detailed context for troubleshooting.
 
+- **Startup Error Visibility** - If the application fails to start, the error log is now opened automatically in Notepad in addition to the error dialog. This ensures the error is visible even on systems where the dialog does not appear. The error dialog also uses topmost and foreground flags so it cannot be hidden behind other windows.
+
 - **Broader OS Compatibility** - Fixed a startup failure (`ImportError: DLL load failed while importing QtWidgets`) on some Windows versions. The Qt UI framework has been pinned to a version with wider platform support.
 
 ---

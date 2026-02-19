@@ -42,7 +42,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 ## Version 5.1.2
 
-*Includes all features from [5.1](#version-51) and [5.1.1](#version-511).*
+*Includes all features from [5.1.0](#version-510) and [5.1.1](#version-511).*
 
 - **Item Relationship Backup** - Backups now capture item relationships (e.g., Map2Service, Survey2Service, Solution2Item) alongside item data. For each item that has relationships, a `_relationships.json` file is saved to the Descriptions folder listing all forward and reverse relationships with their types, related item IDs, titles, and owners. After restoring an item that had relationships, a dialog shows the backed-up relationships and offers to recreate them on the target portal.
 
@@ -88,9 +88,9 @@ The scheduled backup progress tab now matches the on-demand backup tab exactly:
 
 ---
 
-## Version 5.1
+## Version 5.1.0
 
-### What's New in 5.1
+### What's New in 5.1.0
 
 #### Restore Tab
 

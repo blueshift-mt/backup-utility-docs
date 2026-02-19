@@ -1,6 +1,6 @@
 # Backup Utility for ArcGIS Online and Portal for ArcGIS
 
-## User Guide | Version 5.1.2
+## User Guide | Version 5.1.3
 
 ---
 
@@ -1286,5 +1286,5 @@ ArcGIS treats settings changes (editing, sync, change tracking) as modifications
 
 ---
 
-*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.2*
+*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.3*
 *Copyright CivicLens*

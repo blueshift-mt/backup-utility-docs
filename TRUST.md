@@ -1,12 +1,12 @@
 # Trust & Security
 
-You're being asked to give this application your ArcGIS credentials and access to your organization's data. That's a significant ask. This page explains exactly what the application does, what it doesn't do, and how you can verify every claim yourself.
+This page explains what the application does, what it doesn't do, and how you can verify each claim.
 
 ---
 
 ## What the Application Does
 
-Backup Utility connects to your ArcGIS Online or Portal for ArcGIS environment, exports your content (maps, apps, feature services, files), and saves it to a location you choose: a local folder, Amazon S3, or Azure Blob Storage. That's it.
+Backup Utility connects to your ArcGIS Online or Portal for ArcGIS environment, exports your content (maps, apps, feature services, files), and saves it to a location you choose: a local folder, Amazon S3, or Azure Blob Storage.
 
 ## What It Does Not Do
 

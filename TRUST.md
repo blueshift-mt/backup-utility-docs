@@ -100,15 +100,6 @@ To completely remove the application: delete the exe, delete the `%LOCALAPPDATA%
 
 ---
 
-## About CivicLens
-
-CivicLens LLC is a Montana-based company focused on GIS data management tools for state and local government.
-
-- **Website:** [civiclens.com](https://civiclens.com)
-- **Contact:** info@civiclens.com
-
----
-
 <p style="text-align: center; color: #888; margin-top: 40px;">
 Backup Utility for ArcGIS | CivicLens LLC | v5.1.3
 </p>

@@ -1,7 +1,5 @@
 # Trust & Security
 
-This page explains what the application does, what it doesn't do, and how you can verify each claim.
-
 ---
 
 ## What the Application Does

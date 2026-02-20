@@ -314,18 +314,22 @@ Found in the **Advanced** section of the Backup tab:
 ### Create a Schedule
 
 1. Go to the **Schedules** tab
-2. Click **New Schedule**
-3. Set the frequency (Daily, Weekly, or Monthly)
-4. Enter your connection details
-5. Click **Save**
+2. Click **Add Schedule**
+3. Enter a schedule name, your ArcGIS organization URL, and username
+4. Set the frequency (Daily, Weekly, or Monthly) and time
+5. Choose a save path and storage type
+6. Enter your **Windows login password** when prompted
+7. Click **Save**
 
-Schedules run via Windows Task Scheduler, even when logged out.
+Schedules run via Windows Task Scheduler, even when you are logged out or the screen is locked.
 
 #### Windows Service Account
 
-Each schedule requires a **Windows Password** so Task Scheduler can run unattended. Optionally specify a **Windows User** to run under a different account (defaults to current user).
+Each schedule requires your **Windows login password** so Task Scheduler can run the backup unattended. This is your Windows password, not your ArcGIS password. Optionally specify a **Windows User** to run under a different account (defaults to current user).
 
-> **Tip**: The password is stored securely by Windows Task Scheduler, not by the application.
+If you enter the wrong password, a dialog lets you try again without losing any of your schedule configuration. If you skip the password entirely, the schedule is saved but backups will only run while you are logged in.
+
+> **Tip**: Your password is used only to create the Windows scheduled task and is never stored by the Backup Utility. Windows Task Scheduler stores the credentials securely.
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
@@ -355,7 +359,14 @@ Scheduled tasks run from whichever copy of BackupUtility was last opened. If you
 - **Missing task** - the Windows Task Scheduler task does not exist
 - **Runs only when logged on** - the task is configured to run only when a user is logged in, meaning it will not run at the scheduled time if no one is logged in
 
-If any issues are found, a dialog prompts for your Windows username and password so the tasks can be recreated with proper credentials. The password is used only for task creation and is not saved. A confirmation dialog shows how many tasks were updated and whether any failed. If you skip the prompt, you can fix tasks later by editing each schedule in the Schedules tab.
+If any issues are found, a dialog appears when the application starts:
+
+1. The dialog lists every scheduled task that needs to be fixed
+2. Enter your **Windows login password** (and optionally a different Windows username)
+3. Click **Update Tasks** - each task is recreated with the correct settings
+4. A confirmation shows how many tasks were updated and whether any failed
+
+If you enter the wrong password, the dialog lets you try again. If you click **Skip**, you can fix tasks later by editing each schedule in the Schedules tab and re-entering the password. Your password is used only for task creation and is not saved.
 
 **Ongoing monitoring:** The Schedules tab Warnings column checks task health every time it refreshes. If a task is missing, runs only when logged on, or points to the wrong location, a warning appears in the table. This catches issues that occur between application restarts (for example, if someone modifies a task directly in Task Scheduler).
 
@@ -377,14 +388,14 @@ Receive email when backups complete or fail.
 
 ### Managing Schedules
 
-- **Edit**: Modify settings anytime
-- **Delete**: Removes the schedule and its Windows Task Scheduler task
+- **Edit**: Modify settings. If a backup is currently running, you are warned that changes apply to future runs only
+- **Delete**: Removes the schedule and its Windows Task Scheduler task. If the task cannot be removed, you are told how to delete it manually
 - **Run Now**: Run the backup immediately through the GUI with progress monitoring
-- **Enable/Disable**: Pause without deleting
+- **Enable/Disable**: Pause without deleting. Enabling a schedule that has no Windows task prompts for your Windows password to create one
 
 ### Troubleshooting Task Scheduler Errors
 
-If task creation fails, the application saves your schedule and shows a warning with the specific error and troubleshooting steps. You can also generate an XML file to import the task manually.
+If task creation fails, the application saves your schedule configuration and shows a warning with the specific error and troubleshooting steps. If the error is a wrong password, you can re-enter it immediately without losing your settings. For other errors, you can generate an XML file to import the task manually.
 
 **Common errors and solutions:**
 

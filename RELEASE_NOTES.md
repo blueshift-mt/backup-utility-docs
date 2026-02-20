@@ -38,7 +38,7 @@ Previous versions could silently fail to store credentials for the service accou
 
 1. Open the application and go to the **Schedules** tab
 2. Click **Edit** on each schedule that runs under a service account
-3. Re-enter the **Windows password** and click **Save**
+3. Re-enter the **Windows username** and **password** and click **Save**
 4. No other settings need to change
 
 If your schedules run under the same account that created them, no action is needed.
@@ -79,7 +79,7 @@ This version fixes the issue automatically. **When you open the application, it 
 
 If you click **Skip**, you can fix tasks one at a time later:
 
-- **In the application (recommended):** Go to the Schedules tab, click Edit on a schedule, re-enter the Windows password, and click OK
+- **In the application (recommended):** Go to the Schedules tab, click Edit on a schedule, re-enter the Windows username and password, and click OK
 - **Directly in Task Scheduler:** You can also fix tasks manually. Open `taskschd.msc`, expand the **CivicLens** folder, right-click a task, select Properties, select "Run whether user is logged on or not", enter your password, and click OK. This works but the application will not know the task was fixed until the next restart, so the in-app method is preferred.
 
 **To verify:** In Task Scheduler, right-click any task in the CivicLens folder, select Properties, and confirm it shows "Run whether user is logged on or not" under Security options.

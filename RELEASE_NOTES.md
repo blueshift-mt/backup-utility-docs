@@ -42,14 +42,18 @@ This version fixes the issue automatically. **When you open the application, it 
 
 If you click **Skip**, you can fix tasks one at a time later:
 
-- **In the application:** Go to the Schedules tab, click Edit on a schedule, re-enter the Windows password, and click OK
-- **Directly in Task Scheduler:** Open `taskschd.msc`, expand the **CivicLens** folder, right-click a task, select Properties, select "Run whether user is logged on or not", enter your password, and click OK
+- **In the application (recommended):** Go to the Schedules tab, click Edit on a schedule, re-enter the Windows password, and click OK
+- **Directly in Task Scheduler:** You can also fix tasks manually. Open `taskschd.msc`, expand the **CivicLens** folder, right-click a task, select Properties, select "Run whether user is logged on or not", enter your password, and click OK. This works but the application will not know the task was fixed until the next restart, so the in-app method is preferred.
 
 **To verify:** In Task Scheduler, right-click any task in the CivicLens folder, select Properties, and confirm it shows "Run whether user is logged on or not" under Security options.
+
+If you enter the wrong password, the dialog will let you try again without losing your input. Tasks that were already updated successfully are not affected by a subsequent failed attempt.
 
 </div>
 
 - **Smarter Task Path Repair** - When the application is opened from a new location (after moving, renaming, or updating), the startup prompt now also updates the task path. Previously, path repair used a separate mechanism that could silently change the task's logon type.
+
+- **Safer Task Updates** - When updating a scheduled task (e.g., fixing the logon type or path), the existing task is no longer deleted before creating the replacement. If the update fails (wrong password, account issue), the original working task is preserved instead of being lost.
 
 - **Owner Filter Performance** - When an owner filter is set, the discovery phase now queries only that owner's items instead of scanning every user in the organization. Previously, setting an owner filter still retrieved the full user list and iterated all owners before filtering. This also applies to web map dependency scanning and group mapping, which are now scoped to the filtered owner and exit early when all items are mapped.
 
@@ -235,7 +239,7 @@ Exclude specific items by ArcGIS item ID (comma-separated).
 
 #### Migrating from Parameters Files
 
-As noted in the [breaking change notice](#-breaking-change-scheduled-backup-users-must-act) above, parameters files are no longer auto-detected. Pass `--file` to continue using them, or migrate to the Schedules tab.
+As noted in the [breaking change notice](#breaking-change-scheduled-backup-users-must-act-v50) above, parameters files are no longer auto-detected. Pass `--file` to continue using them, or migrate to the Schedules tab.
 
 > **Parameters file support will be removed in a future release.** Migrate to the built-in Schedules tab as soon as possible.
 

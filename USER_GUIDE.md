@@ -1,6 +1,6 @@
 # Backup Utility for ArcGIS Online and Portal for ArcGIS
 
-## User Guide | Version 5.1.3
+## User Guide | Version 5.1.5
 
 ---
 
@@ -323,13 +323,24 @@ Found in the **Advanced** section of the Backup tab:
 
 Schedules run via Windows Task Scheduler, even when you are logged out or the screen is locked.
 
-#### Windows Service Account
+#### Windows Credentials
 
 Each schedule requires your **Windows login password** so Task Scheduler can run the backup unattended. This is your Windows password, not your ArcGIS password. Optionally specify a **Windows User** to run under a different account (defaults to current user).
 
 If you enter the wrong password, a dialog lets you try again without losing any of your schedule configuration. If you skip the password entirely, the schedule is saved but backups will only run while you are logged in.
 
 > **Tip**: Your password is used only to create the Windows scheduled task and is never stored by the Backup Utility. Windows Task Scheduler stores the credentials securely.
+
+#### Service Accounts
+
+Service accounts are fully supported. When you specify a different Windows user in the schedule dialog, the application stores ArcGIS and cloud storage credentials in that account's Windows Credential Manager so the scheduled task can access them at runtime.
+
+**Requirements for the service account:**
+- Must have the **Log on as a batch job** right (Local Security Policy > User Rights Assignment)
+- Must have logged on to the machine at least once (so its user profile exists)
+- Must have read access to the backup save path
+
+**gMSA (Group Managed Service Accounts)** are also supported. Enter the account name as `DOMAIN\account$` - no Windows password is required. Credentials are stored using machine-scope encryption so the gMSA can access them at runtime.
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
@@ -339,7 +350,7 @@ If you enter the wrong password, a dialog lets you try again without losing any 
 
 > **Tip**: Set backups to run overnight when network usage is low.
 
-> **Overlap Detection**: If a backup is still running when the next scheduled run starts, a warning is logged. Both will run concurrently, doubling resource usage.
+> **Overlap Protection**: If a backup is still running when the next scheduled run starts, the new run is automatically skipped. The skip is recorded in the schedule's status with the reason visible in the Schedules tab.
 
 ### Upgrading & Moving the Application
 
@@ -348,7 +359,8 @@ Schedule configurations, credentials, and settings are stored independently of t
 | Component | Location | Survives upgrade? |
 |-----------|----------|-------------------|
 | Schedule configs | `%LOCALAPPDATA%\CivicLens\BackupUtility\schedules.json` | Yes |
-| ArcGIS credentials | Windows Credential Manager | Yes |
+| ArcGIS credentials | Windows Credential Manager (per-user) | Yes |
+| Service account credentials | Replicated to the service account's Credential Manager | Yes |
 | Windows Task Scheduler tasks | Task Scheduler `\CivicLens` folder | Repaired on startup |
 
 Scheduled tasks run from whichever copy of BackupUtility was last opened. If you move or rename the application or its folder, open it from the new location so your scheduled tasks are updated. If you download an update to the same location (replacing the existing file), no action is needed.
@@ -406,6 +418,7 @@ If task creation fails, the application saves your schedule configuration and sh
 | **Account not found** | Username cannot be resolved (typo, deleted account, or missing domain prefix) | Check spelling, include the domain or machine name (e.g., `DOMAIN\user` or `.\localuser`) |
 | **Account locked out** | Too many failed login attempts | Ask your IT administrator to unlock the account, or wait for the lockout period to expire |
 | **Password expired** | The account password must be changed | Log in with the account to set a new password, then update the schedule |
+| **Credential warning for service account** | Could not store credentials in the service account's Credential Manager | Ensure the service account has logged on to this machine at least once to create its user profile |
 | **Logon session does not exist** | The account lacks the "Log on as a batch job" right | Open **Local Security Policy** (secpol.msc) > Local Policies > User Rights Assignment, and add the account to **Log on as a batch job** |
 | **Task Scheduler service not running** | The Windows service is stopped or disabled | Open **services.msc**, find **Task Scheduler**, right-click and select **Start**. Set Startup Type to **Automatic** |
 
@@ -1311,5 +1324,5 @@ ArcGIS treats settings changes (editing, sync, change tracking) as modifications
 
 ---
 
-*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.3*
+*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.5*
 *Copyright CivicLens*

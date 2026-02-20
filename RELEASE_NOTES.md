@@ -22,6 +22,42 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 ---
 
+## Version 5.1.5
+
+*Includes all features from [5.1.4](#version-514) and earlier.*
+
+- **Enterprise Login Auto-Fallback** - Built-in ArcGIS accounts (non-SSO) on organizations that use enterprise login (SAML/SSO) now automatically fall back to arcgis.com authentication when the org-specific URL rejects their credentials. No user action needed - authentication just works.
+
+- **Missed Schedule Recovery** - Scheduled tasks now have `StartWhenAvailable` enabled. If a scheduled backup is missed because the machine was asleep, off, or rebooting, it runs automatically when the machine comes back online.
+
+- **Overlap Protection** - When a scheduled backup fires while the previous run is still active, it now skips instead of running in parallel. The skip is recorded as a "skipped" status with the reason visible in the Schedules tab. PID reuse detection (via process creation time) prevents false overlaps after a reboot.
+
+- **Service Account Credential Reliability** - Credential replication to service accounts now loads the user's profile during impersonation, ensuring Windows Credential Manager writes target the correct registry hive. Previously, WCM writes during impersonation could silently fail or write to a temporary profile. OAuth token rotation is also protected: editing a schedule no longer overwrites a token that the service account rotated during a previous run.
+
+- **gMSA and Built-In Account Support** - Group Managed Service Accounts and built-in system accounts (SYSTEM, LOCAL SERVICE, NETWORK SERVICE) now correctly display OAuth authorization status in the schedule dialog and table, using DPAPI-encrypted tokens stored on the schedule object.
+
+- **Multi-Domain Username Handling** - The schedule dialog now uses the `USERDOMAIN` environment variable for accurate same-user detection. Previously, two accounts with the same username on different domains (e.g., `CORP\jsmith` vs `LAB\jsmith`) were treated as the same user.
+
+- **Locale-Independent Task Queries** - All Windows Task Scheduler queries (next run time, task command, logon type) now use the COM API via PowerShell instead of parsing `schtasks /Query` output. This fixes failures on non-English Windows where field labels like "Next Run Time:" and "Logon Mode:" are localized.
+
+- **Crashed Process Detection** - The GUI now detects when a scheduled backup process has stopped responding and marks it as "Failed" instead of appearing stuck indefinitely. Detection triggers after 2 minutes of no status updates from the process.
+
+- **Schedule Validation** - The schedule dialog now validates save paths, schedule names, and warns when a backup is currently running. Delete confirmation provides clearer feedback.
+
+- **Password Retry for Schedules** - When creating or editing a schedule, if the Windows password is wrong, you can re-enter it without losing any of your settings. Previously, a wrong password required starting over.
+
+- **Task Repair Improvements** - Disabled schedules are now included in startup task repair. The repair retry dialog works correctly when the first attempt fails.
+
+- **Credential Fill-In on Edit** - Editing a schedule now fills in all blank credential fields from your Windows Credential Manager, ensuring service accounts receive the complete credential set even when you only change the schedule time or filters.
+
+- **Atomic Schedule File Writes** - The schedule configuration file now uses `fsync` before atomic file replacement to prevent corruption from power failures or system crashes.
+
+- **Graceful Cancellation** - Cancelling a scheduled backup without `psutil` installed now polls for 30 seconds before force-terminating, matching the behavior of the `psutil` path.
+
+- **Comprehensive Bug Fixes** - 35+ bugs fixed across credential management, scheduling, GUI monitoring, and storage through six rounds of systematic code auditing. Key fixes include: OAuth client_id preservation during token storage, ghost scheduled backup widget prevention, exception safety in the scheduled entry point, concurrent schedule file write protection, and stale cancelled-schedule tracking cleanup.
+
+---
+
 ## Version 5.1.4
 
 *Includes all features from [5.1.3](#version-513) and earlier.*

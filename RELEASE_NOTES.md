@@ -26,6 +26,25 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 *Includes all features from [5.1.4](#version-514) and earlier.*
 
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f; font-size: 1.2em;">Action Required: Schedules Running Under a Service Account</strong>
+
+**If any of your scheduled backups run under a Windows service account (a different user than the one who created the schedule), you should re-save each affected schedule after updating to v5.1.5.**
+
+Previous versions could silently fail to store credentials for the service account, causing authentication failures on the next run. This version fixes the underlying issue, but existing schedules need to be re-saved once to ensure credentials are written correctly.
+
+**To fix:**
+
+1. Open the application and go to the **Schedules** tab
+2. Click **Edit** on each schedule that runs under a service account
+3. Re-enter the **Windows password** and click **Save**
+4. No other settings need to change
+
+If your schedules run under the same account that created them, no action is needed.
+
+</div>
+
 - **Enterprise Login Auto-Fallback** - Built-in ArcGIS accounts on organizations that use enterprise login (SAML/SSO) now automatically fall back to arcgis.com authentication. No user action needed.
 
 - **Missed Schedule Recovery** - Scheduled tasks now run automatically when the machine comes back online if a backup was missed due to sleep, shutdown, or reboot.

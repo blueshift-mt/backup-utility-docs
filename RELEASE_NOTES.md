@@ -30,11 +30,13 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 <strong style="color: #d32f2f; font-size: 1.2em;">Action Required: Schedules Running Under a Service Account</strong>
 
-**If any of your scheduled backups run under a Windows service account (a different user than the one who created the schedule), credentials are now replicated automatically when the update dialog appears on startup.**
+**If any of your scheduled backups run under a Windows service account (a different user than the one who created the schedule), you need to open the application and complete the update dialog to fix credential storage.**
 
-Previous versions could silently fail to store credentials for the service account, causing authentication failures on the next run. This version fixes the underlying issue. When you enter your Windows credentials in the startup update dialog, the application recreates the scheduled tasks **and** replicates all stored credentials (portal password, OAuth tokens, S3/Azure keys, SMTP password) to the service account automatically.
+Previous versions could silently fail to store credentials for the service account, causing authentication failures on the next run. This version fixes the underlying issue.
 
-**No manual action is needed** if you complete the startup update dialog. If you skip the dialog, you can fix schedules individually:
+**To fix:** Open the application after updating. An update dialog will appear listing affected tasks. Enter your **Windows username** and **password** and click **Update Tasks**. The application recreates the scheduled tasks and replicates all stored credentials (portal password, OAuth tokens, S3/Azure keys, SMTP password) to the service account automatically.
+
+If you skip the dialog, you can fix schedules individually:
 
 1. Open the application and go to the **Schedules** tab
 2. Click **Edit** on each schedule that runs under a service account

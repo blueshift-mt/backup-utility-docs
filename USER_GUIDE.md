@@ -340,7 +340,7 @@ Service accounts are fully supported. When you specify a different Windows user 
 - Must have logged on to the machine at least once (so its user profile exists)
 - Must have read access to the backup save path
 
-**gMSA (Group Managed Service Accounts)** are also supported. Enter the account name as `DOMAIN\account$` - no Windows password is required. Credentials are stored using machine-scope encryption so the gMSA can access them at runtime.
+**gMSA (Group Managed Service Accounts)** support is experimental. Enter the account name as `DOMAIN\account$` - no Windows password is required. Credentials are stored using machine-scope encryption so the gMSA can access them at runtime. This feature may not work in all Active Directory configurations - please contact support@civiclens.com if you encounter issues.
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 

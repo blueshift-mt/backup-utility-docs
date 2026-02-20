@@ -28,12 +28,6 @@ See [Scheduling Automatic Backups](#scheduling-automatic-backups) for scheduled 
 | **Username** | Your ArcGIS username (case-sensitive) |
 | **Password** | Your password, or leave blank and check SSO/OAuth for single sign-on |
 
-<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
-
-**Enterprise login (SAML/SSO) with a built-in account?** If your organization uses enterprise logins (SAML, Active Directory, Okta, etc.) and you are signing in with a **built-in ArcGIS account** (not your enterprise credentials), use your org short name (e.g., `myorg`) or `arcgis.com` instead of the full URL (`myorg.maps.arcgis.com`). The org-specific URL may reject built-in credentials when enterprise login is configured as the default sign-in method. This does not apply if you are using SSO/OAuth (browser login).
-
-</div>
-
 ### Step 3: Choose Where to Save
 
 Click **Browse** to select a backup folder. Local paths (e.g., `D:\Backups`) and UNC paths (e.g., `\\server\share\backups`) both work.
@@ -1245,7 +1239,6 @@ If the application won't launch, check `%LOCALAPPDATA%\CivicLens\BackupUtility\S
 - Double-check your username - it's case-sensitive
 - For SSO organizations, leave password blank and sign in via the browser popup
 - Check if your account is locked or password expired
-- **Enterprise login orgs with built-in accounts**: If your org uses enterprise logins (SAML, AD, Okta) and you are using a built-in ArcGIS account, try using your org short name (e.g., `myorg`) or `arcgis.com` instead of the full URL (`myorg.maps.arcgis.com`). The org-specific URL may reject built-in credentials when enterprise login is the default sign-in method
 
 ### "Export timeout"
 

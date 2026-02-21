@@ -424,7 +424,19 @@ If task creation fails, the application saves your schedule configuration and sh
 | **Access denied** | Group Policy restricts task creation, or account permissions are insufficient | Check with your IT administrator about Group Policy restrictions. Running as administrator may help. |
 | **Task Scheduler service not running** | The Windows service is stopped or disabled | Open **services.msc**, find **Task Scheduler**, right-click and select **Start**. Set Startup Type to **Automatic** |
 
-**Manual import option:** When automatic task creation fails, click **Yes** on the warning dialog to generate an XML file. You (or an administrator) can import it via Task Scheduler (right-click Task Scheduler Library > Import Task) or from an elevated command prompt:
+#### Manual import option
+
+When automatic task creation fails, click **Yes** on the warning dialog to generate an XML file. You (or an administrator) can import it via Task Scheduler or from an elevated command prompt.
+
+**From Task Scheduler GUI:**
+
+1. Open Task Scheduler (Win+R, type `taskschd.msc`)
+2. Right-click **Task Scheduler Library**
+3. Select **Import Task...**
+4. Browse to the XML file
+5. Enter the run-as credentials when prompted
+
+**From an elevated command prompt:**
 
 ```
 schtasks /Create /TN "CivicLens\BackupUtility_<id>" /XML "path\to\file.xml"
@@ -457,7 +469,7 @@ Task Scheduler needs the password you use to **sign in to this machine**, which 
 
 On Windows 10 and 11, a setting called **"Only allow Windows Hello sign-in for Microsoft accounts on this device"** can block password authentication entirely. When this is enabled, Task Scheduler will reject every password you enter, even if it's correct.
 
-**How to check:** Open **Settings > Accounts > Sign-in options** and look for this toggle.
+**How to check:** Press **Win+R**, type `ms-settings:signinoptions`, and press Enter. Look for the "Only allow Windows Hello sign-in" toggle.
 
 If it's **on**, you have three options:
 

@@ -367,11 +367,13 @@ Schedule configurations, credentials, and settings are stored independently of t
 
 Scheduled tasks run from whichever copy of BackupUtility was last opened. If you move or rename the application or its folder, open it from the new location so your scheduled tasks are updated. If you download an update to the same location (replacing the existing file), no action is needed.
 
-**How it works:** Each time the application starts, it checks whether all scheduled tasks (enabled and disabled) are healthy. It detects three issues:
+**How it works:** Each time the application starts, it checks whether all scheduled tasks (enabled and disabled) are healthy. It detects these issues:
 
 - **Stale path** - the task points to a different application location (after moving or updating)
 - **Missing task** - the Windows Task Scheduler task does not exist
 - **Runs only when logged on** - the task is configured to run only when a user is logged in, meaning it will not run at the scheduled time if no one is logged in
+- **Schedule drift** - the trigger type (Daily/Weekly/Monthly), schedule time, or selected days in the Windows task don't match what the application expects (e.g., someone changed the task directly in Task Scheduler)
+- **Disabled when enabled** - the Windows task is disabled but the schedule is set to enabled in the application
 
 If any issues are found, a dialog appears when the application starts:
 
@@ -382,7 +384,7 @@ If any issues are found, a dialog appears when the application starts:
 
 If you enter the wrong password, the dialog lets you try again. If you click **Skip**, you can fix tasks later by editing each schedule in the Schedules tab and re-entering the password. Your password is used only for task creation and is not saved.
 
-**Ongoing monitoring:** The Schedules tab Warnings column checks task health every time it refreshes. If a task is missing, runs only when logged on, or points to the wrong location, a warning appears in the table. This catches issues that occur between application restarts (for example, if someone modifies a task directly in Task Scheduler).
+**Ongoing monitoring:** The Schedules tab Warnings column checks task health every time it refreshes. If a task is missing, runs only when logged on, points to the wrong location, has drifted trigger settings, or is disabled when it should be enabled, a warning appears in the table. This catches issues that occur between application restarts (for example, if someone modifies a task directly in Task Scheduler).
 
 **If a scheduled backup fires before you open the app from the new location**, that run will fail because the old path no longer exists. The next time you open the application, the task is repaired, and all future runs will use the correct path.
 
@@ -804,6 +806,7 @@ No telemetry or analytics.
 - Use **Windows Credential Manager** for passwords (see [above](#windows-credential-manager-recommended-for-automation))
 - Use dedicated service accounts for scheduled backups
 - The executable is **code-signed** with a CivicLens LLC EV certificate
+- Core application logic is compiled to **native machine code** to protect against reverse engineering
 
 ### Organization
 
@@ -1399,6 +1402,14 @@ ArcGIS treats settings changes (editing, sync, change tracking) as modifications
 
 - Verify the Windows Task Scheduler service is running
 - Confirm your Windows account has permission to create scheduled tasks
+
+### Scheduled Backup Not Running (Stuck Process)
+
+If a scheduled backup appears stuck (the previous run is still "active" but not making progress), the application will automatically terminate the stuck process when the next scheduled run fires. The lock file is cleaned up and the new run proceeds normally. If this happens repeatedly, check Full_Log.log for the stuck run to identify the root cause (network timeout, server-side hang, etc.).
+
+### Schedule Warnings Show "Trigger Drift" or "Disabled"
+
+This means the Windows Task Scheduler entry was modified outside the application (e.g., someone changed the trigger time in Task Scheduler directly, or disabled the task). Open the application and use the startup repair dialog or edit the schedule in the Schedules tab to sync the task back to the expected settings.
 
 ### "OAuth token expired"
 

@@ -59,6 +59,14 @@ If your schedules run under the same account that created them, no action is nee
 
 - **Scheduling and Credential Improvements** - Improved reliability for service account credentials, gMSA (experimental) and built-in account OAuth status display, multi-domain username handling, password retry without losing settings, and credential fill-in when editing schedules.
 
+- **Schedule Drift Detection** - The application now detects when a Windows Task Scheduler entry has been modified externally (wrong trigger type, changed schedule time, disabled when it should be enabled). Drift is surfaced as a warning in the Schedules tab and flagged for repair in the startup dialog.
+
+- **Stale Heartbeat Recovery** - If a previous scheduled backup process is stuck (alive but not making progress for 30+ minutes), it is now terminated automatically so the next run can proceed. Previously, a stuck process would block all future scheduled runs until the lock file was manually deleted.
+
+- **Credential Key Preservation** - Deleting a schedule no longer removes the portal password from Windows Credential Manager if another schedule shares the same portal credentials. Per-schedule keys (OAuth tokens, S3/Azure keys, SMTP password) are still cleaned up normally.
+
+- **Code Protection** - Core backup pipeline modules (export, retry, discovery, download, and orchestration - ~14,000 lines) are now compiled to native machine code, matching the protection already applied to licensing and authentication modules.
+
 - **General Stability** - Numerous fixes across credential management, scheduling, GUI monitoring, and storage.
 
 ---

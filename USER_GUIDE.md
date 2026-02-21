@@ -420,7 +420,7 @@ If task creation fails, the application saves your schedule configuration and sh
 | **Password expired** | The account password must be changed | Log in with the account to set a new password, then update the schedule |
 | **Credential warning for service account** | Could not store credentials in the service account's Credential Manager | Ensure the service account has logged on to this machine at least once to create its user profile |
 | **Logon session does not exist** | The account lacks the "Log on as a batch job" right | Open **Local Security Policy** (secpol.msc) > Local Policies > User Rights Assignment, and add the account to **Log on as a batch job** |
-| **Password rejected on Windows Hello machine** | "Only allow Windows Hello sign-in" is enabled, blocking password authentication entirely | See [Windows Hello & Scheduled Tasks](#windows-hello-amp-scheduled-tasks) below |
+| **Password keeps failing (Windows Hello machine)** | "Only allow Windows Hello sign-in" may be blocking password authentication entirely | See [Troubleshooting "User name or password is incorrect"](#troubleshooting-quot-user-name-or-password-is-incorrectquot) below |
 | **Task Scheduler service not running** | The Windows service is stopped or disabled | Open **services.msc**, find **Task Scheduler**, right-click and select **Start**. Set Startup Type to **Automatic** |
 
 **Manual import option:** When automatic task creation fails, click **Yes** on the warning dialog to generate an XML file. You (or an administrator) can import it via Task Scheduler (right-click Task Scheduler Library > Import Task) or from an elevated command prompt:
@@ -429,81 +429,92 @@ If task creation fails, the application saves your schedule configuration and sh
 schtasks /Create /TN "CivicLens\BackupUtility_<id>" /XML "path\to\file.xml"
 ```
 
-### Windows Hello & Scheduled Tasks
+### Troubleshooting "User name or password is incorrect"
 
-Windows Task Scheduler requires a traditional Windows password to create tasks that run unattended (when no user is logged in). If **"Only allow Windows Hello sign-in for Microsoft accounts on this device"** is enabled, Windows blocks password authentication entirely, and task creation will fail with a **"user name or password is incorrect"** error even when the correct password is entered.
+This is the most common task creation error. Windows uses the same error message for several different problems, which makes it frustrating to diagnose. Work through the steps below in order, or skip straight to the **quick alternative** at the end.
 
-This setting is often enabled by default on newer Windows 11 installations, or enforced by your organization via Intune or Group Policy.
+#### Step 1: Confirm you're entering the right password
 
-**How to check:** Open **Settings > Accounts > Sign-in options** and look for the **"Only allow Windows Hello sign-in for Microsoft accounts on this device"** toggle.
+Task Scheduler needs the password you use to **sign in to this machine**, which is not always the password you expect:
 
-#### Option 1: Use SYSTEM as the run-as account (simplest)
+- **Not your Windows Hello PIN** - Task Scheduler requires a traditional password, not a PIN, fingerprint, or face scan
+- **Not necessarily your Microsoft account password** - If the machine uses a local Windows account, your Microsoft online password is a completely separate credential
+- **Not your ArcGIS password** - This is your Windows login password, not your portal password
 
-The fastest fix is to run the scheduled task as the Local System account, which does not require a password and is not affected by Windows Hello settings.
+**Quick test:** Lock your computer (Win+L), click **Sign-in options** on the lock screen, click the key icon to switch to password entry, and try the password there. If it works at the lock screen, it will work in BackupUtility. If it doesn't, the password is wrong and Task Scheduler will reject it too.
 
-1. Open the schedule in the **Schedules** tab and click **Edit** (or create a new schedule)
-2. In the **Windows User** field, enter: `SYSTEM`
-3. Leave the **Windows Password** field blank
-4. Click **Save**
+> **Not sure which account type you have?** Open **Settings > Accounts > Your info**. It will show "Microsoft account", "Local account", or your organization name. This determines which password to use:
 
-SYSTEM runs whether or not any user is logged in, and has access to all local files and folders. Your ArcGIS portal credentials and any cloud storage credentials (S3, Azure) are stored securely using machine-scope encryption so the scheduled backup can still authenticate to ArcGIS Online, Portal, S3, and Azure exactly as it would under your own account.
+| Machine setup | Password to use |
+|---------------|-----------------|
+| **Microsoft account** | Your Microsoft account password (the one you use at outlook.com, microsoft.com, etc.) |
+| **Local Windows account** | The password set locally on this machine. Your Microsoft account password has no effect here. |
+| **Azure AD / Entra ID** (work or school) | Your organization password |
+| **Active Directory domain** | Your domain password |
 
-> **Network shares:** SYSTEM authenticates to the network as the computer account, not as a user. If your backup save path is a network share that requires user-specific permissions (e.g., a mapped drive or `\\server\share` with ACLs limited to specific users), SYSTEM may not have access. In that case, use Option 2 or 3 instead. Saving to a local folder, S3, or Azure is unaffected.
+#### Step 2: Check if Windows Hello is blocking password authentication
 
-#### Option 2: Disable Windows Hello-only and reset your password
+On Windows 10 and 11, a setting called **"Only allow Windows Hello sign-in for Microsoft accounts on this device"** can block password authentication entirely. When this is enabled, Task Scheduler will reject every password you enter, even if it's correct.
 
-If you need the task to run under your own account (for example, to access a network share), you can disable the Windows Hello-only setting and use your traditional Windows password. This can be a multi-step process, because if you've been using Windows Hello (PIN, fingerprint, or face) for a long time, you may no longer know your traditional password, or it may have expired.
+**How to check:** Open **Settings > Accounts > Sign-in options** and look for this toggle.
 
-**Step 1: Disable the setting**
+If it's **on**, you have three options:
 
-1. Open **Settings > Accounts > Sign-in options**
-2. Turn **off** "Only allow Windows Hello sign-in for Microsoft accounts on this device"
-3. **Sign out or restart** your computer. This is required. The password option will not appear on the login screen until you do.
+**A. Disable the setting and use your password:**
 
-> If the toggle is greyed out, your organization enforces this setting via Group Policy or Intune. Contact your IT department, or use Option 1 (SYSTEM) or Option 3 (service account) instead.
+1. Turn **off** "Only allow Windows Hello sign-in"
+2. **Sign out or restart** your computer (required - the password option won't appear at the lock screen until you do)
+3. Log in with your password to confirm it works
+4. Open BackupUtility and save your schedule
+5. You can re-enable the Hello-only setting afterward - it only affects task *creation*, not execution of existing tasks
 
-**Step 2: Log in with your password**
+> If the toggle is greyed out, your organization enforces it via Group Policy or Intune. Contact your IT department, or use option B or C below.
 
-After restarting, on the Windows login screen:
+**B. Enter SYSTEM in the Windows User field:**
 
-1. Look for **"Sign-in options"** (a link or key icon below the PIN field)
-2. Click the **key icon** to switch to password entry
-3. Enter your Windows password
+This bypasses the password requirement entirely. See [Using SYSTEM](#using-system-as-the-run-as-account) below.
 
-**If you don't remember your password:**
+**C. Use a dedicated service account:**
 
-Click **"I forgot my password"** on the login screen. What happens next depends on your account type (check **Settings > Accounts > Your info** if unsure):
+Domain service accounts and Group Managed Service Accounts are typically not affected by Windows Hello policies. Enter the service account's username and password in the schedule dialog.
+
+#### Step 3: If you don't know your Windows password
+
+If you've been using a PIN or biometric for a long time, you may no longer remember your traditional password, or it may have expired without you noticing. How to reset it depends on your account type:
 
 | Account type | How to reset |
 |-------------|-------------|
-| **Microsoft account** | Windows sends a verification code to your recovery email or phone. You must be connected to the internet. After resetting, the new password works immediately on the login screen. |
-| **Local Windows account** | Answer the security questions set when the account was created. If you don't remember them, an administrator on the machine must reset it. |
+| **Microsoft account** | At the Windows lock screen, click **"I forgot my password"** and follow the prompts. Windows sends a verification code to your recovery email or phone. You must be connected to the internet. |
+| **Local Windows account** | At the lock screen, click **"I forgot my password"** and answer your security questions. If you don't remember them, an administrator on the machine must reset it. |
 | **Azure AD / Entra ID** | Contact your IT department for a password reset. |
 | **Active Directory domain** | Contact your IT department, or press Ctrl+Alt+Del > Change Password if you know the current password. |
 
 <div style="background-color: #1565c0; color: white; padding: 12px 16px; border-radius: 6px; margin: 12px 0;">
-<b>Microsoft account vs. local account:</b> Resetting your password at <a href="https://account.microsoft.com" style="color: #bbdefb;">account.microsoft.com</a> only works if the machine is signed in with a Microsoft account. If it uses a local Windows account, the online reset has no effect on the machine password. Check <b>Settings > Accounts > Your info</b> to see which type you have.<br><br>
+<b>Microsoft account vs. local account:</b> Resetting your password at <a href="https://account.microsoft.com" style="color: #bbdefb;">account.microsoft.com</a> only works if the machine is signed in with a Microsoft account. If it uses a local Windows account, the online reset has <b>no effect</b> on the machine password. Check <b>Settings > Accounts > Your info</b> to see which type you have.<br><br>
 <b>Online reset not syncing?</b> If you reset your Microsoft account password online but the new password isn't accepted at the login screen, make sure the machine is connected to the internet and restart. Windows must contact Microsoft's servers to sync the new password.
 </div>
 
-**Step 3: Save the schedule**
+#### Step 4: Other causes
 
-After logging in with your password, open BackupUtility and save or edit your schedule. The password will now be accepted.
+If none of the above resolved the issue:
 
-You can **re-enable** "Only allow Windows Hello sign-in" afterward if you prefer. The setting only affects task *creation*, not task execution. Existing scheduled tasks continue to run.
+- **Account locked out** - Too many failed attempts can lock the account. Wait for the lockout period to expire or ask your IT admin to unlock it.
+- **Password expired** - The account password may have expired. Log in with the account to set a new one (Ctrl+Alt+Del > Change Password for domain accounts).
+- **Username doesn't exist** - Windows returns the same "incorrect" error for nonexistent usernames. Verify spelling and include the domain if needed (`DOMAIN\username`).
+- **Run as administrator** - Right-click BackupUtility and select **Run as administrator**.
+- **Contact support** - Email support@civiclens.com with the exact error message shown in the dialog.
 
-#### Option 3: Use a dedicated service account
+#### Using SYSTEM as the run-as account
 
-Create or use a Windows service account that is not subject to Windows Hello enforcement. Domain service accounts are typically excluded from Windows Hello policies. Enter the service account's username and password in the schedule dialog. ArcGIS and cloud storage credentials are automatically replicated to the service account's credential store.
+If password authentication is problematic for any reason, you can skip it entirely by running the scheduled task as the Local System account.
 
-#### Still not working?
+1. In the schedule dialog, enter `SYSTEM` in the **Windows User** field
+2. Leave the **Windows Password** field blank
+3. Click **Save**
 
-If task creation fails after trying these steps:
+SYSTEM runs whether or not any user is logged in, and has access to all local files and folders. Your ArcGIS portal credentials and any cloud storage credentials (S3, Azure) are stored securely using machine-scope encryption so the scheduled backup can still authenticate to ArcGIS Online, Portal, S3, and Azure exactly as it would under your own account.
 
-- Verify the password by **signing in to Windows with it at the lock screen** (not using your PIN). If the password doesn't work at the lock screen, it won't work for Task Scheduler either.
-- Check if the account is locked out or the password has expired
-- Try running BackupUtility as administrator (right-click > Run as administrator)
-- Contact support@civiclens.com with the error message shown in the dialog
+> **Network shares:** Mapped drives (e.g., `Z:\backups`) are per-user and not available to SYSTEM. UNC paths (e.g., `\\server\share`) can work if the share grants access to the computer account (`COMPUTERNAME$`). If your save path is a network share with user-specific permissions, use your own account or a service account instead. Saving to a local folder, S3, or Azure is unaffected.
 
 ---
 

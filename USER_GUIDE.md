@@ -471,7 +471,7 @@ If it's **on**, you have three options:
 
 > If the toggle is greyed out, your organization enforces it via Group Policy or Intune. Contact your IT department, or use option B or C below.
 
-**B. Enter SYSTEM in the Windows User field:**
+**B. Enter SYSTEM in the Windows User field (requires running as administrator):**
 
 This bypasses the password requirement entirely. See [Using SYSTEM](#using-system-as-the-run-as-account) below.
 
@@ -507,6 +507,8 @@ If none of the above resolved the issue:
 #### Using SYSTEM as the run-as account
 
 If password authentication is problematic for any reason, you can skip it entirely by running the scheduled task as the Local System account.
+
+> **Requires administrator:** Creating a task that runs as SYSTEM requires BackupUtility to be running as administrator. Right-click BackupUtility and select **Run as administrator** before saving the schedule.
 
 1. In the schedule dialog, enter `SYSTEM` in the **Windows User** field
 2. Leave the **Windows Password** field blank

@@ -19,7 +19,7 @@
 * **Restore**
   * [Restoring Items](USER_GUIDE.md#restoring-items)
 * **Find & Replace**
-  * [Find & Replace](USER_GUIDE.md#find--replace)
+  * [Find & Replace](USER_GUIDE.md#find-and-replace)
 * **Reference**
   * [Proxy Settings](USER_GUIDE.md#proxy-settings)
   * [Understanding Your Backup](USER_GUIDE.md#understanding-your-backup)

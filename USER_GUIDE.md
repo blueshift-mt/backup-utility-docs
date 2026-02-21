@@ -352,6 +352,8 @@ Service accounts are fully supported. When you specify a different Windows user 
 
 > **Overlap Protection**: If a backup is still running when the next scheduled run starts, the new run is automatically skipped. The skip is recorded in the schedule's status with the reason visible in the Schedules tab.
 
+<a id="upgrading-and-moving-the-application"></a>
+
 ### Upgrading & Moving the Application
 
 Schedule configurations, credentials, and settings are stored independently of the application:
@@ -413,14 +415,13 @@ If task creation fails, the application saves your schedule configuration and sh
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| **Access denied** | Not running with admin rights, or Group Policy restricts task creation | Right-click BackupUtility and select **Run as administrator** |
-| **User name or password is incorrect** | Wrong password, or the account does not exist (Windows uses the same error for both) | Verify the password is correct and the username is spelled correctly. Include the domain if needed (e.g., `DOMAIN\username`) |
+| **User name or password is incorrect** | Wrong password, nonexistent account, or Windows Hello blocking password auth. Windows uses the same error for all three cases. | See [Troubleshooting user name or password is incorrect](#troubleshooting-user-name-or-password-is-incorrect) below |
 | **Account not found** | Username cannot be resolved (typo, deleted account, or missing domain prefix) | Check spelling, include the domain or machine name (e.g., `DOMAIN\user` or `.\localuser`) |
 | **Account locked out** | Too many failed login attempts | Ask your IT administrator to unlock the account, or wait for the lockout period to expire |
 | **Password expired** | The account password must be changed | Log in with the account to set a new password, then update the schedule |
-| **Credential warning for service account** | Could not store credentials in the service account's Credential Manager | Ensure the service account has logged on to this machine at least once to create its user profile |
 | **Logon session does not exist** | The account lacks the "Log on as a batch job" right | Open **Local Security Policy** (secpol.msc) > Local Policies > User Rights Assignment, and add the account to **Log on as a batch job** |
-| **Password keeps failing (Windows Hello machine)** | "Only allow Windows Hello sign-in" may be blocking password authentication entirely | See [Troubleshooting "User name or password is incorrect"](#troubleshooting-quot-user-name-or-password-is-incorrectquot) below |
+| **Credential warning for service account** | Could not store credentials in the service account's Credential Manager | Ensure the service account has logged on to this machine at least once to create its user profile |
+| **Access denied** | Group Policy restricts task creation, or account permissions are insufficient | Check with your IT administrator about Group Policy restrictions. Running as administrator may help. |
 | **Task Scheduler service not running** | The Windows service is stopped or disabled | Open **services.msc**, find **Task Scheduler**, right-click and select **Start**. Set Startup Type to **Automatic** |
 
 **Manual import option:** When automatic task creation fails, click **Yes** on the warning dialog to generate an XML file. You (or an administrator) can import it via Task Scheduler (right-click Task Scheduler Library > Import Task) or from an elevated command prompt:
@@ -429,7 +430,7 @@ If task creation fails, the application saves your schedule configuration and sh
 schtasks /Create /TN "CivicLens\BackupUtility_<id>" /XML "path\to\file.xml"
 ```
 
-### Troubleshooting "User name or password is incorrect"
+### Troubleshooting user name or password is incorrect
 
 This is the most common task creation error. Windows uses the same error message for several different problems, which makes it frustrating to diagnose. Work through the steps below in order, or skip straight to the **quick alternative** at the end.
 
@@ -501,7 +502,6 @@ If none of the above resolved the issue:
 - **Account locked out** - Too many failed attempts can lock the account. Wait for the lockout period to expire or ask your IT admin to unlock it.
 - **Password expired** - The account password may have expired. Log in with the account to set a new one (Ctrl+Alt+Del > Change Password for domain accounts).
 - **Username doesn't exist** - Windows returns the same "incorrect" error for nonexistent usernames. Verify spelling and include the domain if needed (`DOMAIN\username`).
-- **Run as administrator** - Right-click BackupUtility and select **Run as administrator**.
 - **Contact support** - Email support@civiclens.com with the exact error message shown in the dialog.
 
 #### Using SYSTEM as the run-as account
@@ -1139,7 +1139,7 @@ The Restore tab has its own portal connection, separate from the Backup tab. You
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">Cross-portal limitations:</strong> JSON-based items contain internal references to other item IDs (layer sources, widget configs). These must exist on the target portal or the restored item will have broken references, effectively limiting JSON restores to the same portal. Use <a href="#/USER_GUIDE?id=find--replace">Find &amp; Replace</a> to remap old IDs after restoring. Feature Service config restore has no such limitation.
+<strong style="color: #1565c0;">Cross-portal limitations:</strong> JSON-based items contain internal references to other item IDs (layer sources, widget configs). These must exist on the target portal or the restored item will have broken references, effectively limiting JSON restores to the same portal. Use <a href="#/USER_GUIDE?id=find-and-replace">Find &amp; Replace</a> to remap old IDs after restoring. Feature Service config restore has no such limitation.
 
 </div>
 
@@ -1166,6 +1166,8 @@ If a backed-up item has a `_relationships.json` file (created automatically duri
 > Relationship restore is available for same-portal restores only. For cross-portal migrations, relationships must be recreated manually or by restoring the origin items on the target portal.
 
 ---
+
+<a id="find-and-replace"></a>
 
 ## Find & Replace
 

@@ -1,5 +1,7 @@
 # Release Notes
 
+<a id="breaking-change-scheduled-backup-users-must-act-v50"></a>
+
 <div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
 <strong style="color: #d32f2f; font-size: 1.2em;">BREAKING CHANGE: Scheduled Backup Users Must Act (v5.0+)</strong>

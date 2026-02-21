@@ -340,7 +340,7 @@ Service accounts are fully supported. When you specify a different Windows user 
 - Must have logged on to the machine at least once (so its user profile exists)
 - Must have read access to the backup save path
 
-**gMSA (Group Managed Service Accounts)** support is experimental. Enter the account name as `DOMAIN\account$` - no Windows password is required. Credentials are stored using machine-scope encryption so the gMSA can access them at runtime. This feature may not work in all Active Directory configurations - please contact support@civiclens.com if you encounter issues.
+**gMSA (Group Managed Service Accounts)** support is experimental and may not work in all Active Directory configurations. Enter the account name as `DOMAIN\account$` - no Windows password is required. Credentials are stored using machine-scope encryption so the gMSA can access them at runtime. Please contact support@civiclens.com if you encounter issues or can provide feedback on gMSA compatibility.
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
@@ -485,13 +485,9 @@ If it's **on**, you have three options:
 
 > If the toggle is greyed out, your organization enforces it via Group Policy or Intune. Contact your IT department, or use option B or C below.
 
-**B. Enter SYSTEM in the Windows User field (requires running as administrator):**
+**B. Use a dedicated service account:**
 
-This bypasses the password requirement entirely. See [Using SYSTEM](#using-system-as-the-run-as-account) below.
-
-**C. Use a dedicated service account:**
-
-Domain service accounts and Group Managed Service Accounts are typically not affected by Windows Hello policies. Enter the service account's username and password in the schedule dialog.
+Domain service accounts are typically not affected by Windows Hello policies. Enter the service account's username and password in the schedule dialog.
 
 #### Step 3: If you don't know your Windows password
 
@@ -517,20 +513,6 @@ If none of the above resolved the issue:
 - **Password expired** - The account password may have expired. Log in with the account to set a new one (Ctrl+Alt+Del > Change Password for domain accounts).
 - **Username doesn't exist** - Windows returns the same "incorrect" error for nonexistent usernames. Verify spelling and include the domain if needed (`DOMAIN\username`).
 - **Contact support** - Email support@civiclens.com with the exact error message shown in the dialog.
-
-#### Using SYSTEM as the run-as account
-
-If password authentication is problematic for any reason, you can skip it entirely by running the scheduled task as the Local System account.
-
-> **Requires administrator:** Creating a task that runs as SYSTEM requires BackupUtility to be running as administrator. Right-click BackupUtility and select **Run as administrator** before saving the schedule.
-
-1. In the schedule dialog, enter `SYSTEM` in the **Windows User** field
-2. Leave the **Windows Password** field blank
-3. Click **Save**
-
-SYSTEM runs whether or not any user is logged in, and has access to all local files and folders. Your ArcGIS portal credentials and any cloud storage credentials (S3, Azure) are stored securely using machine-scope encryption so the scheduled backup can still authenticate to ArcGIS Online, Portal, S3, and Azure exactly as it would under your own account.
-
-> **Network shares:** Mapped drives (e.g., `Z:\backups`) are per-user and not available to SYSTEM. UNC paths (e.g., `\\server\share`) can work if the share grants access to the computer account (`COMPUTERNAME$`). If your save path is a network share with user-specific permissions, use your own account or a service account instead. Saving to a local folder, S3, or Azure is unaffected.
 
 ---
 

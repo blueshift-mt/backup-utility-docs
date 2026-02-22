@@ -57,7 +57,7 @@ If your schedules run under the same account that created them, no action is nee
 
 - **Non-English Windows Support** - Task Scheduler queries now use the COM API, fixing schedule display issues on non-English versions of Windows.
 
-- **Scheduling and Credential Improvements** - Improved reliability for service account credentials, gMSA (experimental) OAuth status display, multi-domain username handling, password retry without losing settings, and credential fill-in when editing schedules.
+- **Scheduling and Credential Improvements** - Improved reliability for service account credentials, gMSA (experimental) and built-in account OAuth status display, multi-domain username handling, password retry without losing settings, and credential fill-in when editing schedules.
 
 - **Schedule Drift Detection** - The application now detects when a Windows Task Scheduler entry has been modified externally (wrong trigger type, changed schedule time, disabled when it should be enabled). Drift is surfaced as a warning in the Schedules tab and flagged for repair in the startup dialog.
 
@@ -112,7 +112,7 @@ If you enter the wrong password, the dialog will let you try again without losin
 
 *Includes all features from [5.1.2](#version-512) and earlier.*
 
-- **gMSA Support for Scheduled Tasks (Experimental)** - Experimental support for Group Managed Service Accounts (gMSA) in scheduled backups. This may not work in all Active Directory configurations. Enter the account in `DOMAIN\account$` format in the Windows User field - no password is required. Active Directory manages the credentials automatically. Please contact support@civiclens.com with feedback.
+- **gMSA Support for Scheduled Tasks (Experimental)** - Group Managed Service Accounts (gMSA) are now supported for scheduled backups. Enter the account in `DOMAIN\account$` format in the Windows User field - no password is required. Active Directory manages the credentials automatically. This feature is experimental and may not work in all Active Directory configurations.
 
 - **Cloud Credential Validation for Scheduled Backups** - S3 and Azure credentials are now checked when saving a schedule (access key format, connection string structure) with a warning if something looks wrong. At backup time, missing credentials (secret key or connection string) are detected at startup and logged clearly, rather than failing mid-backup with a generic message. If cloud storage is completely unreachable, the backup now falls back to local storage with a warning instead of aborting. Cloud credential info buttons now link directly to setup documentation.
 

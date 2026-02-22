@@ -1,6 +1,6 @@
 # Backup Utility for ArcGIS Online and Portal for ArcGIS
 
-## User Guide | Version 5.1.5
+## User Guide | Version 5.1.6
 
 ---
 
@@ -55,6 +55,11 @@ Click **Start Backup**. The Progress tab shows real-time status. Results.txt and
 ### Hosted Feature and Table Data
 Exported as **File Geodatabase (.gdb)** with domains, attachments, and related tables:
 `Feature Service`
+
+### Hosted Feature Layer Views
+By default, views are backed up as **JSON configuration only** (admin definition, item data, details, description) to the `HFLV Defs/` folder. This preserves the view definition, filters, and sharing settings without duplicating data from the parent Feature Service.
+
+When **HFLV Feature Data** is enabled in Advanced Options, views are treated as regular Feature Services and their filtered data is exported as File Geodatabase alongside normal Feature Service backups. See [HFLV Feature Data](#hflv-feature-data) below.
 
 ### Location Tracking Services
 Exported as **Shapefile (.shp)** to a `Location Tracking` folder. The ArcGIS export API does not support File Geodatabase for Location Tracking Services.
@@ -305,7 +310,46 @@ Found in the **Advanced** section of the Backup tab:
 | **Service Definitions** | Download .sd files from ArcGIS Pro |
 | **Write Dependencies** | Record item-to-item dependencies in Inventory.csv |
 | **Empty Services** | Include feature services with zero features (preserves schema). Enabled by default |
-| **Tag Backed-Up Items** | Tag items with `last_backup_<date>` after export. ⚠️ Updates modified date, so every tagged item appears in the next incremental backup |
+| **Tag Backed-Up Items** | Tag items with `last_backup_<timestamp>` after export. See [Tag Backed-Up Items](#tag-backed-up-items-1) below |
+| **HFLV Feature Data** | Export feature data for Hosted Feature Layer Views. See [HFLV Feature Data](#hflv-feature-data) below |
+
+#### Tag Backed-Up Items
+
+When enabled, each item that is successfully exported gets a tag applied in ArcGIS Online:
+
+- **Full success** - `last_backup_YYYYMMDD_HHMMSS` (e.g., `last_backup_20260222_143015`)
+- **Partial success** - `last_backup_YYYYMMDD_HHMMSS_PARTIAL` (e.g., `last_backup_20260222_143015_PARTIAL`)
+
+An item receives the `_PARTIAL` tag when it was exported in a degraded state:
+
+- Shapefile only (FGDB export failed, fell back to SHP)
+- CSV only (FGDB and SHP both failed, fell back to CSV)
+- Missing attachments (blob errors prevented attachment download)
+- Partial features (some features excluded due to export errors)
+
+Any previous `last_backup_` tag is removed before the new one is applied, so each item carries only the tag from its most recent backup.
+
+<div style="background: #fff3e0; border-left: 4px solid #ff9800; padding: 10px; margin: 10px 0;">
+<strong>⚠️ Modified date</strong><br>
+Tagging an item updates its modified date in ArcGIS Online.
+</div>
+
+This option is available in both on-demand backup (Advanced Options) and scheduled backups (Advanced section of the schedule editor). AGOL only - tagging is skipped for Portal for ArcGIS.
+
+#### HFLV Feature Data
+
+By default, Hosted Feature Layer Views are backed up as JSON configuration only (view definition, filters, sharing settings) to the `HFLV Defs/` folder. The parent Feature Service's FGDB already contains the underlying data.
+
+When this option is enabled, views are treated as regular Feature Services. Each view's filtered dataset is exported as a standalone File Geodatabase to the `Feature Service/` folder, with definition files in `Feature Service/Definitions/`.
+
+This is useful when views apply definition queries or filters that create important subsets of data you want preserved independently.
+
+<div style="background: #fff3e0; border-left: 4px solid #ff9800; padding: 10px; margin: 10px 0;">
+<strong>⚠️ Redundant data warning</strong><br>
+Enabling this option may significantly increase backup size. If the parent Feature Service and multiple views of the same service are all backed up, the same data may be exported multiple times with different filters applied.
+</div>
+
+This option is available in both on-demand backup (Advanced Options) and scheduled backups (Advanced section of the schedule editor).
 
 ---
 
@@ -444,6 +488,24 @@ When automatic task creation fails, click **Yes** on the warning dialog to gener
 schtasks /Create /TN "CivicLens\BackupUtility_<id>" /XML "path\to\file.xml"
 ```
 
+#### Copy Diagnostics
+
+If you need help from CivicLens support, click **Copy Diagnostics** to copy detailed system and schedule information to your clipboard. Paste the result into an email to support@civiclens.com. The diagnostics include:
+
+- Operating system and Python version
+- Current user and administrator status
+- Run-as account type (standard, SYSTEM, or gMSA)
+- Windows Task Scheduler task status and configuration
+- Credential storage health (whether encrypted credentials can be decrypted - values are never included)
+- File and folder access permissions for the backup save path, status directory, and lock directory
+- Recent entries from diagnostic logs (`scheduled_crash.log`, `scheduled_breadcrumb.log`, `StartErrorLog.txt`)
+- Schedule configuration (no passwords or tokens)
+
+The **Copy Diagnostics** button appears in two places:
+
+1. **Schedules tab** - select a schedule and click **Copy Diagnostics** in the button bar
+2. **Task creation failure dialog** - click **Copy Diagnostics** to capture the error context, then choose whether to generate an XML file
+
 ### Troubleshooting user name or password is incorrect
 
 This is the most common task creation error. Windows uses the same error message for several different problems, which makes it frustrating to diagnose. Work through the steps below in order, or skip straight to the **quick alternative** at the end.
@@ -562,6 +624,7 @@ For better security, create a policy that only allows access to your backup buck
             "Action": [
                 "s3:PutObject",
                 "s3:PutObjectAcl",
+                "s3:GetObject",
                 "s3:GetObjectAcl",
                 "s3:ListBucket",
                 "s3:GetBucketLocation"
@@ -574,6 +637,8 @@ For better security, create a policy that only allows access to your backup buck
     ]
 }
 ```
+
+> `s3:GetObject` is needed if you also plan to use the [Restore tab](#restoring-from-cloud-storage) to restore directly from S3.
 
 3. Replace `YOUR-BUCKET-NAME` with your actual bucket name
 4. Click **Next**, give it a name (e.g., `BackupUtilityS3Access`), and **Create policy**
@@ -600,7 +665,7 @@ For better security, create a policy that only allows access to your backup buck
 
 <div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #2e7d32;">Tip:</strong> Leave credentials blank if running on EC2/ECS with an IAM role attached - the utility will use instance credentials automatically.
+<strong style="color: #2e7d32;">Tip:</strong> Leave credentials blank to use the default AWS credential chain. This supports EC2/ECS instance roles, environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`), and the `~/.aws/credentials` file automatically.
 
 </div>
 
@@ -664,15 +729,46 @@ Move old backups to cheaper storage automatically:
 5. Set access level to **Private**
 6. Click **Create**
 
-#### Step 3: Generate a Connection String
+#### Step 3: Choose an Authentication Method
 
-**Option A: Full Connection String (simpler)**
+There are three options for authenticating with Azure Blob Storage. Choose the one that best fits your environment.
+
+**Option A: Default Credentials (recommended for Azure-hosted environments)**
+
+If your machine is already configured with Azure credentials, you can authenticate by providing just the storage account name. Leave the connection string blank and the utility will use Azure's default credential chain, which automatically checks (in order):
+
+- Environment variables (`AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`)
+- Azure CLI login (`az login`)
+- Managed Identity (Azure VMs, App Services, Azure Functions)
+- Visual Studio / VS Code credentials
+
+This is the simplest option when running on Azure infrastructure or when you've already signed in with the Azure CLI.
+
+1. In the Backup Utility, select **Azure Blob** as storage type
+2. Enter:
+   - **Account Name**: Your storage account name (e.g., `mycompanybackups`)
+   - **Container**: The container you created (e.g., `arcgis-backups`)
+   - **Connection String**: Leave blank
+
+<div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #2e7d32;">Tip:</strong> This works the same way as the S3 IAM role pattern. If your Azure VM has a Managed Identity with Storage Blob Data Contributor role on the storage account, just enter the account name and container - no secrets needed.
+
+</div>
+
+> Default credentials require the `azure-identity` Python package. This is included in production builds. If running from source, install it with: `pip install azure-identity`
+
+**Option B: Connection String (simplest for non-Azure environments)**
 
 1. In your storage account, go to **Access keys** (under Security + networking)
 2. Click **Show** next to the connection string
 3. Copy the entire connection string
+4. In the Backup Utility, select **Azure Blob** as storage type
+5. Enter:
+   - **Container**: The container you created (e.g., `arcgis-backups`)
+   - **Connection String**: Paste the full connection string
 
-**Option B: SAS Token (more secure, time-limited)**
+**Option C: SAS Token (time-limited, most restrictive)**
 
 1. In your storage account, go to **Shared access signature**
 2. Set permissions: **Read, Write, Delete, List, Add, Create**
@@ -681,13 +777,7 @@ Move old backups to cheaper storage automatically:
 5. Set expiration date (recommend 1-2 years for scheduled backups)
 6. Click **Generate SAS and connection string**
 7. Copy the **Connection string** (not just the SAS token)
-
-#### Step 4: Configure Backup Utility
-
-1. In the Backup Utility, select **Azure Blob** as storage type
-2. Enter:
-   - **Container name**: The container you created (e.g., `arcgis-backups`)
-   - **Connection string**: Paste the full connection string
+8. Paste into the **Connection String** field
 
 <div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fdecea; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
@@ -988,7 +1078,7 @@ Feature Service restore updates service configuration from definition files. It 
 
 ### Restoring Feature Layer Views
 
-Feature Layer Views (HFLVs) are backed up to the `HFLV Defs/` folder and appear in the item dropdown with a **(Feature Layer View)** suffix. Views support both restore modes.
+Feature Layer Views (HFLVs) are backed up to the `HFLV Defs/` folder by default. When **HFLV Feature Data** is enabled, views are instead exported as File Geodatabases alongside regular Feature Services in the `Feature Service/` folder. View items appear in the item dropdown with a **(Feature Layer View)** suffix and support both restore modes.
 
 **Restore to existing view** works the same as Feature Service restore - select the view, validate the target item ID, choose your options, and click Restore. The tool warns if the backup and target don't match (e.g., restoring a view backup to a regular Feature Service).
 
@@ -1109,14 +1199,15 @@ At the top of the Restore tab, change **Backup Source** from **Local Folder** to
 | **Access Key** | Your AWS Access Key ID |
 | **Secret Key** | Your AWS Secret Access Key |
 
-> **Tip**: Leave credentials blank if running on EC2/ECS with an IAM role attached, or if you have environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`) or `~/.aws/credentials` configured.
+> **Tip**: Leave credentials blank to use the default AWS credential chain (IAM roles, environment variables, `~/.aws/credentials`).
 
 **Azure Blob:**
 
 | Field | What to Enter |
 |-------|---------------|
+| **Account Name** | Your storage account name (e.g., `mycompanybackups`). Required when using default credentials. |
 | **Container** | Your Azure blob container name (e.g., `arcgis-backups`) |
-| **Connection String** | Your Azure Storage connection string (from Access keys or Shared access signature) |
+| **Connection String** | Your Azure Storage connection string, or leave blank to use default credentials (Azure CLI, Managed Identity) |
 
 #### Step 3: Connect and Select a Backup
 
@@ -1142,13 +1233,13 @@ From here, the restore workflow is identical to local folder restore - select an
 
 #### Cloud Credential Storage
 
-Bucket name, subdirectory, access key ID, and container name are saved in application settings. Secret keys and connection strings are stored securely in **Windows Credential Manager** - the same approach used by the Backup tab.
+Bucket name, subdirectory, access key ID, account name, and container name are saved in application settings. Secret keys and connection strings are stored securely in **Windows Credential Manager** - the same approach used by the Backup tab.
 
 #### Required Cloud Permissions
 
 **S3**: `s3:ListBucket` and `s3:GetObject` on the backup bucket. Write permissions are not needed for restore.
 
-**Azure**: Read and List permissions on the blob container. The connection string or SAS token must include these permissions.
+**Azure**: Read and List permissions on the blob container. When using a connection string or SAS token, it must include these permissions. When using default credentials, the identity needs the **Storage Blob Data Reader** role on the storage account or container.
 
 ### Restore Connection
 
@@ -1439,5 +1530,5 @@ This means the Windows Task Scheduler entry was modified outside the application
 
 ---
 
-*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.5*
+*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.6*
 *Copyright CivicLens*

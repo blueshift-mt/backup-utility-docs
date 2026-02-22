@@ -24,6 +24,28 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 ---
 
+## Version 5.1.6
+
+*Includes all features from [5.1.5](#version-515) and earlier.*
+
+- **Azure Default Credentials** - Azure Blob Storage now supports authentication via Azure CLI, Managed Identity, or environment variables. Enter just an Account Name (no connection string needed) and the application uses Azure's default credential chain. Works in Backup, Restore, and Scheduled Backups.
+
+- **HFLV Feature Data Export** - New option to export Hosted Feature Layer View data as File Geodatabase. Previously, views were backed up as JSON definitions only. Enable "HFLV Feature Data" in Advanced Options (or in the schedule editor) to include the underlying feature data.
+
+- **Schedule Diagnostics** - New "Copy Diagnostics" button in the Schedules tab collects OS info, task status, credential health (DPAPI round-trip test), file permissions, and recent error logs into a single clipboard-ready block for support. Also available in the task creation failure dialog alongside the XML export option. Scheduled backups that crash now include account identity, DPAPI status, and file access checks in the crash log.
+
+- **Scheduling Improvements** - Info buttons throughout the schedule editor now link directly to relevant documentation. SMTP servers that don't require a password no longer show a misleading "notifications will fail" warning. Docs links added to OAuth, Windows User, Storage, and other schedule settings.
+
+- **Credential Fallback for Restore and Find & Replace** - The Restore and Find & Replace tabs now fall back to credentials stored by the Backup tab when no tab-specific password is saved, so you don't need to re-enter your password after backing up.
+
+- **Item Tagging Fix** - The "Tag Backed-Up Items" option now works correctly. Items are tagged with `last_backup_YYYYMMDD_HHMMSS` after successful export, or `_PARTIAL` for items that exported in a degraded format (SHP-only, CSV-only, missing attachments).
+
+- **Portal URL Fix** - Portal URLs ending in `/home` (commonly copied from the browser address bar) are now normalized correctly during license lookup. Previously this caused a "not licensed" error.
+
+- **StoryMap Restore Fix** - Creating a StoryMap as new no longer fails when the server auto-creates a phantom `published_data.json` resource. The application detects the conflict and retries automatically.
+
+---
+
 ## Version 5.1.5
 
 *Includes all features from [5.1.4](#version-514) and earlier.*

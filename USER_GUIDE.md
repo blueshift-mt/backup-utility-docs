@@ -285,7 +285,7 @@ a1b2c3d4e5f6,b2c3d4e5f6a7
 
 ### Delete Protection
 
-Control delete protection on items during backup:
+Found in **Backup Options** on the Backup tab. Control delete protection on items during backup:
 
 - **No changes**: Leave protection settings as-is (default)
 - **Enable**: Turn on delete protection for all items in the backup
@@ -293,7 +293,7 @@ Control delete protection on items during backup:
 
 ### Exclude Types
 
-Skip specific item types from backup. Enter type names separated by commas:
+Found in the **Filters** section on the Backup tab. Skip specific item types from backup. Enter type names separated by commas:
 
 ```
 Web Map, Dashboard, StoryMap
@@ -855,7 +855,7 @@ If your network requires a proxy for internet access:
 
 For authenticated proxies, use: `http://username:password@proxy.yourcompany.com:8080`
 
-> **Note**: Used for all ArcGIS API connections. Leave empty for direct connection.
+> **Note**: Used for all ArcGIS API connections. Leave empty for direct connection. Scheduled backups also support proxy - enter the proxy URL in the schedule editor's System section.
 
 ---
 
@@ -878,7 +878,7 @@ When **Keep monthly** is enabled, the backup closest to the 1st of each month is
 ### Performance
 
 - **Large organizations (10,000+ items)**: Use Deep Scan instead of Quick Scan
-- **Slow exports**: Reduce concurrent threads (5-10 conservative, 10-20 recommended, 20-50 aggressive; default is 15)
+- **Slow exports**: Reduce concurrent threads (5-10 conservative, 10-20 recommended, 20-50 aggressive; default 15, max 50)
 - **Timeouts**: Increase the timeout for large feature services with many attachments
 - **Unstable network**: Failed exports are retried automatically, but a stable connection helps
 - **Split large backups**: Use filters (tag, group, folder, owner) to split large orgs into multiple jobs
@@ -983,6 +983,10 @@ Summary report:
 ### Full_Log.log
 
 Detailed log of the entire backup process. Include this when contacting support.
+
+For scheduled backups that fail before creating a backup folder, diagnostic logs are saved to `%LOCALAPPDATA%\CivicLens\BackupUtility\`:
+- `scheduled_crash.log` - crash details with system diagnostics
+- `scheduled_breadcrumb.log` - execution progress markers
 
 ### StartErrorLog.txt
 
@@ -1456,7 +1460,7 @@ If the application won't launch, check `%LOCALAPPDATA%\CivicLens\BackupUtility\S
 
 ### "Export timeout"
 
-- Increase the timeout setting (Backup Options section on the Backup tab)
+- Increase the timeout in **Backup Options** on the Backup tab (default is 120 minutes)
 - Reduce concurrent threads
 - Large services may need longer timeouts
 

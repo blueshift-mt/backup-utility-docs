@@ -470,6 +470,10 @@ If task creation fails, the application saves your schedule configuration and sh
 | **Access denied** | Group Policy restricts task creation, or account permissions are insufficient | Check with your IT administrator about Group Policy restrictions. Running as administrator may help. |
 | **Task Scheduler service not running** | The Windows service is stopped or disabled | Open **services.msc**, find **Task Scheduler**, right-click and select **Start**. Set Startup Type to **Automatic** |
 
+#### "Configure for Windows Vista, Windows Server 2008" compatibility
+
+When viewing a Backup Utility task in Task Scheduler, the compatibility level shows "Configure for Windows Vista, Windows Server 2008". This is normal and does not affect functionality. The task XML uses the 1.2 schema, which is the minimum version that supports all required features (triggers, credentials, wake-to-run). Higher schema versions only add capabilities the application does not use. Tasks run identically on Windows 10 and 11.
+
 #### Manual import option
 
 When automatic task creation fails, click **Yes** on the warning dialog to generate an XML file. You (or an administrator) can import it via Task Scheduler or from an elevated command prompt.

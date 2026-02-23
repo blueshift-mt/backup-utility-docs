@@ -127,14 +127,14 @@ Downloaded in **original format**:
 
 ### Not Exportable
 
-**Reference-only** (item description saved, no data):
+**Reference-only** (item description saved, no data). These are non-hosted/registered services where data lives on an external server:
 `WMS`, `WMTS`, `WFS`, `Geocoding Service`, `Document Link`, `Map Image Layer`
 
 **Not exportable** from the hosted ArcGIS environment:
 `Scene Service`, `Scene Layer`, `Image Service`
 
 **Not included** in backups:
-`Application`, `API Key` - developer credentials (OAuth/API registrations), not web apps.
+`Application`, `API Key` - these are OAuth app registrations and developer API keys, not web apps (web apps are backed up as `Web Mapping Application`).
 
 **Conditionally skipped** during export:
 - Referenced Feature Services (data lives in another org or external server)
@@ -257,7 +257,7 @@ test, draft
 ### Filter by Owner, Group, or Folder
 
 - **Owner**: Enter a username to back up only that person's content
-- **Groups**: Enter group names separated by semicolons
+- **Groups**: Enter group names or group IDs separated by semicolons
 - **Folders**: Enter folder names separated by semicolons
 
 ```
@@ -273,7 +273,7 @@ Public Works;Planning;GIS Team
 ### Exclude Groups or Specific Items
 
 - **Exclude Groups**: Skip items shared to specific groups (semicolon-separated)
-- **Exclude Item IDs**: Skip specific items by their ArcGIS item ID (comma-separated)
+- **Exclude IDs**: Skip specific items by their ArcGIS item ID (comma-separated)
 
 ```
 # Exclude groups containing test data
@@ -307,9 +307,9 @@ Found in the **Advanced** section of the Backup tab:
 
 | Option | Description |
 |--------|-------------|
-| **Service Definitions** | Download .sd files from ArcGIS Pro |
+| **Service Definitions** | Download Service Definition (.sd) items published from ArcGIS Pro |
 | **Write Dependencies** | Record item-to-item dependencies in Inventory.csv |
-| **Empty Services** | Include feature services with zero features (preserves schema). Enabled by default |
+| **Empty Services** | Include feature services with zero features (preserves schema). Enabled by default. When disabled, empty services are skipped entirely |
 | **Tag Backed-Up Items** | Tag items with `last_backup_<timestamp>` after export. See [Tag Backed-Up Items](#tag-backed-up-items-1) below |
 | **HFLV Feature Data** | Export feature data for Hosted Feature Layer Views. See [HFLV Feature Data](#hflv-feature-data) below |
 
@@ -826,7 +826,7 @@ Get notified when scheduled backups complete or fail.
 
 - Contains the full Results.txt content in monospace formatting
 - Subject line includes the organization name and backup status
-- Failed backups use the subject prefix **"Backup failure"**
+- Failed backups use the subject prefix **"Backup Failed"**
 - When a software update is available, the subject includes **[UPDATE AVAILABLE]**
 
 ### Setup
@@ -861,16 +861,15 @@ For authenticated proxies, use: `http://username:password@proxy.yourcompany.com:
 
 ## Automatic Cleanup
 
-Control backup folder growth:
+Control backup folder growth. Cleanup runs at the end of each backup (on-demand or scheduled) and deletes old backup folders and zip files based on the folder name timestamp. Local storage only - for S3 and Azure, use cloud-native lifecycle policies to manage retention.
 
-1. In schedule settings, set **Delete after** to the number of days to keep backups
-2. Optionally enable **Keep Monthly** to preserve one backup per month
+**On-demand backups:** Set **Delete after** and **Keep monthly** in the **Clean Up Local Backups** section on the Backup tab. Use **Dry run** to preview what would be deleted without actually deleting anything.
 
-### Test Before Deleting
+**Scheduled backups:** Set **Delete after** and **Keep monthly** in the schedule editor.
 
-Use **Dry Run** to preview deletions before enabling actual cleanup.
+When **Keep monthly** is enabled, the backup closest to the 1st of each month is preserved as a monthly archive (preferring folders with "full" in the name). Monthly archives are exempt from deletion even when past the retention cutoff.
 
-> **Safety**: The utility never deletes from system folders or drive roots.
+> **Safety**: The utility never deletes from system folders, drive roots, or UNC share roots. Folders without a valid timestamp in their name are always skipped.
 
 ---
 
@@ -915,7 +914,7 @@ No telemetry or analytics.
 
 ## Understanding Your Backup
 
-Each backup creates a timestamped folder using the **Filename Prefix** (default `BACKUP`), e.g., `BACKUP_20240115_143022`. Change the prefix to distinguish jobs (e.g., `PROD`, `DEV`). **Sort By** controls folder structure:
+Each backup creates a timestamped folder using the **Folder prefix** (default `BACKUP`), e.g., `BACKUP_2026-01-15_14-30-22`. Change the prefix to distinguish jobs (e.g., `PROD`, `DEV`). **Sort By** controls folder structure:
 
 | Sort Option | Structure | Example Path |
 |-------------|-----------|-------------|
@@ -926,7 +925,7 @@ Each backup creates a timestamped folder using the **Filename Prefix** (default 
 With the default "Item Type Only" sorting:
 
 ```
-BACKUP_20240115_143022/
+BACKUP_2026-01-15_14-30-22/
 ├── Feature Service/
 │   ├── Roads_abc123def456.zip          (File Geodatabase)
 │   └── Parcels_def456abc123.zip
@@ -944,7 +943,7 @@ BACKUP_20240115_143022/
 - **JSON files** - item configuration (web apps, maps, dashboards)
 - **ZIP files** - File Geodatabase (feature services) or item resources (web apps/maps/dashboards)
 
-Each item type folder also contains subfolders for supplemental metadata when "Get Definitions" is enabled:
+Each item type folder also contains subfolders for supplemental metadata:
 
 - **Descriptions/** - item description JSON (`_desc.json`) and relationship metadata (`_relationships.json`) for items that have relationships (e.g., Map2Service, Survey2Service)
 - **Thumbnails/** - item thumbnail images
@@ -1483,9 +1482,9 @@ Large feature services with attachments can take over an hour to prepare server-
 
 Use [7-Zip](https://www.7-zip.org/download.html) instead of Windows' built-in extractor. Long path names can cause issues - move to a shorter path if needed.
 
-### 'TEMP_FOR_EXPORT' Files Left in Portal
+### 'TEMP_FOR_BACKUP' Items Left in Portal
 
-Temporary export files from interrupted backups are cleaned up automatically on the next run (files older than 72 hours).
+Temporary export items (with `TEMP_FOR_BACKUP` in the title) from interrupted backups are cleaned up automatically on the next backup run (items older than 72 hours).
 
 ### Incremental Backup Grabs Extra Services
 

@@ -629,6 +629,25 @@ SYSTEM runs whether or not any user is logged in, and has access to all local fi
 
 > **Network shares:** Mapped drives (e.g., `Z:\backups`) are per-user and not available to SYSTEM. UNC paths (e.g., `\\server\share`) can work if the share grants access to the computer account (`COMPUTERNAME$`). If your save path is a network share with user-specific permissions, use your own account or a service account instead. Saving to a local folder, S3, or Azure is unaffected.
 
+### Updating Your Password
+
+If you change your ArcGIS portal password, update it in every place BackupUtility stores it. Each feature stores credentials independently.
+
+**Where to update:**
+
+| Feature | Where to update |
+|---------|----------------|
+| **On-demand backup** (Backup tab) | Enter the new password in the Password field and check **Remember** |
+| **Scheduled backups** (Schedules tab) | Edit each schedule that uses this account and re-enter the password |
+| **Find & Replace** | Enter the new password on the Find & Replace tab |
+| **Restore** | Enter the new password on the Restore tab (source and/or target portal) |
+
+Updating one does not update the others. If you have multiple scheduled backups for the same portal, each must be updated individually.
+
+<div style="background-color: #d32f2f; color: white; padding: 12px 16px; border-radius: 6px; margin: 12px 0;">
+<b>Scheduled backups fail silently on password change.</b> The next scheduled run will fail with an authentication error. If email notifications are configured, you will receive a failure email identifying the schedule. To fix it, open BackupUtility, go to the Schedules tab, edit the schedule, and enter your new password.
+</div>
+
 ---
 
 ## Cloud Storage

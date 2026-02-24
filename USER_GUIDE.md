@@ -379,10 +379,40 @@ If you enter the wrong password, a dialog lets you try again without losing any 
 
 Service accounts are fully supported. When you specify a different Windows user in the schedule dialog, the application stores ArcGIS and cloud storage credentials in that account's Windows Credential Manager so the scheduled task can access them at runtime.
 
-**Requirements for the service account:**
-- Must have the **Log on as a batch job** right (Local Security Policy > User Rights Assignment)
-- Must have logged on to the machine at least once (so its user profile exists)
-- Must have read access to the backup save path
+**Setting up a service account for scheduled backups:**
+
+1. **Create the account** (if it doesn't already exist)
+   - Open **Computer Management** (compmgmt.msc) > Local Users and Groups > Users > right-click > New User
+   - Set "Password never expires" (recommended for service accounts)
+   - Uncheck "User must change password at next logon"
+
+2. **Grant "Log on as a batch job"** (required - Windows Server does not grant this by default)
+   - Open **Local Security Policy** (secpol.msc)
+   - Navigate to Local Policies > User Rights Assignment
+   - Double-click **Log on as a batch job** and add the service account
+   - Also check **Deny log on as a batch job** and make sure the service account is NOT listed (deny overrides allow)
+   - If secpol.msc is unavailable (Windows Home), use `ntrights +r SeBatchLogonRight -u <username>` from an elevated prompt, or ask your IT administrator to apply the setting via Group Policy
+
+3. **Log on as the service account at least once**
+   - This creates the user profile, which is required for Windows Credential Manager to work
+   - Sign in to this machine with the service account, then sign out
+
+4. **Grant folder access**
+   - The service account must have read/write access to the backup save path
+   - If saving to a network share, ensure the share permissions allow the service account
+
+5. **Create the schedule in BackupUtility**
+   - Open BackupUtility as any administrator account
+   - Go to the Schedules tab and create or edit a schedule
+   - Enter the service account username in the **Windows User** field (e.g., `.\svc_backup` or `DOMAIN\svc_backup`)
+   - Enter the service account's password
+   - The application automatically stores ArcGIS and cloud storage credentials in the service account's Credential Manager
+
+<div style="border: 2px solid #d32f2f; border-left: 6px solid #d32f2f; background-color: #fef0f0; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #d32f2f;">Missing "Log on as a batch job" looks like a wrong password:</strong> If the service account does not have the "Log on as a batch job" right, Windows returns <em>"The user name or password is incorrect"</em> - the exact same error as a wrong password. On Windows Server, new accounts do not have this right by default. If you are certain the password is correct, check Step 2 above.
+
+</div>
 
 **gMSA (Group Managed Service Accounts)** support is experimental. Enter the account name as `DOMAIN\account$` - no Windows password is required. Credentials are stored using machine-scope encryption so the gMSA can access them at runtime. This feature may not work in all Active Directory configurations - please contact support@civiclens.com if you encounter issues.
 
@@ -461,7 +491,7 @@ If task creation fails, the application saves your schedule configuration and sh
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| **User name or password is incorrect** | Wrong password, nonexistent account, or Windows Hello blocking password auth. Windows uses the same error for all three cases. | See [Troubleshooting user name or password is incorrect](#troubleshooting-user-name-or-password-is-incorrect) below |
+| **User name or password is incorrect** | Wrong password, nonexistent account, Windows Hello blocking password auth, or missing "Log on as a batch job" right. Windows uses the same error for all of these cases. | See [Troubleshooting user name or password is incorrect](#troubleshooting-user-name-or-password-is-incorrect) below |
 | **Account not found** | Username cannot be resolved (typo, deleted account, or missing domain prefix) | Check spelling, include the domain or machine name (e.g., `DOMAIN\user` or `.\localuser`) |
 | **Account locked out** | Too many failed login attempts | Ask your IT administrator to unlock the account, or wait for the lockout period to expire |
 | **Password expired** | The account password must be changed | Log in with the account to set a new password, then update the schedule |
@@ -579,6 +609,7 @@ If you've been using a PIN or biometric for a long time, you may no longer remem
 
 If none of the above resolved the issue:
 
+- **Missing "Log on as a batch job" right** - On Windows Server, new accounts do not have this right by default. Windows returns the same "password is incorrect" error. Open **Local Security Policy** (secpol.msc) > Local Policies > User Rights Assignment > add the account to **Log on as a batch job**. Also verify it is not in "Deny log on as a batch job."
 - **Account locked out** - Too many failed attempts can lock the account. Wait for the lockout period to expire or ask your IT admin to unlock it.
 - **Password expired** - The account password may have expired. Log in with the account to set a new one (Ctrl+Alt+Del > Change Password for domain accounts).
 - **Username doesn't exist** - Windows returns the same "incorrect" error for nonexistent usernames. Verify spelling and include the domain if needed (`DOMAIN\username`).

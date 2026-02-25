@@ -178,24 +178,6 @@ Scheduled backups run unattended. OAuth uses a stored refresh token:
 
 </div>
 
-### Windows Credential Manager (Recommended for Automation)
-
-Store passwords securely instead of typing them:
-
-1. Open **Windows Credential Manager** (Control Panel > Credential Manager)
-2. Click **Add a generic credential**
-3. Enter:
-   - **Internet or network address**: `CIVICLENS`
-   - **User name**: Your ArcGIS username
-   - **Password**: Your password
-4. In the Backup Utility, enter `wcm` as your password
-
-<div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
-
-<strong style="color: #2e7d32;">Security Tip:</strong> Recommended for scheduled backups. Credentials are encrypted at rest using Windows DPAPI, tied to your Windows user account, and never leave your machine.
-
-</div>
-
 ### Admin vs. Non-Admin Mode
 
 Detected automatically:
@@ -224,7 +206,7 @@ Set **Incremental Days** to back up only recent changes (e.g., `7` for the last 
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">Note:</strong> Incremental backup is only available for ArcGIS Online. A 12-hour buffer is added automatically to avoid missing items near the boundary.
+<strong style="color: #1565c0;">Note:</strong> Incremental backup is only available for ArcGIS Online. A 6-hour buffer is added automatically to avoid missing items near the boundary.
 
 </div>
 
@@ -424,7 +406,7 @@ Service accounts are fully supported. When you specify a different Windows user 
 
 > **Tip**: Set backups to run overnight when network usage is low.
 
-> **Overlap Protection**: If a backup is still running when the next scheduled run starts, the new run is automatically skipped. The skip is recorded in the schedule's status with the reason visible in the Schedules tab.
+> **Overlap Protection**: If a backup is still running when the next scheduled run starts, the new run proceeds but logs a warning. In rare cases where a process becomes stuck (no heartbeat for 30+ minutes), it is automatically terminated so it doesn't block future runs.
 
 <a id="upgrading-and-moving-the-application"></a>
 
@@ -500,9 +482,13 @@ If task creation fails, the application saves your schedule configuration and sh
 | **Access denied** | Group Policy restricts task creation, or account permissions are insufficient | Check with your IT administrator about Group Policy restrictions. Running as administrator may help. |
 | **Task Scheduler service not running** | The Windows service is stopped or disabled | Open **services.msc**, find **Task Scheduler**, right-click and select **Start**. Set Startup Type to **Automatic** |
 
-#### "Configure for Windows Vista, Windows Server 2008" compatibility
+<div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #1565c0;">"Configure for Windows Vista, Windows Server 2008" compatibility</strong>
 
 When viewing a Backup Utility task in Task Scheduler, the compatibility level shows "Configure for Windows Vista, Windows Server 2008". This is normal and does not affect functionality. The task XML uses the 1.2 schema, which is the minimum version that supports all required features (triggers, credentials, wake-to-run). Higher schema versions only add capabilities the application does not use. Tasks run identically on Windows 10 and 11.
+
+</div>
 
 #### Manual import option
 
@@ -723,18 +709,6 @@ For better security, create a policy that only allows access to your backup buck
 
 </div>
 
-#### Optional: Store S3 Credentials in Windows Credential Manager
-
-Instead of entering credentials in the app, store them securely:
-
-1. Open **Windows Credential Manager** (Control Panel > Credential Manager)
-2. Click **Add a generic credential**
-3. Enter:
-   - **Internet or network address**: `CIVICLENS_S3`
-   - **User name**: Your S3 Access Key ID
-   - **Password**: Your S3 Secret Access Key
-4. In the Backup Utility, enter `wcm` as the Secret Access Key
-
 #### Optional: Set Up S3 Lifecycle Rules for Cost Savings
 
 Move old backups to cheaper storage automatically:
@@ -806,7 +780,7 @@ This is the simplest option when running on Azure infrastructure or when you've 
 
 <div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #2e7d32;">Tip:</strong> This works the same way as the S3 IAM role pattern. If your Azure VM has a Managed Identity with Storage Blob Data Contributor role on the storage account, just enter the account name and container - no secrets needed.
+<strong style="color: #2e7d32;">Tip:</strong> If your Azure VM has a Managed Identity with the Storage Blob Data Contributor role on the storage account, just enter the account name and container - no connection string needed.
 
 </div>
 
@@ -946,7 +920,6 @@ The application communicates only with your ArcGIS environment. Exceptions:
 
 No telemetry or analytics.
 
-- Use **Windows Credential Manager** for passwords (see [above](#windows-credential-manager-recommended-for-automation))
 - Use dedicated service accounts for scheduled backups
 - The executable is **code-signed** with a CivicLens LLC EV certificate
 - Core application logic is compiled to **native machine code** to protect against reverse engineering
@@ -1074,7 +1047,7 @@ The **Restore** tab restores backed-up items to ArcGIS Online or Portal for ArcG
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">"Create as new item" is not available for regular Feature Services</strong> because this tool restores configuration only (symbology, settings, domains). To create a new Feature Service, publish the backed-up File Geodatabase, then use this tool to restore configuration to it. <strong>Feature Layer Views</strong> do support "Create as new" - see <a href="#/USER_GUIDE?id=restoring-feature-layer-views">Restoring Feature Layer Views</a>.
+<strong style="color: #1565c0;">"Create as new item" is not available for regular Feature Services</strong> because this tool restores configuration only (symbology, settings, domains). To create a new Feature Service, publish the backed-up File Geodatabase using ArcGIS Pro or the "New item" button in ArcGIS Online, then use this tool to restore configuration to it. <strong>Feature Layer Views</strong> do support "Create as new" - see <a href="#/USER_GUIDE?id=restoring-feature-layer-views">Restoring Feature Layer Views</a>.
 
 </div>
 

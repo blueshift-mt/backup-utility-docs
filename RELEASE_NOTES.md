@@ -75,7 +75,7 @@ If your schedules run under the same account that created them, no action is nee
 
 - **Missed Schedule Recovery** - Scheduled tasks now run automatically when the machine comes back online if a backup was missed due to sleep, shutdown, or reboot.
 
-- **Overlap Protection** - When a scheduled backup fires while the previous run is still active, the new run is skipped instead of running in parallel. The skip reason is visible in the Schedules tab.
+- **Overlap Protection** - When a scheduled backup fires while the previous run is still active, the new run proceeds with an overlap warning in the results. In rare cases where a process becomes stuck (no heartbeat for 30+ minutes), it is automatically terminated so it doesn't block future runs.
 
 - **Non-English Windows Support** - Task Scheduler queries now use the COM API, fixing schedule display issues on non-English versions of Windows.
 

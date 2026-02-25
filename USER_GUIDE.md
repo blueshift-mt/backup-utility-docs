@@ -914,7 +914,7 @@ All credentials (ArcGIS passwords, OAuth tokens, S3 keys, Azure connection strin
 
 The application communicates only with your ArcGIS environment. Exceptions:
 
-- **License validation** - downloads a license list, checks your org name locally (not transmitted). Cached 30 days.
+- **License validation** - downloads a license list, checks your org name locally (not transmitted).
 - **Update check** - checks for newer versions. No user data transmitted.
 - **CivicLens email** (opt-in) - result summaries sent through CivicLens mail server. Use "Custom SMTP" to avoid this.
 
@@ -1031,7 +1031,6 @@ The **Restore** tab restores backed-up items to ArcGIS Online or Portal for ArcG
 
 **Feature Service** - configuration restore only (no feature data):
 - Symbology, popups, labels, visibility
-- Service settings (capabilities, maxRecordCount, editor tracking)
 - Domains and field properties
 - Item metadata (title, tags, description, thumbnail)
 
@@ -1099,12 +1098,12 @@ Feature Service restore updates service configuration from definition files. It 
 3. Select a Feature Service item from the dropdown (shown with "(Feature Service)" suffix)
 4. Click **Validate** to confirm the service exists and has a valid URL
 5. Choose what to restore:
-   - **Symbology & Popups** - drawing info, popup config, labels (from `_data.json`)
+   - **Symbology & Popups** - drawing info, popup config, labels (from `_data.json` and `_def.json`)
    - **Domains & Field Properties** - coded value/range domains, field aliases (from `_def.json`)
    - **Restore metadata** - title, tags, description, thumbnail (from `_desc.json`)
 6. Click **Restore**
 
-> **Tip**: The Symbology & Popups option is only available when a `_data.json` file exists for the service.
+> **Tip**: The Symbology & Popups option is only available when a `_data.json` or `_def.json` file exists for the service.
 
 ### Restoring Feature Layer Views
 

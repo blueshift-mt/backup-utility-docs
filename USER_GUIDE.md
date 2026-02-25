@@ -1,6 +1,6 @@
 # Backup Utility for ArcGIS Online and Portal for ArcGIS
 
-## User Guide | Version 5.1.6
+## User Guide | Version 5.1.7
 
 ---
 
@@ -1559,5 +1559,5 @@ This means the Windows Task Scheduler entry was modified outside the application
 
 ---
 
-*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.6*
+*Backup Utility for ArcGIS Online and Portal for ArcGIS v5.1.7*
 *Copyright CivicLens*

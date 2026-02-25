@@ -30,11 +30,9 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 - **Adaptive Download Retries** - Large file downloads that keep breaking mid-stream are no longer abandoned after 10 attempts if the download is making real progress. Each attempt that writes more than 1 MB of data extends the retry limit automatically (up to 50 total attempts). This prevents unnecessary fallback to slower export methods for multi-gigabyte Feature Services where the connection drops but resume is working.
 
-- **Duplicate File Prevention** - When a Feature Service replica download fails and the item is re-exported via the item export API, the partial file from the failed replica is now cleaned up. Previously, both files could end up in the backup folder with slightly different filenames, resulting in duplicate uploads to S3/Azure and invalid zip warnings.
+- **Duplicate File Prevention** - When a Feature Service replica download fails and the item is re-exported via the item export API, the partial file from the failed replica is now cleaned up. Previously, both files could end up in the backup folder with slightly different filenames, resulting in duplicate files and invalid zip warnings.
 
 - **OAuth Token Rotation Persistence** - When ArcGIS Online rotates an OAuth refresh token during a scheduled backup, the new token is now persisted to both Windows Credential Manager (for interactive/impersonated service accounts) and DPAPI machine-scope storage (for SYSTEM/gMSA accounts). Previously, the rotated token was only used in-memory, causing the next scheduled run to fail with an expired token.
-
-- **Log Sanitization** - OAuth tokens and refresh tokens are now redacted from all exception log messages across the backup pipeline. Previously, network errors during token refresh or download could write tokens to log files in plain text.
 
 - **Scheduling Reliability** - Improved error diagnostics for scheduled task creation failures, credential validation hardening, and DPAPI round-trip testing in the Copy Diagnostics output.
 

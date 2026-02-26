@@ -34,6 +34,10 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 - **OAuth Token Rotation Persistence** - When ArcGIS Online rotates an OAuth refresh token during a scheduled backup, the new token is now persisted to both Windows Credential Manager (for interactive/impersonated service accounts) and DPAPI machine-scope storage (for SYSTEM/gMSA accounts). Previously, the rotated token was only used in-memory, causing the next scheduled run to fail with an expired token.
 
+- **Cross-User Schedule Fix** - Creating a scheduled backup as a different Windows user (e.g., a service account) no longer fails when the current user is not an administrator. Previous versions required admin privileges to load the run-as user's profile for credential storage. Non-admin users now store credentials via DPAPI machine-scope encryption automatically.
+
+- **Cloud Backup Location in Results** - Results.txt, email notifications, and console output now include the full S3 or Azure path where the backup was uploaded (e.g., `s3://bucket/folder/`).
+
 - **Scheduling Reliability** - Improved error diagnostics for scheduled task creation failures, credential validation hardening, and DPAPI round-trip testing in the Copy Diagnostics output.
 
 ---

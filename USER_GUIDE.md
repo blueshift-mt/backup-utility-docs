@@ -1027,7 +1027,7 @@ The Backup Utility uses the same export APIs that ArcGIS itself uses. If an item
 - **Non-related tables** - Feature Services with tables that have no relationship class to any layer. These require a different export method that may produce incomplete results.
 - **Attachment errors** - Server-side blob storage issues that prevent attachment export. The feature data is still exported without attachments.
 
-**How to verify:** Open the failed item in ArcGIS Online or Portal and try to export it to File Geodatabase manually (Overview tab, Export Data, File Geodatabase). If ArcGIS cannot export it, the issue is with the item, not the backup.
+**How to verify:** Open the failed item's page in your browser and use Export Data > File Geodatabase. The Backup Utility uses the same REST API as that browser-based export. If the browser export also fails, the issue is with the item, not the backup. (Note: ArcGIS Pro uses a different export method (arcpy) that may succeed where the REST API does not. The browser export is the correct comparison.)
 
 **What to expect:** Most organizations see 95-100% of Feature Services export as complete FGDBs. The remaining items typically have pre-existing data issues on the ArcGIS platform. These items are still backed up in a fallback format when possible.
 

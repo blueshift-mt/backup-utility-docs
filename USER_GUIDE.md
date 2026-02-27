@@ -464,7 +464,7 @@ Tasks are created in Windows Task Scheduler under the **CivicLens** folder:
 
 ### Email Confirmation
 
-Receive email when backups complete or fail. This is the recommended way to confirm scheduled backups are running successfully without opening the GUI.
+Receive email when backups complete or fail.
 
 ### Managing Schedules
 

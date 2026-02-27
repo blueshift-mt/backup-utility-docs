@@ -1011,6 +1011,26 @@ Summary report:
 - **WARNINGS** - Non-fatal issues encountered during the backup
 - **EXCLUDED ITEMS** - Items skipped due to filters or unsupported types
 
+### Understanding Backup Results
+
+The Backup Utility exports Feature Services as File Geodatabases (FGDB) by default. When FGDB export fails, it retries with multiple methods before falling back to Shapefile or CSV. Results.txt categorizes every item so you know exactly what happened.
+
+**What "success" means:** A successful export is a complete File Geodatabase with all layers, related tables, and attachments. Shapefile and CSV fallbacks preserve your data but lose some FGDB-specific content (domains, relationship classes, attachments).
+
+**Why some items don't export as FGDB:**
+
+The Backup Utility uses the same export APIs that ArcGIS itself uses. If an item cannot be exported as FGDB through ArcGIS, it cannot be exported as FGDB through the Backup Utility either. Common causes:
+
+- **Corrupt geometry or features** - Individual features with invalid geometry prevent FGDB export. The Backup Utility detects these and exports without the corrupt features (listed under PARTIAL EXPORTS in Results.txt).
+- **Broken or misconfigured services** - Services that return errors to any export request. Often caused by publishing issues, deleted underlying data, or service definition problems.
+- **Server-side timeouts** - Very large Feature Services may exceed server-side processing limits. Increasing the timeout in your backup settings may help.
+- **Non-related tables** - Feature Services with tables that have no relationship class to any layer. These require a different export method that may produce incomplete results.
+- **Attachment errors** - Server-side blob storage issues that prevent attachment export. The feature data is still exported without attachments.
+
+**How to verify:** Open the failed item in ArcGIS Online or Portal and try to export it to File Geodatabase manually (Overview tab, Export Data, File Geodatabase). If ArcGIS cannot export it, the issue is with the item, not the backup.
+
+**What to expect:** Most organizations see 95-100% of Feature Services export as complete FGDBs. The remaining items typically have pre-existing data issues on the ArcGIS platform. These items are still backed up in a fallback format when possible.
+
 ### Full_Log.log
 
 Detailed log of the entire backup process. Include this when contacting support.

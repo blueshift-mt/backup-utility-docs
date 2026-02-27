@@ -18,7 +18,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 4. In the **Add arguments** field, add: `--file "C:\path\to\parameters.xlsx"`
 5. Click **OK** to save
 
-**Parameters file support is deprecated and will be removed in a future release.** We recommend migrating to the built-in Schedules tab, which is easier to set up, supports OAuth/SSO, provides real-time progress monitoring, and stores credentials securely. See [Migrating from Parameters Files](#migrating-from-parameters-files) for details.
+**We recommend migrating to the built-in Schedules tab** when possible. It is easier to set up, supports OAuth/SSO, provides real-time progress monitoring, and stores credentials securely. See [Migrating from Parameters Files](#migrating-from-parameters-files) for details. Parameters file support remains available for automated and containerized environments that require external orchestration.
 
 **You do not need a GUI to run backups.** Scheduled backups run as a background process through Windows Task Scheduler. They run whether or not anyone is logged in, and they do not open a window. You only need the GUI once to create the schedule. After that, everything runs unattended.
 
@@ -332,7 +332,7 @@ Exclude specific items by ArcGIS item ID (comma-separated).
 
 As noted in the [breaking change notice](#breaking-change-scheduled-backup-users-must-act-v50) above, parameters files are no longer auto-detected. Pass `--file` to continue using them, or migrate to the Schedules tab.
 
-> **Parameters file support will be removed in a future release.** Migrate to the built-in Schedules tab as soon as possible.
+> **We recommend the built-in Schedules tab for most users.** It is easier to configure, supports OAuth/SSO, and stores credentials securely. Parameters files remain supported for automated and containerized environments that require external orchestration.
 
 The `--file` flag accepts both formats:
 

@@ -18,7 +18,7 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 4. In the **Add arguments** field, add: `--file "C:\path\to\parameters.xlsx"`
 5. Click **OK** to save
 
-**We recommend migrating to the built-in Schedules tab** when possible. It is easier to set up, supports OAuth/SSO, and stores credentials securely. The Schedules tab also lets you monitor running scheduled backups in real time from the GUI. Parameters file backups cannot be monitored this way (although email notifications and log files are still available). See [Migrating from Parameters Files](#migrating-from-parameters-files) for details. Parameters file support remains available for automated and containerized environments that require external orchestration.
+**We recommend migrating to the built-in Schedules tab** when possible. It is easier to set up, supports OAuth/SSO, and stores credentials securely. The Schedules tab also lets you monitor running scheduled backups in real time from the GUI. Parameters file backups cannot be monitored this way (although email notifications and log files are still available). See [Migrating from Parameters Files](#migrating-from-parameters-files) for details. **Parameters file support remains available for automated and containerized environments that require external orchestration.**
 
 **You do not need a GUI to run backups.** Scheduled backups run as a background process through Windows Task Scheduler. They run whether or not anyone is logged in, and they do not open a window. You only need the GUI once to create the schedule. After that, everything runs unattended.
 
@@ -332,7 +332,7 @@ Exclude specific items by ArcGIS item ID (comma-separated).
 
 As noted in the [breaking change notice](#breaking-change-scheduled-backup-users-must-act-v50) above, parameters files are no longer auto-detected. Pass `--file` to continue using them, or migrate to the Schedules tab.
 
-> **We recommend the built-in Schedules tab for most users.** It is easier to configure, supports OAuth/SSO, stores credentials securely, and lets you monitor running backups in real time from the GUI. Parameters file backups cannot be monitored this way (email notifications and log files are still available). Parameters files remain supported for automated and containerized environments that require external orchestration.
+> **We recommend the built-in Schedules tab for most users.** It is easier to configure, supports OAuth/SSO, stores credentials securely, and lets you monitor running backups in real time from the GUI. Parameters file backups cannot be monitored this way (email notifications and log files are still available). **Parameters files remain supported for automated and containerized environments that require external orchestration.**
 
 The `--file` flag accepts both formats:
 

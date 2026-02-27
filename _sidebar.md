@@ -5,7 +5,7 @@
   * [Logging In](USER_GUIDE.md#logging-in)
 * **Backup Options**
   * [What Gets Backed Up](USER_GUIDE.md#what-gets-backed-up)
-  * [Item Types Reference](USER_GUIDE.md#item-types-reference)
+  * [Item Types Reference](USER_GUIDE.md#tile-amp-map-services)
   * [Filtering What to Back Up](USER_GUIDE.md#filtering-what-to-back-up)
   * [Advanced Options](USER_GUIDE.md#advanced-options)
 * **Scheduling**

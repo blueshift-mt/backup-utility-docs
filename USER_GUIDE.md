@@ -16,7 +16,9 @@ See [Scheduling Automatic Backups](#scheduling-automatic-backups) for scheduled 
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">Note for parameters file users:</strong> The application no longer auto-detects parameters files. To run a headless backup with a parameters file, use <code>BackupUtility.exe --file parameters.xlsx</code>. Parameters file support is temporary and will be removed in a future release - please migrate to the built-in Schedules tab.
+<strong style="color: #1565c0;">Note for parameters file users:</strong> Parameters file support is temporary and will be removed in a future release. To run a headless backup with a parameters file in the meantime, use <code>BackupUtility.exe --file parameters.xlsx</code> (auto-detection is no longer supported).
+
+**You do not need a GUI to run backups.** The recommended replacement is the built-in <strong>Schedules</strong> tab. Scheduled backups run as a background process via Windows Task Scheduler - no GUI window is required, and backups run even when no user is logged in. You only need the GUI once to create the schedule. After that, everything runs unattended. See <a href="#/USER_GUIDE?id=scheduling-automatic-backups">Scheduling Automatic Backups</a>.
 
 </div>
 
@@ -337,6 +339,12 @@ This option is available in both on-demand backup (Advanced Options) and schedul
 
 ## Scheduling Automatic Backups
 
+<div style="border: 2px solid #2e7d32; border-left: 6px solid #2e7d32; background-color: #e8f5e9; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
+
+<strong style="color: #2e7d32;">No GUI required at runtime.</strong> Scheduled backups run as a background process through Windows Task Scheduler. They run whether or not anyone is logged in, and they do not open a window. You only need the GUI once to create the schedule. After that, everything runs unattended. Opening the GUI to monitor a running backup is completely optional.
+
+</div>
+
 ### Create a Schedule
 
 1. Go to the **Schedules** tab
@@ -400,7 +408,7 @@ Service accounts are fully supported. When you specify a different Windows user 
 
 <div style="border: 2px solid #1565c0; border-left: 6px solid #1565c0; background-color: #e3f2fd; padding: 16px 20px; border-radius: 4px; margin: 20px 0;">
 
-<strong style="color: #1565c0;">Monitor Running Backups:</strong> Open the application at any time to check progress on the <strong>Progress</strong> tab. Closing the GUI does not stop the backup.
+<strong style="color: #1565c0;">Monitoring is optional.</strong> Scheduled backups run entirely in the background. You can open the application at any time to check progress on the <strong>Progress</strong> tab, but it is not required. Closing the GUI does not stop the backup, and never opening the GUI at all is perfectly fine.
 
 </div>
 
@@ -456,7 +464,7 @@ Tasks are created in Windows Task Scheduler under the **CivicLens** folder:
 
 ### Email Confirmation
 
-Receive email when backups complete or fail.
+Receive email when backups complete or fail. This is the recommended way to confirm scheduled backups are running successfully without opening the GUI.
 
 ### Managing Schedules
 

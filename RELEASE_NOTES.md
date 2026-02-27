@@ -20,6 +20,8 @@ The application no longer auto-detects parameters files on launch. Double-clicki
 
 **Parameters file support is deprecated and will be removed in a future release.** We recommend migrating to the built-in Schedules tab, which is easier to set up, supports OAuth/SSO, provides real-time progress monitoring, and stores credentials securely. See [Migrating from Parameters Files](#migrating-from-parameters-files) for details.
 
+**You do not need a GUI to run backups.** Scheduled backups run as a background process through Windows Task Scheduler. They run whether or not anyone is logged in, and they do not open a window. You only need the GUI once to create the schedule. After that, everything runs unattended.
+
 </div>
 
 ---

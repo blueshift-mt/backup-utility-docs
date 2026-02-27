@@ -18,7 +18,7 @@ See [Scheduling Automatic Backups](#scheduling-automatic-backups) for scheduled 
 
 <strong style="color: #1565c0;">Note for parameters file users:</strong> Parameters files are no longer auto-detected on launch. To run a headless backup with a parameters file, use <code>BackupUtility.exe --file parameters.xlsx</code>.
 
-**We recommend the built-in Schedules tab for most users.** It is easier to configure, supports OAuth/SSO, and stores credentials securely. Scheduled backups run as a background process via Windows Task Scheduler - no GUI window is required, and backups run even when no user is logged in. You only need the GUI once to create the schedule. After that, everything runs unattended. See <a href="#/USER_GUIDE?id=scheduling-automatic-backups">Scheduling Automatic Backups</a>. Parameters files remain supported for automated and containerized environments that require external orchestration.
+**We recommend the built-in Schedules tab for most users.** It is easier to configure, supports OAuth/SSO, and stores credentials securely. The Schedules tab also lets you monitor running scheduled backups in real time from the GUI. Parameters file backups cannot be monitored this way (email notifications and log files are still available). Scheduled backups run as a background process via Windows Task Scheduler - no GUI window is required, and backups run even when no user is logged in. You only need the GUI once to create the schedule. After that, everything runs unattended. See <a href="#/USER_GUIDE?id=scheduling-automatic-backups">Scheduling Automatic Backups</a>. Parameters files remain supported for automated and containerized environments that require external orchestration.
 
 </div>
 
